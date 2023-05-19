@@ -36,9 +36,7 @@ class UserService {
             throw ApiError.BadRequest('Введен некорректный логин или пароль')
         }
         const userDto = new UserDto(user);
-
         const tokens = await tokenService.generateTokens({ ...userDto })
-        // доделать постоянное создание токенов при входе
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
         return { ...tokens, user: userDto }
     }

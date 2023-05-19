@@ -1,6 +1,7 @@
 import express from 'express';
 import UserController from "../controllers/user-controller.js"
 import { body } from 'express-validator'
+import { authMiddleware } from '../middlewares/auth-middleware.js'
 
 const router = express.Router();
 // const { auth } = require('../middlewares/auth')
@@ -13,7 +14,7 @@ router.post('/registration',
 router.post('/login', UserController.login);
 router.post('/logout', UserController.logout);
 router.get('/refresh', UserController.refresh);
-router.get('/current', UserController.current);
+router.get('/current', authMiddleware, UserController.current);
 //auth
 
 export default router;
