@@ -23,7 +23,6 @@ class UserService {
         const tokens = await tokenService.generateTokens({ ...userDto })
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
-
         return { ...tokens, user: userDto }
     }
     async login(email, password) {
@@ -60,6 +59,10 @@ class UserService {
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
         return { ...tokens, user: userDto }
+    }
+    async getCurrentUser(refreshToken) {
+        const userData = await tokenService.validateRefreshToken(refreshToken);
+        return userData
     }
 }
 

@@ -17,6 +17,12 @@ const UserSchema = new Schema({
         required: true,
         unique: true
     },
+    employeesId: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Employee'
+        },
+    ]
 }, {
     timestamps: true,
 });

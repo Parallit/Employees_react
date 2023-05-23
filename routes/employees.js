@@ -1,22 +1,22 @@
 import express from 'express';
+import EmployeesController from '../controllers/employees-controller.js'
+import { authMiddleware } from '../middlewares/auth-middleware.js'
+
 const router = express.Router();
 
-import EmployeesController from '../controllers/employees-controller.js'
-// const { auth } = require('../middlewares/auth');
-
 // /api/employees
-router.get('/', EmployeesController.all);
+router.get('/', authMiddleware, EmployeesController.getAllEmployees);
 
 // /api/employees/:id
-router.get('/:id', EmployeesController.employee);
+router.get('/:id', authMiddleware, EmployeesController.getEmployee);
 
 // /api/employees/add
-router.post('/add', EmployeesController.add);
+router.post('/add', authMiddleware, EmployeesController.addNewEmployee);
 
 // /api/employees//edit/:id
-router.put('/edit/:id', EmployeesController.edit);
+router.patch('/edit/:id', authMiddleware, EmployeesController.editDataEmployee);
 
 // /api/employees/remove/:id
-router.delete('/remove/:id', EmployeesController.remove);
+router.delete('/remove/:id', authMiddleware, EmployeesController.removeEmployee);
 
 export default router;

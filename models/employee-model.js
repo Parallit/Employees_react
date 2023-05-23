@@ -3,17 +3,21 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const EmployeeShema = new Schema({
-    firstname: {
+    firstName: {
         type: String,
+        required: true
     },
-    lastname: {
+    lastName: {
         type: String,
+        required: true,
     },
     age: {
         type: Number,
+        required: true,
     },
-    adress: {
+    address: {
         type: String,
+        required: true,
     },
     userId: {
         type: Schema.Types.ObjectId,

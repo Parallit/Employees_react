@@ -1,111 +1,77 @@
+import EmployeesService from "../services/employees-service.js";
+
 class EmployeesController {
     /**
      * @route GET /api/employees
      * @desc get all employees
      * @access Private
      */
-
-    async all(req, res) {
+    async getAllEmployees(req, res, next) {
         try {
-            const employees = await prisma.employee.findMany();
+            const employees = await EmployeesService.getAllEmployees();
             res.status(200).json(employees);
         } catch (err) {
-            //  добавить обработчик
-            res.status(500).json({ message: "не удалось получить всех сотрудников" })
+            next(err)
         }
     }
-
     /**
      * @route GET /api/employees/:id
      * @desc get employee
-     * @access Private
+     * @access Private 
      */
-
-    async employee(req, res) {
+    async getEmployee(req, res, next) {
         const { id } = req.params;
         try {
-            const employee = await prisma.employee.findUnique({
-                where: {
-                    id
-                }
-            })
+            const employee = await EmployeesService.getEmployee(id);
             res.status(200).json(employee);
         } catch (err) {
-            //  добавить обработчик
-            res.status(500).json({ message: "не удалось получить сотрудника" })
+            next(err)
         }
     }
-
     /**
      * @route POST /api/employees/add
      * @desc add employee
      * @access Private
      */
-
-    async add(req, res) {
+    async addNewEmployee(req, res, next) {
         try {
             const data = req.body;
-            if (!data.firstName || !data.lastName || !data.address || !data.age) {
-                return res.status(200).json({ message: "Все поля обязательные" })
-            }
-
-            const employee = await prisma.employee.create({
-                data: {
-                    ...data,
-                    userId: req.user.id
-                }
-            })
-
+            const { refreshToken } = req.cookies;
+            const employee = await EmployeesService.addNewEmployee(data, refreshToken);
             return res.status(201).json(employee);
         } catch (err) {
-            //  добавить обработчик
-            console.log(err);
-            res.status(500).json({ message: "не удалось получить всех сотрудников" })
+            next(err)
         }
     }
-
     /**
      * @route PUT /api/employees/edit/:id
      * @desc edit data of employee
      * @access Private
      */
-
-    async edit(req, res) {
-        const data = req.body;
-        const id = data.id;
-
+    async editDataEmployee(req, res, next) {
         try {
-            //добавить проверку на права пользователя для редактирования
-            await prisma.employee.update({
-                where: {
-                    id
-                },
-                data
-            })
-            res.status(204).json('Edited')
-        } catch (error) {
-            res.status(500).json({ message: 'не удалось редактировать сотрудника' })
+            const data = req.body;
+            const { id } = req.params;
+            const { refreshToken } = req.cookies;
+            const updatedEmployee = await EmployeesService.editDataEmployee(id, data, refreshToken)
+            res.status(204)
+        } catch (err) {
+            next(err)
         }
     }
-
     /**
      * @route DELETE /api/employees/remove/:id
      * @desc remove employee
      * @access Private
      */
-
-    async remove(req, res) {
-        const { id } = req.body
+    async removeEmployee(req, res, next) {
+        const { id } = req.params;
         try {
-            //добавить проверку на права пользователя для удаления
-            await prisma.employee.delete({
-                where: {
-                    id
-                }
-            })
-            res.status(204).json('Removed')
+            const { refreshToken } = req.cookies;
+            const removedEmployee = await EmployeesService.removeEmployee(id, refreshToken);
+            res.status(204)
         } catch (err) {
-            res.status(500).json({ message: 'не удалось удалить сотрудника' })
+            next(err)
         }
     }
 }

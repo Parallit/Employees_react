@@ -24,6 +24,11 @@ app.use('/api/employees', EmployeesRouter);
 
 app.use(errorMiddleware);
 
+app.all("*", (_, res) => {
+    res.status(404);
+    res.json({ error: 404 })
+})
+
 const start = async () => {
     try {
         await mongoose.connect(DB_URL), {
@@ -36,10 +41,5 @@ const start = async () => {
         console.log(err);
     }
 }
-
-app.all("*", (_, res) => {
-    res.status(404);
-    res.json({ error: 404 })
-})
 
 start()

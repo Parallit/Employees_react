@@ -1,7 +1,6 @@
 import UserService from '../services/user-service.js'
 import { validationResult } from 'express-validator';
 import { ApiError } from '../exceptions/api-error.js';
-import userService from '../services/user-service.js';
 
 class UserController {
     /**
@@ -31,7 +30,7 @@ class UserController {
     async login(req, res, next) {
         try {
             const { email, password } = req.body;
-            const userData = await userService.login(email, password)
+            const userData = await UserService.login(email, password)
             res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
             return res.status(200).json(userData)
         } catch (err) {
@@ -43,21 +42,25 @@ class UserController {
      * @desc Logout
      * @access Public
      */
-
     async logout(req, res, next) {
         try {
             const { refreshToken } = req.cookies;
-            const token = await userService.logout(refreshToken);
+            const token = await UserService.logout(refreshToken);
             res.clearCookie('refreshToken')
             res.status(200).json(token)
         } catch (error) {
             next(err)
         }
     }
+    /**
+     * @route GET /api/user/refresh
+     * @desc Logout
+     * @access Public
+     */
     async refresh(req, res, next) {
         try {
             const { refreshToken } = req.cookies;
-            const userData = await userService.refresh(refreshToken);
+            const userData = await UserService.refresh(refreshToken);
             res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
             return res.status(200).json(userData)
         } catch (err) {
@@ -69,10 +72,12 @@ class UserController {
      * @desc  get current user
      * @access Private
      */
-    async current(req, res) {
+    async current(req, res, next) {
         try {
-            return res.status(200).json(req.user)
-        } catch (error) {
+            const { refreshToken } = req.cookies;
+            const user = await UserService.getCurrentUser(refreshToken);
+            return res.status(200).json(user)
+        } catch (err) {
             next(err)
         }
     }
