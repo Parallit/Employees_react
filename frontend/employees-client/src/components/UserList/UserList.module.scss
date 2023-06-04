@@ -1,0 +1,16 @@
+.users_box {
+    display: flex;
+    align-items: center;
+    min-width: 80%;
+    min-height: 75px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.user_box {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #fff;
+}
