@@ -1,12 +1,18 @@
-const express = require('express');
+import express from 'express';
+import UserController from "../controllers/user-controller.js"
+import { body } from 'express-validator'
+import { authMiddleware } from '../middlewares/auth-middleware.js'
+
 const router = express.Router();
 
-const { login, register, current } = require('../controllers/users')
-const { auth } = require('../middlewares/auth')
+router.post('/registration',
+    body('email').isEmail(),
+    body('password').isLength({ min: 3, max: 32 }),
+    UserController.registration
+);
+router.post('/login', UserController.login);
+router.post('/logout', UserController.logout);
+router.get('/refresh', UserController.refresh);
+router.get('/current', authMiddleware, UserController.current);
 
-
-router.post('/login', login);
-router.post('/register', register);
-router.get('/current', auth, current);
-
-module.exports = router;
+export default router;
