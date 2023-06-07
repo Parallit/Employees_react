@@ -53,7 +53,7 @@ export const RegistrationForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
                     <button className={style.login_btn}>
                         Rigistration
                     </button>
-                    <button onClick={() => onFormSwitch('login')} className={style.to_another_btn}>Already have an account? Login here</button>
+                    <button onClick={() => onFormSwitch('login')} className={style.to_another_form}>Already have an account? Login here</button>
                 </form>
             </div>
         </>

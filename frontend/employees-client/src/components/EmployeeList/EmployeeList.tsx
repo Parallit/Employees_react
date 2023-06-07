@@ -19,8 +19,8 @@ export const EmployeeList: FC = () => {
     return (
         <>
             <ul>
-                {employees.map((employee) => (
-                    <li key={employee.email}> Работники: {employee.name}</li>
+                { employees && employees.map((employee) => (
+                    <li key={employee._id}> Работники: {employee.name}</li>
                 ))}
             </ul>
         </>
