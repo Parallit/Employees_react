@@ -3,8 +3,8 @@ import { Token } from '../models/token-model.js'
 
 class TokenService {
     async generateTokens(payload) {
-        const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, { expiresIn: '20m' });
-        const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, { expiresIn: '30d' });
+        const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, { expiresIn: '10m' });
+        const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, { expiresIn: '30m' });
         return {
             accessToken,
             refreshToken
@@ -12,7 +12,7 @@ class TokenService {
     }
     async validateAccessToken(token) {
         try {
-            const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+            const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET)
             return userData
         } catch (err) {
             return null
