@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Header } from "./Header/Header";
+import { Layout } from "./Layout/Layout";
 import { Homepage } from "../pages/Homepage";
 import { Users } from "../pages/Users";
 import { About } from "../pages/About/About";
@@ -14,8 +14,8 @@ export const AppRouter: FC = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Header />}>
-        <Route path="/" element={<PrivateRoute component={<Homepage />} />} />
+      <Route path="/" element={<Layout />}>
+        <Route index element={<PrivateRoute component={<Homepage />} />} />
         <Route path="users" element={<PrivateRoute component={<Users />} />} />
         <Route path="employees" element={<PrivateRoute component={<Employees />} />} />
         <Route path="login" element={<PublicRoute component={<LogIn />}/> }/>
@@ -24,4 +24,4 @@ export const AppRouter: FC = () => {
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
-} 
+}

@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import style from './Header.module.scss'
-import { useDispatch } from "react-redux";
+import style from './Layout.module.scss'
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
-import { userLogout } from "../../store/auth/authSlice";
+import { checkAuthUser, userLogout } from "../../store/auth/authSlice";
+import { selectLoading } from "../../store/auth/selectors";
 
 const navigate = [
     {
@@ -29,8 +30,16 @@ const navigate = [
 ];
 
 
-export const Header: FC = () => {
+export const Layout: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
+    const isLoading = useSelector(selectLoading)
+    const LayoutLoading = 'Loading...'
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            dispatch(checkAuthUser())
+        }
+    }, [])
 
     return (
         <>
@@ -48,18 +57,18 @@ export const Header: FC = () => {
                             </NavLink>
                         </li>
                     ))}
-                        <li className={style.link}>
-                            <button onClick={() => dispatch(userLogout())} className={style.link}>Logout</button>
-                        </li> :
+                    <li className={style.link}>
+                        <NavLink to={"/"} onClick={() => dispatch(userLogout())} className={style.link}>Logout</NavLink>
+                    </li> :
                 </ul>
             </header>
-            <main>
+            <main className={style.container}>
                 <div>
-                    <Outlet />
+                    {isLoading ? LayoutLoading : <Outlet />}
                 </div>
             </main>
-            <footer>
-
+            <footer className={style.container}>
+                2023
             </footer>
         </>
     );

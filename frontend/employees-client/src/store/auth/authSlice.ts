@@ -1,17 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import $api from "../../axios";
-import { AuthResponse, User } from "./types";
+import { AuthResponse, AuthState, User } from "./types";
 import axios from 'axios';
-
-interface UserInfo {
-    name: string,
-    email: string,
-    password: string
-}
 
 export const userRegistration = createAsyncThunk(
     'auth/userRegistration',
-    async (payload: UserInfo, thunkApi) => {
+    async (payload: { name: string, email: string, password: string }, thunkApi) => {
         try {
             const res = await $api.post<AuthResponse>('/user/registration', payload)
             return res.data
@@ -35,7 +29,7 @@ export const userLogout = createAsyncThunk(
     'auth/userLogout',
     async (_, thunkApi) => {
         try {
-            await $api.post<AuthResponse>('/user/logout')
+            await $api.post('/user/logout')
             return
         } catch (error) {
             return thunkApi.rejectWithValue(`Не удается выйти: ${error}`)
@@ -48,6 +42,8 @@ export const checkAuthUser = createAsyncThunk(
     async (_, thunkApi) => {
         try {
             const res = await axios.get<AuthResponse>(`${process.env.REACT_APP_BASE_URL}/user/refresh`, { withCredentials: true })
+            console.log(res.data);
+
             return res.data
         } catch (error) {
             console.log('Error', error);
@@ -56,7 +52,7 @@ export const checkAuthUser = createAsyncThunk(
     }
 )
 
-const initialState = {
+const initialState: AuthState = {
     user: {},
     isAuth: false,
     isLoading: false
@@ -67,7 +63,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(userLogin.fulfilled, (state, action) => {
+        builder.addCase(userLogin.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
             localStorage.setItem('token', action.payload.accessToken);
             state.isAuth = true;
             state.user = action.payload.user;
@@ -80,7 +76,7 @@ const authSlice = createSlice({
         builder.addCase(checkAuthUser.pending, (state, _) => {
             state.isLoading = true
         })
-        builder.addCase(checkAuthUser.fulfilled, (state, action) => {
+        builder.addCase(checkAuthUser.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
             localStorage.setItem('token', action.payload.accessToken);
             state.isAuth = true;
             state.user = action.payload.user;
