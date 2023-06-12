@@ -81,6 +81,19 @@ class UserController {
             next(err)
         }
     }
+    /**
+     * @route GET /api/users
+     * @desc  get all users
+     * @access Private
+     */
+    async getAllUsers(_, res, next) {
+        try {
+            const users = await UserService.getAllUsers();
+            return res.status(200).json(users)
+        } catch (err) {
+            next(err)
+        }
+    }
 }
 
 

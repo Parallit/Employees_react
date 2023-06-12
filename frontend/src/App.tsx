@@ -10,6 +10,6 @@ const App: FC = () => {
       </BrowserRouter>
     </>
   );
-}
+};
 
 export default App;
