@@ -4,15 +4,15 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { RootState } from '../store';
 
 interface PublicRouteProps {
-    component?: JSX.Element;
+  component?: JSX.Element;
 }
 
 export const PublicRoute: FC<PublicRouteProps> = ({ component }) => {
-    const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
 
-    if (isAuth) {
-        return <Navigate to="/" />;
-    }
+  if (isAuth) {
+    return <Navigate to="/" />;
+  }
 
-    return component ? component : <Outlet />;
+  return component ? component : <Outlet />;
 };
