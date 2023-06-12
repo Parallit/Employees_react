@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../store';
-import { fetchUsers } from '../../store/users/usersSlice';
-import { selectUsers } from '../../store/users/selectors';
+import { AppDispatch } from 'src/store';
+import { fetchUsers } from 'src/store/users/usersSlice';
+import { selectUsers } from 'src/store/users/selectors';
 import style from './UserList.module.scss';
 
 export const UserList: FC = () => {

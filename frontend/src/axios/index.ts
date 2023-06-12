@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AuthResponse } from '../store/auth/types';
+import { AuthResponse } from 'src/store/auth/types';
 
 export const API_URL = process.env.REACT_APP_BASE_URL;
 

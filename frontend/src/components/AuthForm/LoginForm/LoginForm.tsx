@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
-import style from './Form.module.scss';
+import style from '../Form.module.scss';
 import { useDispatch } from 'react-redux';
-import { userLogin } from '../../store/auth/authSlice';
-import { AppDispatch } from '../../store';
+import { userLogin } from 'src/store/auth/authSlice';
+import { AppDispatch } from 'src/store';
 import { useNavigate } from 'react-router-dom';
 
 interface LoginFormProp {

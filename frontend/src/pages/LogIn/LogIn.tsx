@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
-import { LoginForm } from '../components/AuthForm/LoginForm';
-import { RegistrationForm } from '../components/AuthForm/RegistrationForm';
+import { LoginForm } from 'src/components/AuthForm/LoginForm';
+import { RegistrationForm } from 'src/components/AuthForm/RegistrationForm';
 
 export const LogIn: FC = () => {
   const [currentForm, setCurrentForm] = useState('login');
