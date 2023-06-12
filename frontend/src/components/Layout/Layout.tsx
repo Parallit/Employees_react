@@ -2,9 +2,9 @@ import { FC, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import style from './Layout.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../store';
-import { checkAuthUser, userLogout } from '../../store/auth/authSlice';
-import { selectLoading } from '../../store/auth/selectors';
+import { AppDispatch } from 'src/store';
+import { checkAuthUser, userLogout } from 'src/store/auth/authSlice';
+import { selectLoading } from 'src/store/auth/selectors';
 
 const navigate = [
   {
