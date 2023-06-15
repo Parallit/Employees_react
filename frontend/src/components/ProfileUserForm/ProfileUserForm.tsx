@@ -1,16 +1,20 @@
 import { FC, useState } from "react";
 import style from './ProfileUserForm.module.scss'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "src/store";
+import { selectCurrentUser } from "src/store/auth/selectors";
 
 export const ProfileUserForm: FC = () => {
-    const [name, setName] = useState<string>('');
+    
+    const user = useSelector(selectCurrentUser);
+
+    const [name, setName] = useState<string>(user.name? user.name : '');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [address, setAddress] = useState<string>('');
-    const [department, setDepartment] = useState<string>('');
-    const [telephone, setTelephone] = useState<string>('');
-    const [about, setAbout] = useState<string>('');
+    const [address, setAddress] = useState<string>(user.address? user.address : '');
+    const [department, setDepartment] = useState<string>(user.department? user.department : '');
+    const [telephone, setTelephone] = useState<string>(user.telephone? user.telephone : '');
+    const [about, setAbout] = useState<string>(user.about? user.about : '');
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -39,6 +43,7 @@ export const ProfileUserForm: FC = () => {
                             className={style.form_input}
                             type="text"
                             id="name"
+                            required
                         />
                         <label htmlFor="name" className={style.form_label}>
                             Name:{' '}
