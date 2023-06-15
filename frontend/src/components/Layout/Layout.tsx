@@ -4,7 +4,8 @@ import style from './Layout.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { checkAuthUser, userLogout } from 'src/store/auth/authSlice';
-import { selectLoading } from 'src/store/auth/selectors';
+import { selectAuth, selectLoading } from 'src/store/auth/selectors';
+import { Footer } from '../Footer';
 
 const navigate = [
   {
@@ -22,23 +23,20 @@ const navigate = [
   {
     name: 'About',
     path: '/about',
-  },
-  {
-    name: 'Login',
-    path: '/login',
-  },
+  }
 ];
 
 export const Layout: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const isLoading = useSelector(selectLoading);
+  const isAuth = useSelector(selectAuth)
   const LayoutLoading = 'Loading...';
 
-  // useEffect(() => {
-  //     if (localStorage.getItem('token')) {
-  //         dispatch(checkAuthUser())
-  //     }
-  // }, [])
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(checkAuthUser())
+    }
+  }, [])
 
   return (
     <>
@@ -56,22 +54,35 @@ export const Layout: FC = () => {
               </NavLink>
             </li>
           ))}
-          <li className={style.link}>
-            <NavLink
-              to={'/'}
-              onClick={() => dispatch(userLogout())}
-              className={style.link}
-            >
-              Logout
-            </NavLink>
-          </li>{' '}
-          :
+          {!isAuth &&
+            <li className={style.link}>
+              <NavLink
+                to={'/login'}
+                className={style.link}
+              >
+                Login
+              </NavLink>
+            </li>
+          }
+          {isAuth &&
+            <li className={style.link}>
+              <NavLink
+                to={'/'}
+                onClick={() => dispatch(userLogout())}
+                className={style.link}
+              >
+                Logout
+              </NavLink>
+            </li>
+          }
         </ul>
       </header>
       <main className={style.container}>
         <div>{isLoading ? LayoutLoading : <Outlet />}</div>
       </main>
-      <footer className={style.container}>2023</footer>
+      <footer>
+        <Footer/>
+      </footer>
     </>
   );
 };

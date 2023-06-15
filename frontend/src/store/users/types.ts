@@ -2,6 +2,9 @@ export interface User {
   _id: string;
   email: string;
   name: string;
+  address: string;
+  department: string;
+  telephone: string;
   employees: [];
 }
 

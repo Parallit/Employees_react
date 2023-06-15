@@ -19,14 +19,28 @@ export const UserList: FC = () => {
 
   return (
     <>
-      <ul className={style.users_box}>
-        {users.map((user) => (
-          <li className={style.user_box} key={user.email}>
-            {' '}
-            Пользователь: {user.name}
-          </li>
-        ))}
-      </ul>
+      <div className={style.users_container}>
+        <ul className={style.users_titles}>
+          <li>Name</li>
+          <li>Department</li>
+          <li>Telephone</li>
+          <li>Address</li>
+          <li>Subordinates</li>
+        </ul>
+      </div>
+      <div>
+        <div className={style.user_container}>
+          {users.map((user) => (
+            <ul className={style.user_box} key={user.email}>
+              <li>{user.name}</li>
+              <li>{user.department}</li>
+              <li>{user.telephone}</li>
+              <li>{user.address}</li>
+              <li>{user.employees}</li>
+            </ul>
+          ))}
+        </div>
+      </div>
     </>
   );
 };

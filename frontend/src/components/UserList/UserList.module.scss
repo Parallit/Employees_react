@@ -1,16 +1,57 @@
-.users_box {
-    display: flex;
-    align-items: center;
-    min-width: 80%;
-    min-height: 75px;
+.users_container {
+    min-height: 50px;
+    border-radius: 15px;
+    box-shadow: inset;
     background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+.users_titles {
+    min-height: 50px;
+    padding: 0;
+    display: grid;
+    justify-content: space-around;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    justify-items: center;
+    row-gap: 20px;
+    color: #fff;
+    list-style-type: none;
+}
+
+.users_titles > li {
+    padding: 0 20px 0 20px;
+    margin: 20px 0 20px 0;
+    letter-spacing: 2px;
+}
+
+.user_container {
+    min-height: 50px;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    margin-bottom: 60px;
 }
 
 .user_box {
-    margin: 0;
-    width: 100%;
-    display: flex;
+    display: grid;
+    min-height: 50px;
     justify-content: space-around;
+    grid-template-columns: repeat(5, 1fr);
     align-items: center;
+    justify-items: center;
     color: #fff;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user_box > li {
+    padding: 0 20px 0 20px;
+    margin: 20px 0 20px 0;
+    letter-spacing: 2px;
+}
+
+.user_box:not(:last-child) {
+    border-bottom: 1px solid grey;
 }

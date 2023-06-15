@@ -16,10 +16,7 @@ export const AppRouter: FC = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<PrivateRoute component={<Homepage />} />} />
         <Route path="users" element={<PrivateRoute component={<Users />} />} />
-        <Route
-          path="employees"
-          element={<PrivateRoute component={<Employees />} />}
-        />
+        <Route path="employees" element={<PrivateRoute component={<Employees />} />}/>
         <Route path="login" element={<PublicRoute component={<LogIn />} />} />
         <Route path="about" element={<About />} />
       </Route>

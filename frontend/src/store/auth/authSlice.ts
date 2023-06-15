@@ -51,8 +51,6 @@ export const checkAuthUser = createAsyncThunk(
         `${process.env.REACT_APP_BASE_URL}/user/refresh`,
         { withCredentials: true }
       );
-      console.log(res.data);
-
       return res.data;
     } catch (error) {
       console.log('Error', error);
@@ -97,8 +95,15 @@ const authSlice = createSlice({
         state.isAuth = true;
         state.user = action.payload.user;
         state.isLoading = false;
-      }
+      },
     );
+    builder.addCase(
+      checkAuthUser.rejected,
+      (state, _) => {
+        state.isAuth = false;
+        state.isLoading = false;
+      }
+    )
   },
 });
 
