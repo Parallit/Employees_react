@@ -5,6 +5,7 @@ export interface User {
   address: string;
   department: string;
   telephone: string;
+  about: string;
   employees: [];
 }
 

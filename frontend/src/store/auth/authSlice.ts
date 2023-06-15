@@ -62,7 +62,7 @@ export const checkAuthUser = createAsyncThunk(
 );
 
 const initialState: AuthState = {
-  user: {},
+  user: {} as User,
   isAuth: false,
   isLoading: false,
 };
@@ -107,5 +107,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { ...args } = authSlice.actions;
+export const { } = authSlice.actions;
 export default authSlice.reducer;
