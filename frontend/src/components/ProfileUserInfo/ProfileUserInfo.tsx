@@ -1,29 +1,35 @@
 import { FC } from "react";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "src/store/auth/selectors";
 import style from './ProfileUserInfo.module.scss'
+import { CurrentUserDto } from "src/store/user/types";
 
-export const ProfileUserInfo: FC = () => {
-    const user = useSelector(selectCurrentUser)
+interface CurrentUserProps {
+    user: CurrentUserDto;
+}
+
+export const ProfileUserInfo: FC<CurrentUserProps> = ({ user }) => {
+
     return (
         <>
             <div className={style.container}>
                 <img src="" alt="user-photo" className={style.user_photo} />
-                <h2 className={style.title}>My account</h2>
+                <h2 className={style.title}>Your profile</h2>
                 <div className={style.user_subordinates_box}>
                     <div className={style.user_subordinates_amount}>
-                        {user.employees ? (user.employees.length + 1) : 0}
+                        {user.employeesId ? user.employeesId.length : 0}
                     </div>
                     <h3 className={style.user_subordinates_title}>Subordinates</h3>
                 </div>
                 <div className={style.user_name}>{user.name}</div>
                 <div className={style.user_info_box}>
+                    <h3>Department:</h3>
                     <p>
                         {user.department ? user.department : 'fill in the field Departament'}
                     </p>
+                    <h3>Room:</h3>
                     <p>
-                        {user.address ? user.address : 'fill in the field Address'}
+                        {user.room ? user.room : 'fill in the field Room'}
                     </p>
+                    <h3>Phone number:</h3>
                     <p>
                         {user.telephone ? user.telephone : 'fill in the field Telephone'}
                     </p>
@@ -31,7 +37,7 @@ export const ProfileUserInfo: FC = () => {
                 <div className={style.user_about_box}>
                     <h3>About me:</h3>
                     <p>
-                        {user.about ? user.about : 'fill in the field About'}
+                        &laquo;{user.about ? user.about : 'fill in the field About'}&raquo;
                     </p>
                 </div>
             </div>

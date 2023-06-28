@@ -3,8 +3,8 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 40%;
-    padding: 40px;
+    width: 100%;
+    padding: 40px 40px;
     box-sizing: border-box;
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.5);
@@ -25,11 +25,11 @@
     letter-spacing: 2px;
 }
 
-.input_wrp, .textbox_wrp {
+.input_wrp {
     position: relative;
 }
 
-.form_input, .form_textbox {
+.form_input {
     width: 100%;
     padding: 15px 0;
     font-size: 16px;
@@ -40,10 +40,6 @@
     border-bottom: 1px solid #fff;
     outline: none;
     background: transparent;
-}
-
-.form_textbox {
-    max-width: 100%;
 }
 
 .form_label {
@@ -58,16 +54,14 @@
 }
 
 .form_input:focus~.form_label,
-.form_input:valid~.form_label,
-.form_textbox:focus~.form_label,
-.form_textbox:valid~.form_label  {
+.form_input:valid~.form_label  {
     top: -20px;
     left: 0;
     color: #03e9f4;
     font-size: 12px; 
 }
 
-.form_update_btn {
+.add_btn {
     padding: 10px 20px;
     color: #03e9f4;
     font-size: 16px;
@@ -76,31 +70,13 @@
     letter-spacing: 4px;
     background: none;
     border: none;
+    cursor: pointer;
 }
 
-.form_update_btn:hover {
+.add_btn:hover {
     background: #03e9f4;
     color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
         0 0 100px #03e9f4;
-}
-
-.form_delete_btn {
-    padding: 10px 20px;
-    color: #ff6781;
-    font-size: 16px;
-    text-transform: uppercase;
-    margin: 20px 0 20px 0;
-    letter-spacing: 4px;
-    background: none;
-    border: none;
-}
-
-.form_delete_btn:hover {
-    background: #ff6781;
-    color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 5px #ff6781, 0 0 25px #ff6781, 0 0 50px #ff6781,
-        0 0 100px #ff6781;
 }

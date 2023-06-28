@@ -1,15 +1,4 @@
-export interface User {
-  _id: string;
-  email: string;
-  name: string;
-  address: string;
-  department: string;
-  telephone: string;
-  about: string;
-  employees: [];
-}
-
-export type Users = User[];
+import { Users } from "../types.common";
 
 export interface UsersState {
   users: Users;

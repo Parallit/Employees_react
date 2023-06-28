@@ -1,10 +1,15 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import style from './ButtonModal.module.scss';
 
-export const ButtonModal: FC = () => {
+type Props = {
+    children: ReactNode;
+    openModal: () => void
+}
+
+export const ButtonModal: FC<Props> = ({ children, openModal }) => {
     return (
         <>
-            <button className={style.btn}>Edit</button>
+            <button onClick={openModal} className={style.btn}>{ children }</button>
         </>
     );
 }

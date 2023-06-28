@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import $api from '../../axios';
-import { AuthResponse, AuthState, User } from './types';
+import $api from 'src/axios';
+import { AuthResponse, AuthState } from './types';
 import axios from 'axios';
+import { User } from '../types.common';
 
 export const userRegistration = createAsyncThunk(
   'auth/userRegistration',

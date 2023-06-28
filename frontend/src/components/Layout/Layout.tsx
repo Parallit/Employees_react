@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { checkAuthUser, userLogout } from 'src/store/auth/authSlice';
 import { selectAuth, selectLoading } from 'src/store/auth/selectors';
-import { Footer } from '../Footer';
+import { Footer } from 'src/components/Footer';
 
 const navigate = [
   {
@@ -44,49 +44,51 @@ export const Layout: FC = () => {
 
   return (
     <>
-      <header className={style.header}>
-        <ul className={style.links}>
-          {navigate.map((item, idx) => (
-            <li className={style.link} key={idx}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  isActive ? `${style.active_link}` : `${style.link}`
-                }
-              >
-                {item.name}
-              </NavLink>
-            </li>
-          ))}
-          {!isAuth &&
-            <li className={style.link}>
-              <NavLink
-                to={'/login'}
-                className={style.link}
-              >
-                Login
-              </NavLink>
-            </li>
-          }
-          {isAuth &&
-            <li className={style.link}>
-              <NavLink
-                to={'/'}
-                onClick={() => dispatch(userLogout())}
-                className={style.link}
-              >
-                Logout
-              </NavLink>
-            </li>
-          }
-        </ul>
-      </header>
-      <main className={style.container}>
-        <div>{isLoading ? LayoutLoading : <Outlet />}</div>
-      </main>
-      <footer>
-        <Footer/>
-      </footer>
+      <div className={style.wrp}>
+        <header className={style.header_container}>
+          <ul className={style.links}>
+            {navigate.map((item, idx) => (
+              <li className={style.link} key={idx}>
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    isActive ? `${style.active_link}` : `${style.link}`
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              </li>
+            ))}
+            {!isAuth &&
+              <li className={style.link}>
+                <NavLink
+                  to={'/login'}
+                  className={style.link}
+                >
+                  Login
+                </NavLink>
+              </li>
+            }
+            {isAuth &&
+              <li className={style.link}>
+                <NavLink
+                  to={'/'}
+                  onClick={() => dispatch(userLogout())}
+                  className={style.link}
+                >
+                  Logout
+                </NavLink>
+              </li>
+            }
+          </ul>
+        </header>
+        <main className={style.content_container}>
+          <div>{isLoading ? LayoutLoading : <Outlet />}</div>
+        </main>
+        <footer className={style.footer_container}>
+          <Footer />
+        </footer>
+      </div>
     </>
   );
 };

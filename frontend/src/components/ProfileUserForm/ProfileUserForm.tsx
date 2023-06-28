@@ -1,31 +1,42 @@
 import { FC, useState } from "react";
 import style from './ProfileUserForm.module.scss'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store";
-import { selectCurrentUser } from "src/store/auth/selectors";
+import { CurrentUserDto, editedUserInfo } from "src/store/user/types"
+import { deleteUserProfile, updateUserInfo } from "src/store/user/userSlice";
 
-export const ProfileUserForm: FC = () => {
-    
-    const user = useSelector(selectCurrentUser);
+interface CurrentUserProps {
+    user: CurrentUserDto;
+}
 
-    const [name, setName] = useState<string>(user.name? user.name : '');
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [address, setAddress] = useState<string>(user.address? user.address : '');
-    const [department, setDepartment] = useState<string>(user.department? user.department : '');
-    const [telephone, setTelephone] = useState<string>(user.telephone? user.telephone : '');
-    const [about, setAbout] = useState<string>(user.about? user.about : '');
+export const ProfileUserForm: FC<CurrentUserProps> = ({ user }) => {
+    const [room, setRoom] = useState<string>('');
+    const [department, setDepartment] = useState<string>('');
+    const [telephone, setTelephone] = useState<string>('');
+    const [about, setAbout] = useState<string>('');
 
     const dispatch = useDispatch<AppDispatch>();
 
+    const updateProfile = (editedUserInfo: editedUserInfo) => {       
+        dispatch(updateUserInfo(editedUserInfo));
+    }
+
+    const handleDeleteProfile = () => {
+        dispatch(deleteUserProfile(user));
+    }
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(e);
-
-        setName('');
-        setEmail('');
-        setPassword('');
-        setAddress('');
+        const editedUserInfo = {
+            userId: user.id,
+            room: room,
+            department: department,
+            telephone: telephone,
+            about: about
+        }
+        
+        updateProfile(editedUserInfo)
+        setRoom('');
         setDepartment('');
         setTelephone('');
         setAbout('');
@@ -38,27 +49,15 @@ export const ProfileUserForm: FC = () => {
                 <form onSubmit={handleSubmit} className={style.form_info}>
                     <div className={style.input_wrp}>
                         <input
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
+                            onChange={(e) => setRoom(e.target.value)}
+                            value={room}
                             className={style.form_input}
                             type="text"
-                            id="name"
+                            id="room"
                             required
                         />
-                        <label htmlFor="name" className={style.form_label}>
-                            Name:{' '}
-                        </label>
-                    </div>
-                    <div className={style.input_wrp}>
-                        <input
-                            onChange={(e) => setAddress(e.target.value)}
-                            value={address}
-                            className={style.form_input}
-                            type="text"
-                            id="address"
-                        />
-                        <label htmlFor="address" className={style.form_label}>
-                            Address:{' '}
+                        <label htmlFor="room" className={style.form_label}>
+                            Room:
                         </label>
                     </div>
                     <div className={style.input_wrp}>
@@ -68,9 +67,10 @@ export const ProfileUserForm: FC = () => {
                             className={style.form_input}
                             type="text"
                             id="department"
+                            required
                         />
                         <label htmlFor="department" className={style.form_label}>
-                            Department:{' '}
+                            Department:
                         </label>
                     </div>
                     <div className={style.input_wrp}>
@@ -80,52 +80,29 @@ export const ProfileUserForm: FC = () => {
                             className={style.form_input}
                             type="text"
                             id="telephone"
+                            required
                         />
                         <label htmlFor="telephone" className={style.form_label}>
-                            Tel.:{' '}
+                            Tel.:
                         </label>
                     </div>
-                    <div className={style.input_wrp}>
-                        <input
+                    <div className={style.textbox_wrp}>
+                        <textarea
                             onChange={(e) => setAbout(e.target.value)}
                             value={about}
-                            className={style.form_input}
-                            type="text"
+                            className={style.form_textbox}
+                            rows={10}
+                            cols={45}
+                            maxLength={300}
                             id="about"
-                        />
+                        ></textarea>
                         <label htmlFor="about" className={style.form_label}>
-                            About:{' '}
+                            About:
                         </label>
                     </div>
-                    {/* <div className={style.input_wrp}>
-                        <input
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            className={style.form_input}
-                            type="password"
-                            id="password"
-                            required
-                        />
-                        <label htmlFor="password" className={style.form_label}>
-                            Password:{' '}
-                        </label>
-                    </div >
-                    <div className={style.input_wrp}>
-                        <input
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            className={style.form_input}
-                            type="text"
-                            id="email"
-                            required
-                        />
-                        <label htmlFor="email" className={style.form_label}>
-                            Email:{' '}
-                        </label>
-                    </div> */}
                     <button className={style.form_update_btn}>Click to update profile</button>
                 </form>
-                <button className={style.form_delete_btn}>Delete this profile</button>
+                <button onClick={handleDeleteProfile} className={style.form_delete_btn}>Delete your profile</button>
             </div>
         </>
     )

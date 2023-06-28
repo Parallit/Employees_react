@@ -1,9 +1,10 @@
 import { FC, useEffect } from 'react';
+import style from './UserList.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { fetchUsers } from 'src/store/users/usersSlice';
 import { selectUsers } from 'src/store/users/selectors';
-import style from './UserList.module.scss';
+import { SubordinateList } from 'src/components/SubordinateList';
 
 export const UserList: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,7 +25,7 @@ export const UserList: FC = () => {
           <li>Name</li>
           <li>Department</li>
           <li>Telephone</li>
-          <li>Address</li>
+          <li>Room</li>
           <li>Subordinates</li>
         </ul>
       </div>
@@ -35,8 +36,10 @@ export const UserList: FC = () => {
               <li>{user.name}</li>
               <li>{user.department}</li>
               <li>{user.telephone}</li>
-              <li>{user.address}</li>
-              <li>{user.employees}</li>
+              <li>{user.room}</li>
+              <li>
+                <SubordinateList employees={user.employeesId}/>
+              </li>
             </ul>
           ))}
         </div>

@@ -1,15 +1,25 @@
-.container {
-    max-width: 1440px;
-    padding: 0 20px 0 20px;
-    min-height: 50%;
-    margin: auto;
+.wrp {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.header {
+.content_container {
+    width: 80%;
+    padding: 0 20px 0 20px;
+    min-height: 100%;
+    margin: 0 auto;
+}
+
+.header_container {
     background: rgba(0, 0, 0, 0.5);
     min-height: 75px;
     display: flex;
     align-items: center;
+}
+
+.footer_container{
+    margin-top: auto;
 }
 
 .links {
@@ -32,7 +42,4 @@
 
 .active_link {
     color: #fff;
-}
-
-.link:hover {
 }
