@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   users: usersSlice,
   employees: employeesSlice,
-  user: userSlice
+  user: userSlice,
 });
 
 export const store = configureStore({

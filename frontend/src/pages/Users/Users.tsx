@@ -1,5 +1,5 @@
 import { UserList } from 'src/components/UserList';
-import style from './Users.module.scss'
+import style from './Users.module.scss';
 import { FilterSearch } from 'src/components/FilterSearch';
 
 export const Users = () => {

@@ -1,13 +1,10 @@
-import { FC } from "react";
-import style from './SubordinateSection.module.scss'
+import { FC } from 'react';
+import style from './SubordinateSection.module.scss';
 
 export interface SubordinateSectionProps {
-    subordinate: string
+  subordinate: string;
 }
 
-export const SubordinateSection: FC<SubordinateSectionProps> = ({ }) => {
-    return (
-        <>
-        </>
-    );
-}
+export const SubordinateSection: FC<SubordinateSectionProps> = ({}) => {
+  return <></>;
+};

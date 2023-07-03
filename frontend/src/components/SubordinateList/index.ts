@@ -1,1 +1,1 @@
-export { SubordinateList } from './SubordinateList'
+export { SubordinateList } from './SubordinateList';

@@ -1,12 +1,15 @@
-import { FC } from 'react';
-import style from './EmployeeList.module.scss'
-import { Employees, User } from 'src/store/types.common';
+import { FC, useEffect } from 'react';
+import style from './EmployeeList.module.scss';
+import { Employees } from 'src/store/types.common';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from 'src/store/auth/selectors';
 
 interface EmployeesProps {
-  employees: Employees
+  employees: Employees;
 }
 
-export const EmployeeList: FC<EmployeesProps> = ({employees}) => {
+export const EmployeeList: FC<EmployeesProps> = ({ employees }) => {
+  const currentUser = useSelector(selectCurrentUser);
 
   return (
     <>
@@ -32,10 +35,13 @@ export const EmployeeList: FC<EmployeesProps> = ({employees}) => {
             <li>{employee.room}</li>
             <li>{employee.telephone}</li>
             <li>{employee.userId.name}</li>
-            <li>
-              <button>Edit</button>
-              <button>Remove</button>
-            </li>
+            {
+              currentUser._id === employee.userId._id &&
+              <li>
+                <button>Edit</button>
+                <button>Remove</button>
+              </li>
+            }
           </ul>
         ))}
       </div>

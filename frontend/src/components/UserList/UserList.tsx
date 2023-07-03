@@ -38,7 +38,7 @@ export const UserList: FC = () => {
               <li>{user.telephone}</li>
               <li>{user.room}</li>
               <li>
-                <SubordinateList employees={user.employeesId}/>
+                <SubordinateList employees={user.employeesId} />
               </li>
             </ul>
           ))}

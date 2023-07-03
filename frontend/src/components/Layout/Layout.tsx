@@ -26,21 +26,21 @@ const navigate = [
   },
   {
     name: 'Profile',
-    path: '/profile'
-  }
+    path: '/profile',
+  },
 ];
 
 export const Layout: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const isLoading = useSelector(selectLoading);
-  const isAuth = useSelector(selectAuth)
+  const isAuth = useSelector(selectAuth);
   const LayoutLoading = 'Loading...';
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      dispatch(checkAuthUser())
+      dispatch(checkAuthUser());
     }
-  }, [])
+  }, []);
 
   return (
     <>
@@ -59,17 +59,14 @@ export const Layout: FC = () => {
                 </NavLink>
               </li>
             ))}
-            {!isAuth &&
+            {!isAuth && (
               <li className={style.link}>
-                <NavLink
-                  to={'/login'}
-                  className={style.link}
-                >
+                <NavLink to={'/login'} className={style.link}>
                   Login
                 </NavLink>
               </li>
-            }
-            {isAuth &&
+            )}
+            {isAuth && (
               <li className={style.link}>
                 <NavLink
                   to={'/'}
@@ -79,7 +76,7 @@ export const Layout: FC = () => {
                   Logout
                 </NavLink>
               </li>
-            }
+            )}
           </ul>
         </header>
         <main className={style.content_container}>

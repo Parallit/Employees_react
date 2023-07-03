@@ -1,1 +1,1 @@
-export { SubordinateSection } from './SubordinateSection'
+export { SubordinateSection } from './SubordinateSection';

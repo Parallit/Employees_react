@@ -34,7 +34,7 @@ export const addNewEmployee = createAsyncThunk(
 const initialState: EmployeesState = {
   newEmployee: {} as AddEmployeeRequest,
   employees: [],
-  filteredEmployees: []
+  filteredEmployees: [],
 };
 
 const usersSlice = createSlice({
@@ -43,8 +43,10 @@ const usersSlice = createSlice({
   reducers: {
     // доделать
     getFiltered: (state, action: PayloadAction<string>) => {
-      state.filteredEmployees = [...state.employees].filter((employee) => employee.firstName === action.payload)
-    }
+      state.filteredEmployees = [...state.employees].filter(
+        (employee) => employee.firstName === action.payload
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -57,14 +59,12 @@ const usersSlice = createSlice({
       builder.addCase(
         addNewEmployee.fulfilled,
         (state, action: PayloadAction<Employee>) => {
-          console.log('res', action.payload);
           state.newEmployee = action.payload;
           state.employees.push(action.payload);
         }
-      )
+      );
   },
 });
 
 export const { } = usersSlice.actions;
 export default usersSlice.reducer;
-

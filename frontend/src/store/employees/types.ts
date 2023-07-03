@@ -1,9 +1,9 @@
-import { Employee, Employees } from "../types.common";
+import { Employee, Employees } from '../types.common';
 
 export interface EmployeesState {
   employees: Employees;
   newEmployee: AddEmployeeRequest;
-  filteredEmployees: Employees
+  filteredEmployees: Employees;
 }
 
 export interface AddEmployeeRequest {

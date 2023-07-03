@@ -96,15 +96,12 @@ const authSlice = createSlice({
         state.isAuth = true;
         state.user = action.payload.user;
         state.isLoading = false;
-      },
-    );
-    builder.addCase(
-      checkAuthUser.rejected,
-      (state, _) => {
-        state.isAuth = false;
-        state.isLoading = false;
       }
-    )
+    );
+    builder.addCase(checkAuthUser.rejected, (state, _) => {
+      state.isAuth = false;
+      state.isLoading = false;
+    });
   },
 });
 

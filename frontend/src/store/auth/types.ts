@@ -1,4 +1,4 @@
-import { User } from "../types.common";
+import { User } from '../types.common';
 
 export interface AuthResponse {
   accessToken: string;

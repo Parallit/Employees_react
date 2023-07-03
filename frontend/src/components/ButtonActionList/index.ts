@@ -1,2 +1,1 @@
-export { ButtonActionList } from "./ButtonActionList"
-
+export { ButtonActionList } from './ButtonActionList';
