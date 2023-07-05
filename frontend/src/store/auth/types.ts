@@ -1,4 +1,4 @@
-import { User } from '../types.common';
+import { User } from 'src/store/types.common';
 
 export interface AuthResponse {
   accessToken: string;
@@ -7,7 +7,7 @@ export interface AuthResponse {
 }
 
 export interface AuthState {
-  user: User;
+  AuthUser: User;
   isAuth: boolean;
   isLoading: boolean;
 }

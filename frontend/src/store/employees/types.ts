@@ -1,4 +1,4 @@
-import { Employee, Employees } from '../types.common';
+import { Employees } from 'src/store/types.common';
 
 export interface EmployeesState {
   employees: Employees;
@@ -14,3 +14,4 @@ export interface AddEmployeeRequest {
   telephone: string;
   position: string;
 }
+

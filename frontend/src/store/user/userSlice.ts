@@ -1,8 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import $api from 'src/axios';
-import { UserState, editedUserInfo } from './types';
-import { userLogout } from '../auth/authSlice';
-import { User } from '../types.common';
+import { UserState, editedUserInfo } from 'src/store/user/types';
+import { userLogout } from 'src/store/auth/authSlice';
+import { User } from 'src/store/types.common';
 
 export const fetchCurrentUser = createAsyncThunk(
   'user/fetchCurrentUser',

@@ -11,7 +11,7 @@
     padding: 0;
     display: grid;
     justify-content: space-around;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(7, 1fr) 180px;
     align-items: center;
     justify-items: center;
     row-gap: 20px;
@@ -35,9 +35,7 @@
 
 .user_box {
     display: grid;
-    min-height: 50px;
-    justify-content: space-around;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(7, 1fr) 180px;
     align-items: center;
     justify-items: center;
     color: #fff;
@@ -54,4 +52,9 @@
 
 .user_box:not(:last-child) {
     border-bottom: 1px solid grey;
+}
+
+.actions_container {
+    display: flex;
+    justify-content: space-between;
 }

@@ -3,12 +3,12 @@ import style from './Profile.module.scss';
 import { ProfileUserInfo } from 'src/components/ProfileUserInfo/ProfileUserInfo';
 import { ProfileUserForm } from 'src/components/ProfileUserForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from 'src/store/user/selectors';
 import { AppDispatch } from 'src/store';
 import { fetchCurrentUser } from 'src/store/user/userSlice';
+import { selectAuthUser } from 'src/store/auth/selectors';
 
 export const Profile: FC = () => {
-  const currentUser = useSelector(selectUser);
+  const currentUser = useSelector(selectAuthUser);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {

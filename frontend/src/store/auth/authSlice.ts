@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import $api from 'src/axios';
-import { AuthResponse, AuthState } from './types';
 import axios from 'axios';
-import { User } from '../types.common';
+import { AuthResponse, AuthState } from 'src/store/auth/types';
+import { User } from 'src/store/types.common';
 
 export const userRegistration = createAsyncThunk(
   'auth/userRegistration',
@@ -63,7 +63,7 @@ export const checkAuthUser = createAsyncThunk(
 );
 
 const initialState: AuthState = {
-  user: {} as User,
+  AuthUser: {} as User,
   isAuth: false,
   isLoading: false,
 };
@@ -78,13 +78,13 @@ const authSlice = createSlice({
       (state, action: PayloadAction<AuthResponse>) => {
         localStorage.setItem('token', action.payload.accessToken);
         state.isAuth = true;
-        state.user = action.payload.user;
+        state.AuthUser = action.payload.user;
       }
     );
     builder.addCase(userLogout.fulfilled, (state, _) => {
       localStorage.removeItem('token');
       state.isAuth = false;
-      state.user = {} as User;
+      state.AuthUser = {} as User;
     });
     builder.addCase(checkAuthUser.pending, (state, _) => {
       state.isLoading = true;
@@ -94,7 +94,7 @@ const authSlice = createSlice({
       (state, action: PayloadAction<AuthResponse>) => {
         localStorage.setItem('token', action.payload.accessToken);
         state.isAuth = true;
-        state.user = action.payload.user;
+        state.AuthUser = action.payload.user;
         state.isLoading = false;
       }
     );

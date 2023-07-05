@@ -1,4 +1,4 @@
-import { User } from '../types.common';
+import { User } from 'src/store/types.common';
 
 export interface editedUserInfo {
   userId: string;

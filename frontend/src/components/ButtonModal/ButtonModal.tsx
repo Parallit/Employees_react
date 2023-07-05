@@ -1,16 +1,21 @@
 import { FC, ReactNode } from 'react';
 import style from './ButtonModal.module.scss';
 
-type Props = {
+interface ButtonModalProps {
   children: ReactNode;
-  openModal: () => void;
+  content: string;
+  handleClickModal: (children: ReactNode) => void
 };
 
-export const ButtonModal: FC<Props> = ({ children, openModal }) => {
+export const ButtonModal: FC<ButtonModalProps> = ({
+  children, 
+  content,
+  handleClickModal,
+}) => {
   return (
     <>
-      <button onClick={openModal} className={style.btn}>
-        {children}
+      <button onClick={() => handleClickModal(children)} className={style.btn}>
+        {content}
       </button>
     </>
   );

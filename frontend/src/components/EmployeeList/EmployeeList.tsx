@@ -1,15 +1,29 @@
-import { FC, useEffect } from 'react';
+import { FC, ReactNode } from 'react';
 import style from './EmployeeList.module.scss';
 import { Employees } from 'src/store/types.common';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser } from 'src/store/auth/selectors';
+import { selectAuthUser } from 'src/store/auth/selectors';
+import { EmployeeEditForm } from 'src/components/EmployeeEditForm';
+import { EmployeeRemoveWarn } from 'src/components/EmployeeRemoveWarn';
+import { IconComponent } from 'src/components/Icon';
 
-interface EmployeesProps {
+
+interface EmployeeListProps {
   employees: Employees;
+  handleClickModal: (children: ReactNode) => void;
+  onClose: () => void
 }
 
-export const EmployeeList: FC<EmployeesProps> = ({ employees }) => {
-  const currentUser = useSelector(selectCurrentUser);
+export const EmployeeList: FC<EmployeeListProps> = ({ employees, handleClickModal, onClose }) => {
+  const currentUser = useSelector(selectAuthUser);
+
+  if (employees.length === 0) {
+    return (
+      <div className={style.user_container}>
+        <p className={style.user_box}>employees not added yet</p>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -37,9 +51,15 @@ export const EmployeeList: FC<EmployeesProps> = ({ employees }) => {
             <li>{employee.userId.name}</li>
             {
               currentUser._id === employee.userId._id &&
-              <li>
-                <button>Edit</button>
-                <button>Remove</button>
+              <li className={style.actions_container}>
+                <div>
+                  <button onClick={() => handleClickModal(<EmployeeEditForm employee={employee}/>)}>
+                    <IconComponent type={'edit'}/>
+                  </button>
+                  <button onClick={() => handleClickModal(<EmployeeRemoveWarn onClose={onClose} employee={employee} />)}>
+                    <IconComponent type={'remove'}/>
+                  </button>
+                </div>
               </li>
             }
           </ul>

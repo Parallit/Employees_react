@@ -17,15 +17,9 @@ export const Modal: FC<ModalProps> = ({ open, onClose, children }) => {
             <p onClick={onClose} className={style.closeBtn}>
               X
             </p>
-            <div className="content">{children}</div>
-            {/* <div className="container">
-                            <button className="btnPrimary">
-                                <span className="bold">YES</span>
-                            </button>
-                            <button className="btnOutline">
-                                <span className="bold">NO</span>
-                            </button>
-                        </div> */}
+            <div className="content">
+              {children}
+            </div>
           </div>
         </div>
       </div>

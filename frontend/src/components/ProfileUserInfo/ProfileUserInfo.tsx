@@ -6,6 +6,7 @@ interface CurrentUserProps {
   user: User;
 }
 
+// не меняется информация при удалении сотрудников
 export const ProfileUserInfo: FC<CurrentUserProps> = ({ user }) => {
   return (
     <>
