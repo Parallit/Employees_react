@@ -10,6 +10,7 @@ import { NotFoundPage } from 'src/pages/NotFoundPage';
 import { PublicRoute } from 'src/components/PublicRouter';
 import { PrivateRoute } from 'src/components/PrivateRoter';
 import { Profile } from 'src/pages/Profile';
+import { UserPage } from 'src/pages/UserPage';
 
 export const AppRouter: FC = () => {
   return (
@@ -17,10 +18,8 @@ export const AppRouter: FC = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<PrivateRoute component={<Homepage />} />} />
         <Route path="users" element={<PrivateRoute component={<Users />} />} />
-        <Route
-          path="employees"
-          element={<PrivateRoute component={<EmployeesPage />} />}
-        />
+        <Route path="employees/" element={<PrivateRoute component={<EmployeesPage />} />}/>
+        <Route path="employees/user/:id" element={<PrivateRoute component={<UserPage />} />} />
         <Route
           path="profile"
           element={<PrivateRoute component={<Profile />} />}

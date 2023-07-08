@@ -1,11 +1,13 @@
 import { FC, useEffect } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import style from './Layout.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { checkAuthUser, userLogout } from 'src/store/auth/authSlice';
 import { selectAuth, selectLoading } from 'src/store/auth/selectors';
 import { Footer } from 'src/components/Footer';
+import { StyledLink } from 'src/components/styles/StyledLink';
+import { ContainerLink } from 'src/components/styles/Containers/ContainerLink';
 
 const navigate = [
   {
@@ -48,35 +50,19 @@ export const Layout: FC = () => {
         <header className={style.header_container}>
           <ul className={style.links}>
             {navigate.map((item, idx) => (
-              <li className={style.link} key={idx}>
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) =>
-                    isActive ? `${style.active_link}` : `${style.link}`
-                  }
-                >
-                  {item.name}
-                </NavLink>
-              </li>
+              <ContainerLink key={idx}>
+                <StyledLink to={item.path}>{item.name}</StyledLink>
+              </ContainerLink>
             ))}
-            {!isAuth && (
-              <li className={style.link}>
-                <NavLink to={'/login'} className={style.link}>
-                  Login
-                </NavLink>
-              </li>
-            )}
-            {isAuth && (
-              <li className={style.link}>
-                <NavLink
-                  to={'/'}
-                  onClick={() => dispatch(userLogout())}
-                  className={style.link}
-                >
-                  Logout
-                </NavLink>
-              </li>
-            )}
+            {isAuth ?
+              <ContainerLink>
+                <StyledLink to={'/'} onClick={() => dispatch(userLogout())}>Logout</StyledLink>
+              </ContainerLink>
+              :
+              <ContainerLink>
+                <StyledLink to={'/login'}>Login</StyledLink>
+              </ContainerLink>
+            }
           </ul>
         </header>
         <main className={style.content_container}>

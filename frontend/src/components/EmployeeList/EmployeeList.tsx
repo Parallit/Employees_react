@@ -6,6 +6,7 @@ import { selectAuthUser } from 'src/store/auth/selectors';
 import { EmployeeEditForm } from 'src/components/EmployeeEditForm';
 import { EmployeeRemoveWarn } from 'src/components/EmployeeRemoveWarn';
 import { IconComponent } from 'src/components/Icon';
+import { StyledLink } from 'src/components/styles/StyledLink';
 
 
 interface EmployeeListProps {
@@ -48,7 +49,9 @@ export const EmployeeList: FC<EmployeeListProps> = ({ employees, handleClickModa
             <li>{employee.department}</li>
             <li>{employee.room}</li>
             <li>{employee.telephone}</li>
-            <li>{employee.userId.name}</li>
+            <StyledLink to={`user/${employee.userId._id}`} $fontSize='15px' $textTransform='capitalize'>
+              <li>{employee.userId.name}</li>
+            </StyledLink>
             {
               currentUser._id === employee.userId._id &&
               <li className={style.actions_container}>
