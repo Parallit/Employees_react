@@ -6,8 +6,8 @@ import { AppDispatch } from 'src/store';
 import { checkAuthUser, userLogout } from 'src/store/auth/authSlice';
 import { selectAuth, selectLoading } from 'src/store/auth/selectors';
 import { Footer } from 'src/components/Footer';
-import { StyledLink } from 'src/components/styles/StyledLink';
-import { ContainerLink } from 'src/components/styles/Containers/ContainerLink';
+import { NavigateLink } from 'src/styles/NavigateLink';
+import { ContainerLink } from 'src/styles/Containers/ContainerLink';
 
 const navigate = [
   {
@@ -51,16 +51,16 @@ export const Layout: FC = () => {
           <ul className={style.links}>
             {navigate.map((item, idx) => (
               <ContainerLink key={idx}>
-                <StyledLink to={item.path}>{item.name}</StyledLink>
+                <NavigateLink to={item.path}>{item.name}</NavigateLink>
               </ContainerLink>
             ))}
             {isAuth ?
-              <ContainerLink>
-                <StyledLink to={'/'} onClick={() => dispatch(userLogout())}>Logout</StyledLink>
+              <ContainerLink >
+                <NavigateLink to={'/'} onClick={() => dispatch(userLogout())}>Logout</NavigateLink>
               </ContainerLink>
               :
-              <ContainerLink>
-                <StyledLink to={'/login'}>Login</StyledLink>
+              <ContainerLink >
+                <NavigateLink to={'/login'}>Login</NavigateLink>
               </ContainerLink>
             }
           </ul>

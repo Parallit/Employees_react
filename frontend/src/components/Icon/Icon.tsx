@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import { FC } from 'react';
 import { AiFillEdit, AiFillDelete, AiOutlineRight } from "src/icons";
 
@@ -29,8 +28,3 @@ export const IconComponent: FC<IconComponentProps> = ({ type }) => {
         </>
     );
 };
-
-// export const IconComp = styled(IconComponent)`
-//     display: flex;
-//     color: aquamarine;
-// `
