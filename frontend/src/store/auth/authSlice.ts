@@ -73,35 +73,51 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      userLogin.fulfilled,
-      (state, action: PayloadAction<AuthResponse>) => {
-        localStorage.setItem('token', action.payload.accessToken);
-        state.isAuth = true;
-        state.AuthUser = action.payload.user;
-      }
-    );
-    builder.addCase(userLogout.fulfilled, (state, _) => {
-      localStorage.removeItem('token');
-      state.isAuth = false;
-      state.AuthUser = {} as User;
-    });
-    builder.addCase(checkAuthUser.pending, (state, _) => {
-      state.isLoading = true;
-    });
-    builder.addCase(
-      checkAuthUser.fulfilled,
-      (state, action: PayloadAction<AuthResponse>) => {
-        localStorage.setItem('token', action.payload.accessToken);
-        state.isAuth = true;
-        state.AuthUser = action.payload.user;
-        state.isLoading = false;
-      }
-    );
-    builder.addCase(checkAuthUser.rejected, (state, _) => {
-      state.isAuth = false;
-      state.isLoading = false;
-    });
+    builder
+      .addCase(
+        userLogin.pending,
+        (state, _) => {
+          state.isLoading = true;
+        })
+      .addCase(
+        userLogin.fulfilled,
+        (state, action: PayloadAction<AuthResponse>) => {
+          localStorage.setItem('token', action.payload.accessToken);
+          console.log('LogIn fulfilled');
+
+          state.isAuth = true;
+          state.isLoading = false;
+          state.AuthUser = action.payload.user;
+
+          console.log(state.isAuth, 'Auth state');
+        }
+      );
+    builder
+      .addCase(userLogout.fulfilled, (state, _) => {
+        localStorage.removeItem('token');
+        state.isAuth = false;
+        state.AuthUser = {} as User;
+      });
+    builder
+      .addCase(
+        checkAuthUser.pending,
+        (state, _) => {
+          state.isLoading = true;
+        })
+      .addCase(
+        checkAuthUser.fulfilled,
+        (state, action: PayloadAction<AuthResponse>) => {
+          localStorage.setItem('token', action.payload.accessToken);
+          state.AuthUser = action.payload.user;
+          state.isAuth = true;
+          state.isLoading = false;
+        })
+      .addCase(
+        checkAuthUser.rejected,
+        (state, _) => {
+          state.isLoading = false;
+          state.isAuth = false;
+        });
   },
 });
 

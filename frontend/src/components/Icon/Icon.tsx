@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { AiFillEdit, AiFillDelete, AiOutlineRight } from "src/icons";
+import { AiFillEdit, AiFillDelete, AiOutlineRight, AiOutlineLogout, AiOutlineLogin } from "src/icons";
 
 interface IconComponentProps {
     type: string
@@ -12,6 +12,12 @@ const icons = (type: string) => {
         }
         case "remove": {
             return <AiFillDelete />;
+        }
+        case 'login': {
+            return <AiOutlineLogin />
+        }
+        case "logout": {
+            return <AiOutlineLogout />
         }
         default: {
             return <AiOutlineRight />;

@@ -32,7 +32,7 @@ export const RegistrationForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
     setEmail('');
     setPassword('');
 
-    navigate('/');
+    onFormSwitch('login')
   };
 
   return (

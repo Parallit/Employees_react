@@ -1,15 +1,20 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import style from './Layout.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
-import { checkAuthUser, userLogout } from 'src/store/auth/authSlice';
-import { selectAuth, selectLoading } from 'src/store/auth/selectors';
+import { userLogout } from 'src/store/auth/authSlice';
+import { selectIsAuth, selectLoading } from 'src/store/auth/selectors';
 import { Footer } from 'src/components/Footer';
 import { NavigateLink } from 'src/styles/NavigateLink';
 import { ContainerLink } from 'src/styles/Containers/ContainerLink';
+import { IconComponent } from 'src/components/Icon';
+import { FooterContainer } from 'src/styles/Containers/FooterContainer';
+import { LayoutContainer } from 'src/styles/Containers/LayoutContainer';
+import { HeaderContainer } from 'src/styles/Containers/HeaderContainer';
+import { ContentContainer } from 'src/styles/Containers/MainContainer';
+import { Spinner } from 'src/components/Spinner'
 
-const navigate = [
+const authNavigation = [
   {
     name: 'Homepage',
     path: '/',
@@ -35,43 +40,41 @@ const navigate = [
 export const Layout: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const isLoading = useSelector(selectLoading);
-  const isAuth = useSelector(selectAuth);
-  const LayoutLoading = 'Loading...';
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      dispatch(checkAuthUser());
-    }
-  }, []);
+  const isAuth = useSelector(selectIsAuth);
 
   return (
+
     <>
-      <div className={style.wrp}>
-        <header className={style.header_container}>
-          <ul className={style.links}>
-            {navigate.map((item, idx) => (
-              <ContainerLink key={idx}>
+      <LayoutContainer>
+        <HeaderContainer>
+          <ul>
+            {authNavigation.map((item) => (
+              <ContainerLink key={item.name}>
                 <NavigateLink to={item.path}>{item.name}</NavigateLink>
               </ContainerLink>
             ))}
             {isAuth ?
               <ContainerLink >
-                <NavigateLink to={'/'} onClick={() => dispatch(userLogout())}>Logout</NavigateLink>
+                <NavigateLink to={'/login'} onClick={() => dispatch(userLogout())}>
+                  <IconComponent type={'logout'} />
+                </NavigateLink>
               </ContainerLink>
               :
               <ContainerLink >
-                <NavigateLink to={'/login'}>Login</NavigateLink>
+                <NavigateLink to={'/login'}>
+                  <IconComponent type={'login'} />
+                </NavigateLink>
               </ContainerLink>
             }
           </ul>
-        </header>
-        <main className={style.content_container}>
-          <div>{isLoading ? LayoutLoading : <Outlet />}</div>
-        </main>
-        <footer className={style.footer_container}>
+        </HeaderContainer>
+        <ContentContainer>
+          <section>{isLoading ? <Spinner/> : <Outlet />}</section>
+        </ContentContainer>
+        <FooterContainer>
           <Footer />
-        </footer>
-      </div>
+        </FooterContainer>
+      </LayoutContainer>
     </>
   );
 };

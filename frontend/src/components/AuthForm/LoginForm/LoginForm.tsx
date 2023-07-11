@@ -1,9 +1,10 @@
 import React, { FC, useState } from 'react';
 import style from '../Form.module.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from 'src/store/auth/authSlice';
 import { AppDispatch } from 'src/store';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom'
+import { selectIsAuth } from 'src/store/auth/selectors';
 
 interface LoginFormProp {
   onFormSwitch: (formName: string) => void;
@@ -16,6 +17,9 @@ export const LoginForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email && password) {
@@ -25,10 +29,10 @@ export const LoginForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
           password: password,
         })
       );
+      setEmail('');
+      setPassword('');
+      navigate(from, { replace: true });
     }
-    setEmail('');
-    setPassword('');
-    navigate('/');
   };
 
   return (
