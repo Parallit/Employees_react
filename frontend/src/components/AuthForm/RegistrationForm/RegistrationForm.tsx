@@ -10,7 +10,8 @@ interface LoginFormProp {
 }
 
 export const RegistrationForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
-  const [name, setName] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -19,16 +20,18 @@ export const RegistrationForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (name && email && password) {
+    if (firstName && lastName && email && password) {
       dispatch(
         userRegistration({
-          name: name,
+          firstName: firstName,
+          lastName: lastName,
           email: email,
           password: password,
         })
       );
     }
-    setName('');
+    setFirstName('');
+    setLastName('');
     setEmail('');
     setPassword('');
 
@@ -42,15 +45,28 @@ export const RegistrationForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
         <form onSubmit={handleSubmit}>
           <div className={style.user_wrp}>
             <input
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
               className={style.user_input}
               type="text"
-              id="name"
+              id="firstName"
               required
             />
-            <label htmlFor="name" className={style.user_label}>
-              Name:{' '}
+            <label htmlFor="firstName" className={style.user_label}>
+              First Name:{' '}
+            </label>
+          </div>
+          <div className={style.user_wrp}>
+            <input
+              onChange={(e) => setLastName(e.target.value)}
+              value={lastName}
+              className={style.user_input}
+              type="text"
+              id="lastName"
+              required
+            />
+            <label htmlFor="lastName" className={style.user_label}>
+              Last Name:{' '}
             </label>
           </div>
           <div className={style.user_wrp}>

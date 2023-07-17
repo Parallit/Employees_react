@@ -4,8 +4,8 @@ import { keyframes } from 'styled-components'
 
 export const Spinner: FC = () => {
     return (
-        <Preloader className="preloader">
-            <Loader className="loader"></Loader>
+        <Preloader>
+            <Loader></Loader>
         </Preloader>
     );
 }

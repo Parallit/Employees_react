@@ -18,28 +18,14 @@ interface EmployeeListProps {
 export const EmployeeList: FC<EmployeeListProps> = ({ employees, handleClickModal, onClose }) => {
   const currentUser = useSelector(selectAuthUser);
 
-  if (employees.length === 0) {
-    return (
-      <div className={style.user_container}>
-        <p className={style.user_box}>employees not added yet</p>
-      </div>
-    )
-  }
+  // if (employees.length === 0) {
+  //   return (
+  //     <InfoBox titles={titles}/>
+  //   )
+  // }
 
   return (
     <>
-      <div className={style.users_container}>
-        <ul className={style.users_titles}>
-          <li>First Name</li>
-          <li>Last Name</li>
-          <li>Position</li>
-          <li>Department</li>
-          <li>Room</li>
-          <li>Telephone</li>
-          <li>Chief</li>
-          <li>Actions</li>
-        </ul>
-      </div>
       <div className={style.user_container}>
         {employees.map((employee) => (
           <ul key={employee._id} className={style.user_box}>
@@ -50,17 +36,17 @@ export const EmployeeList: FC<EmployeeListProps> = ({ employees, handleClickModa
             <li>{employee.room}</li>
             <li>{employee.telephone}</li>
             <NavigateLink to={`user/${employee.userId._id}`} $fontSize='15px' $textTransform='capitalize'>
-              {employee.userId.name}
+              {employee.userId.firstName} {employee.userId.lastName}
             </NavigateLink>
             {
               currentUser._id === employee.userId._id &&
               <li className={style.actions_container}>
                 <div>
-                  <button onClick={() => handleClickModal(<EmployeeEditForm employee={employee}/>)}>
-                    <IconComponent type={'edit'}/>
+                  <button onClick={() => handleClickModal(<EmployeeEditForm employee={employee} />)}>
+                    <IconComponent type={'edit'} />
                   </button>
                   <button onClick={() => handleClickModal(<EmployeeRemoveWarn onClose={onClose} employee={employee} />)}>
-                    <IconComponent type={'remove'}/>
+                    <IconComponent type={'remove'} />
                   </button>
                 </div>
               </li>

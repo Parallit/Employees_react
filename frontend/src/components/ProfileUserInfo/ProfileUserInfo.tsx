@@ -19,7 +19,8 @@ export const ProfileUserInfo: FC<CurrentUserProps> = ({ user }) => {
           </div>
           <h3 className={style.user_subordinates_title}>Subordinates</h3>
         </div>
-        <div className={style.user_name}>{user?.name}</div>
+        <div className={style.user_name}>{user?.firstName}</div>
+        <div className={style.user_name}>{user?.lastName}</div>
         <div className={style.user_info_box}>
           <h3>Department:</h3>
           <p>

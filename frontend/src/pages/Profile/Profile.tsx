@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { fetchCurrentUser } from 'src/store/user/userSlice';
 import { selectAuthUser } from 'src/store/auth/selectors';
+import { TitlePage } from 'src/styles/TitlePage';
 
 export const Profile: FC = () => {
   const currentUser = useSelector(selectAuthUser);
@@ -17,9 +18,9 @@ export const Profile: FC = () => {
 
   return (
     <>
+      <TitlePage $textTransform='none'>This is your profile page.</TitlePage>
       <div className={style.heading_container}>
-        <h3>Hello {currentUser.name}!</h3>
-        <p>This is your profile page.</p>
+        <h3>Hello {currentUser.firstName} {currentUser.lastName}!</h3>
       </div>
       <div className={style.profile_container}>
         <ProfileUserForm user={currentUser} />

@@ -8,18 +8,31 @@ import { fetchEmployees } from 'src/store/employees/employeesSlice';
 import { ReactNode, useEffect, useState } from 'react';
 import { Modal } from 'src/components/Modal';
 import { EmployeeAddForm } from 'src/components/EmployeeAddForm';
+import { TitlePage } from 'src/styles/TitlePage';
+import { HandbookTitleBox } from 'src/styles/HandbookTitleBox';
+import { HandbookContentBox } from 'src/styles/HandbookContentBox';
 
 export const EmployeesPage = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [modalChildren, setModalChildren] = useState<ReactNode | null>(null);
+  const employees = useSelector(selectEmployees);
+  const dispatch = useDispatch<AppDispatch>();
+  
+  const titles = [
+    'First Name',
+    'Last Name',
+    'Position',
+    'Department',
+    'Room',
+    'Telephone',
+    'Chief',
+    'Actions'
+  ]
 
   const handleClickModal = (children: ReactNode) => {
     setModalChildren(children)
     setOpenModal(true)
   }
-
-  const employees = useSelector(selectEmployees);
-  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchEmployees());
@@ -27,7 +40,7 @@ export const EmployeesPage = () => {
 
   return (
     <>
-      <h1 className={style.heading}>Employees</h1>
+      <TitlePage>Employees</TitlePage>
       <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
@@ -36,7 +49,9 @@ export const EmployeesPage = () => {
       <div className={style.interface}>
         <ButtonModal handleClickModal={handleClickModal} children={<EmployeeAddForm/>} content={'Add +'}/>
       </div>
-      <EmployeeList employees={employees} handleClickModal={handleClickModal} onClose={() => setOpenModal(false)}/>
+      <HandbookTitleBox titles={titles} />
+      {/* <HandbookContentBox people={employees}/> */}
+      {/* <EmployeeList employees={employees} handleClickModal={handleClickModal} onClose={() => setOpenModal(false)}/> */}
     </>
   );
 };

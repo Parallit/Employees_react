@@ -7,7 +7,7 @@ import { User } from 'src/store/types.common';
 export const userRegistration = createAsyncThunk(
   'auth/userRegistration',
   async (
-    payload: { name: string; email: string; password: string },
+    payload: { firstName: string; lastName: string; email: string; password: string },
     thunkApi
   ) => {
     try {

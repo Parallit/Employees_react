@@ -4,6 +4,7 @@ import $api from "src/axios";
 import style from './UserPage.module.scss';
 import { ProfileUserInfo } from "src/components/ProfileUserInfo/ProfileUserInfo";
 import { User } from "src/store/types.common";
+import { TitlePage } from "src/styles/TitlePage";
 
 export const UserPage: FC = () => {
     const [user, setUser ] = useState<User | null>(null)
@@ -24,7 +25,7 @@ export const UserPage: FC = () => {
 
     return (
         <>
-        <h1 className={style.heading}>User information</h1>
+        <TitlePage>User information</TitlePage>
         <button onClick={goBackPage}>Go Back</button>
         <div className={style.box_container}>
             <ProfileUserInfo user={user}/> 

@@ -2,7 +2,7 @@
   "name": "employees-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/Parallitik/Employees_react/",
+  "homepage": "https://github.com/Parallit/Employees_react/",
   "scripts": {
     "start": "webpack serve --mode=development",
     "build": "webpack --mode=production",
