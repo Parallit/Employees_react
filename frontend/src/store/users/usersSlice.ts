@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import $api from '../../axios';
-import { Users, UsersState } from './types';
+import $api from 'src/axios';
+import { UsersState } from 'src/store/users/types';
+import { Users } from 'src/store/types.common';
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
@@ -34,5 +35,5 @@ const usersSlice = createSlice({
   },
 });
 
-export const { ...args } = usersSlice.actions;
+export const { } = usersSlice.actions;
 export default usersSlice.reducer;

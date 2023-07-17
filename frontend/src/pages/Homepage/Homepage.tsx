@@ -1,7 +1,9 @@
+import { TitlePage } from "src/styles/TitlePage";
+
 export const Homepage = () => {
   return (
     <>
-      <h2>Homepage</h2>
+      <TitlePage>Homepage</TitlePage>
     </>
   );
 };

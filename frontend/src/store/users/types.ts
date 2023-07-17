@@ -1,11 +1,4 @@
-export interface User {
-  _id: string;
-  email: string;
-  name: string;
-  employees: [];
-}
-
-export type Users = User[];
+import { Users } from 'src/store/types.common';
 
 export interface UsersState {
   users: Users;

@@ -1,9 +1,10 @@
+import { TitlePage } from 'src/styles/TitlePage';
 import style from './About.module.scss';
 
 export const About = () => {
   return (
     <>
-      <h2 className={style.header}>About this project</h2>
+      <TitlePage>About this project</TitlePage>
       <div className={style.content_wrp}>
         <div className={style.description_wrp}>
           <p className={style.description}>

@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import $api from '../../axios';
-import { AuthResponse, AuthState, User } from './types';
+import $api from 'src/axios';
 import axios from 'axios';
+import { AuthResponse, AuthState } from 'src/store/auth/types';
+import { User } from 'src/store/types.common';
 
 export const userRegistration = createAsyncThunk(
   'auth/userRegistration',
   async (
-    payload: { name: string; email: string; password: string },
+    payload: { firstName: string; lastName: string; email: string; password: string },
     thunkApi
   ) => {
     try {
@@ -51,8 +52,6 @@ export const checkAuthUser = createAsyncThunk(
         `${process.env.REACT_APP_BASE_URL}/user/refresh`,
         { withCredentials: true }
       );
-      console.log(res.data);
-
       return res.data;
     } catch (error) {
       console.log('Error', error);
@@ -64,7 +63,7 @@ export const checkAuthUser = createAsyncThunk(
 );
 
 const initialState: AuthState = {
-  user: {},
+  AuthUser: {} as User,
   isAuth: false,
   isLoading: false,
 };
@@ -74,33 +73,53 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      userLogin.fulfilled,
-      (state, action: PayloadAction<AuthResponse>) => {
-        localStorage.setItem('token', action.payload.accessToken);
-        state.isAuth = true;
-        state.user = action.payload.user;
-      }
-    );
-    builder.addCase(userLogout.fulfilled, (state, _) => {
-      localStorage.removeItem('token');
-      state.isAuth = false;
-      state.user = {} as User;
-    });
-    builder.addCase(checkAuthUser.pending, (state, _) => {
-      state.isLoading = true;
-    });
-    builder.addCase(
-      checkAuthUser.fulfilled,
-      (state, action: PayloadAction<AuthResponse>) => {
-        localStorage.setItem('token', action.payload.accessToken);
-        state.isAuth = true;
-        state.user = action.payload.user;
-        state.isLoading = false;
-      }
-    );
+    builder
+      .addCase(
+        userLogin.pending,
+        (state, _) => {
+          state.isLoading = true;
+        })
+      .addCase(
+        userLogin.fulfilled,
+        (state, action: PayloadAction<AuthResponse>) => {
+          localStorage.setItem('token', action.payload.accessToken);
+          console.log('LogIn fulfilled');
+
+          state.isAuth = true;
+          state.isLoading = false;
+          state.AuthUser = action.payload.user;
+
+          console.log(state.isAuth, 'Auth state');
+        }
+      );
+    builder
+      .addCase(userLogout.fulfilled, (state, _) => {
+        localStorage.removeItem('token');
+        state.isAuth = false;
+        state.AuthUser = {} as User;
+      });
+    builder
+      .addCase(
+        checkAuthUser.pending,
+        (state, _) => {
+          state.isLoading = true;
+        })
+      .addCase(
+        checkAuthUser.fulfilled,
+        (state, action: PayloadAction<AuthResponse>) => {
+          localStorage.setItem('token', action.payload.accessToken);
+          state.AuthUser = action.payload.user;
+          state.isAuth = true;
+          state.isLoading = false;
+        })
+      .addCase(
+        checkAuthUser.rejected,
+        (state, _) => {
+          state.isLoading = false;
+          state.isAuth = false;
+        });
   },
 });
 
-export const { ...args } = authSlice.actions;
+export const { } = authSlice.actions;
 export default authSlice.reducer;

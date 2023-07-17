@@ -1,8 +1,5 @@
 .login_wrp {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: auto;
     width: 450px;
     padding: 40px;
     box-sizing: border-box;
@@ -24,7 +21,7 @@
 
 .user_input {
     width: 100%;
-    padding: 10px 0;
+    padding: 15px 0;
     font-size: 16px;
     color: #fff;
     margin-bottom: 30px;

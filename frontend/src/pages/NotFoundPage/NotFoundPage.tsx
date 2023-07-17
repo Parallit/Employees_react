@@ -1,7 +1,9 @@
+import { TitlePage } from "src/styles/TitlePage";
+
 export const NotFoundPage = () => {
   return (
     <>
-      <h2>NotFoundPage</h2>
+      <TitlePage>NotFoundPage</TitlePage>
     </>
   );
 };
