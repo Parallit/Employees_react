@@ -2,7 +2,7 @@ import { CustomTitlesBox } from "src/components/Custom/CustomTitlesBox";
 import { styled } from "styled-components";
 
 export const HandbookTitleBox = styled(CustomTitlesBox)`
-    margin: 0 0 30px 0;
+    margin: 10px 0 30px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,14 +10,17 @@ export const HandbookTitleBox = styled(CustomTitlesBox)`
     max-width: 100%;
     min-height: 50px;
     border-radius: 15px;
-    background: ${({ theme }) => theme.colors.bg};
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
+    padding: 10px 20px;
 
     & ul {
+        width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         list-style-type: none;
         padding: 0 20px;
+        align-items: center;
     }
 
     & li {

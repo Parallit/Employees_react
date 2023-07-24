@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { addNewEmployee } from 'src/store/employees/employeesSlice';
 
-interface EmployeeAddFormProps {}
+interface EmployeeAddFormProps {
+  onClose: () => void;
+}
 
-export const EmployeeAddForm: FC<EmployeeAddFormProps> = () => {
+export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({onClose}) => {
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [position, setPosition] = useState<string>('');
@@ -31,6 +33,7 @@ export const EmployeeAddForm: FC<EmployeeAddFormProps> = () => {
     setPosition('');
     setRoom('');
     setDepartment('');
+    onClose()
   };
 
   return (

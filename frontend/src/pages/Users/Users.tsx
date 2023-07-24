@@ -1,12 +1,11 @@
-import { UserList } from 'src/components/UserList';
 import { TitlePage } from 'src/styles/TitlePage';
 import { HandbookTitleBox } from 'src/styles/HandbookTitleBox';
-import { HandbookContentBox } from 'src/styles/HandbookContentBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { selectUsers } from 'src/store/users/selectors';
 import { fetchUsers } from 'src/store/users/usersSlice';
 import { useEffect } from 'react';
+import { HandbookUsersBox } from 'src/styles/HandbookUsersBox';
 
 
 export const Users = () => {
@@ -35,7 +34,7 @@ export const Users = () => {
     <>
       <TitlePage>Users</TitlePage>
       <HandbookTitleBox titles={titles}/>
-      <HandbookContentBox people={users}/>
+      <HandbookUsersBox users={users}/>
     </>
   );
 };

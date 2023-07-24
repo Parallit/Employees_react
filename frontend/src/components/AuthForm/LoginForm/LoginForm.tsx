@@ -38,7 +38,7 @@ export const LoginForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
   return (
     <>
       <div className={style.login_wrp}>
-        <h2 className={style.login_title}>Login</h2>
+        <h2 className={style.login_title}>Sign In</h2>
         <form onSubmit={handleSubmit}>
           <div className={style.user_wrp}>
             <input

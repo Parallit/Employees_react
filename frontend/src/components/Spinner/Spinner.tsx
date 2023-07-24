@@ -42,7 +42,7 @@ export const Loader = styled.div`
     margin: -75px 0 0 -75px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: ${({ theme }) => theme.colors.blue};
+    border-top-color: ${({ theme }) => theme.colors.neonBlue};
     -webkit-animation: ${spin} 2s linear infinite;
     animation: ${spin} 2s linear infinite;
 

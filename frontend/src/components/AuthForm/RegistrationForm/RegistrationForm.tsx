@@ -41,7 +41,7 @@ export const RegistrationForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
   return (
     <>
       <div className={style.login_wrp}>
-        <h2 className={style.login_title}>Registration</h2>
+        <h2 className={style.login_title}>Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div className={style.user_wrp}>
             <input

@@ -1,24 +1,19 @@
-import { ButtonModal } from 'src/components/ButtonModal';
-import { EmployeeList } from 'src/components/EmployeeList';
-import style from './EmployeesPage.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { selectEmployees } from 'src/store/employees/selectors';
 import { fetchEmployees } from 'src/store/employees/employeesSlice';
-import { ReactNode, useEffect, useState } from 'react';
-import { Modal } from 'src/components/Modal';
-import { EmployeeAddForm } from 'src/components/EmployeeAddForm';
+import { useEffect } from 'react';
 import { TitlePage } from 'src/styles/TitlePage';
 import { HandbookTitleBox } from 'src/styles/HandbookTitleBox';
-import { HandbookContentBox } from 'src/styles/HandbookContentBox';
+import { HandbookEmployeesBox } from 'src/styles/HandbookEmployeesBox';
+import { ModalButtonBox } from 'src/components/ModalButtonBox';
 
 export const EmployeesPage = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [modalChildren, setModalChildren] = useState<ReactNode | null>(null);
-  const employees = useSelector(selectEmployees);
   const dispatch = useDispatch<AppDispatch>();
-  
+  const employees = useSelector(selectEmployees);
+
   const titles = [
+    // 'Avatar',
     'First Name',
     'Last Name',
     'Position',
@@ -26,13 +21,8 @@ export const EmployeesPage = () => {
     'Room',
     'Telephone',
     'Chief',
-    'Actions'
+    // 'Actions'
   ]
-
-  const handleClickModal = (children: ReactNode) => {
-    setModalChildren(children)
-    setOpenModal(true)
-  }
 
   useEffect(() => {
     dispatch(fetchEmployees());
@@ -41,17 +31,9 @@ export const EmployeesPage = () => {
   return (
     <>
       <TitlePage>Employees</TitlePage>
-      <Modal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        children={modalChildren}
-      />
-      <div className={style.interface}>
-        <ButtonModal handleClickModal={handleClickModal} children={<EmployeeAddForm/>} content={'Add +'}/>
-      </div>
+      <ModalButtonBox modalContentType={'add'} buttonContent={'Add +'} />
       <HandbookTitleBox titles={titles} />
-      {/* <HandbookContentBox people={employees}/> */}
-      {/* <EmployeeList employees={employees} handleClickModal={handleClickModal} onClose={() => setOpenModal(false)}/> */}
+      <HandbookEmployeesBox employees={employees} />
     </>
   );
 };

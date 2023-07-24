@@ -6,10 +6,11 @@ import { editEmployee } from 'src/store/employees/employeesSlice';
 import { Employee } from 'src/store/types.common';
 
 interface EmployeeEditFormProps {
-    employee: Employee
+    employee: Employee;
+    onClose: () => void;
 }
 
-export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee }) => {
+export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose }) => {
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
     const [position, setPosition] = useState<string>('');
@@ -34,6 +35,7 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee }) => {
         setPosition('');
         setRoom('');
         setDepartment('');
+        onClose()
     };
 
     return (
