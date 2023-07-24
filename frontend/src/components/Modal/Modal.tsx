@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import style from './Modal.module.scss';
 import { EmployeeAddForm } from '../EmployeeAddForm';
 import { EmployeeEditForm } from '../EmployeeEditForm';

@@ -4,18 +4,18 @@ import { ActionsBox } from "src/components/ActionsBox";
 import { selectAuthUser } from "src/store/auth/selectors";
 import { Employees } from "src/store/types.common";
 import { NavigateLink } from "src/styles/NavigateLink";
-import { styled } from "styled-components";
 
 interface CustomContentBoxProps {
+    className?: string;
     employees: Employees;
 }
 
-export const CustomEmployeesBox: FC<CustomContentBoxProps> = ({ employees, ...props }) => {
+export const CustomEmployeesBox: FC<CustomContentBoxProps> = ({ employees, className }) => {
     const currentUser = useSelector(selectAuthUser);
 
     return (
         <>
-            <div {...props}>
+            <div className={className}>
                 {employees.map((unit) => (
                     <ul key={unit._id}>
                         <li>Avatar</li>

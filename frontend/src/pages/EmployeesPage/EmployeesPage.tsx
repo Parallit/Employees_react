@@ -13,7 +13,6 @@ export const EmployeesPage = () => {
   const employees = useSelector(selectEmployees);
 
   const titles = [
-    // 'Avatar',
     'First Name',
     'Last Name',
     'Position',
@@ -21,7 +20,6 @@ export const EmployeesPage = () => {
     'Room',
     'Telephone',
     'Chief',
-    // 'Actions'
   ]
 
   useEffect(() => {
@@ -31,7 +29,7 @@ export const EmployeesPage = () => {
   return (
     <>
       <TitlePage>Employees</TitlePage>
-      <ModalButtonBox modalContentType={'add'} buttonContent={'Add +'} />
+      <ModalButtonBox $primaryButton marginButton='0 0 20px 0' paddingButton='20px 30px' modalContentType={'add'} buttonContent={'Add +'} />
       <HandbookTitleBox titles={titles} />
       <HandbookEmployeesBox employees={employees} />
     </>

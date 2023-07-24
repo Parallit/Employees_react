@@ -19,6 +19,7 @@ const App = () => {
 
   return (
     <>
+    
       <ThemeProvider theme={baseTheme}>
         <BrowserRouter>
           <AppRouter />

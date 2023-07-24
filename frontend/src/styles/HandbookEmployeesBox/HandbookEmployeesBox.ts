@@ -20,28 +20,32 @@ export const HandbookEmployeesBox = styled(CustomEmployeesBox)`
         background: rgba( 255, 255, 255, 0.05 );
         border-radius: 10px;
         border: 1px solid rgba( 255, 255, 255, 0.18 );
-        /* overflow: hidden; */
+        overflow: hidden;
         transition: 1s;
     }
 
     & li:first-child {
         position: absolute;
         left: -150px;
-        transition: 1.2s;
+        opacity: 0;
+        transition: 1.5s;
     }
 
     & ul:hover li:first-child {
+        opacity: 1;
         left: 0;
     }
 
     & li:last-child {
         position: absolute;
         right: -150px;
-        transition: 1.2s;
+        opacity: 0;
+        transition: 1.5s;
     }
 
     & ul:hover li:last-child {
         right: 0;
+        opacity: 1;
     }
 
     & ul:hover {

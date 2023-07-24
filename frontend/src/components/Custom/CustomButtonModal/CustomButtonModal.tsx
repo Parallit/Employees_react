@@ -10,6 +10,9 @@ interface CustomButtonModalProps {
     $margin?: string;
     $fontSize?: string;
     $bg?: string;
+    $primaryButton?: boolean,
+    $secondary?: boolean,
+    $danger?: boolean,
     className?: string
 };
 
@@ -23,12 +26,13 @@ export const CustomButtonModal: FC<CustomButtonModalProps> = ({
     $margin,
     $fontSize,
     $bg,
+    $primaryButton,
     className,
 }) => {
 
     return (
         <>
-            <button onClick={openModal}  className={className}>
+            <button onClick={openModal} className={className}>
                 {children}
             </button>
         </>
