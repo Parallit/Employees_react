@@ -1,7 +1,7 @@
 import { CustomButton } from "src/components/Custom/CustomButton";
 import { styled } from "styled-components";
 
-export const ModalButton = styled(CustomButton) <{
+export const Button = styled(CustomButton) <{
     $primaryButton?: boolean;
     $secondaryButton?: boolean;
     $dangerButton?: boolean

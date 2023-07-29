@@ -18,4 +18,3 @@ export const CustomTitlesBox: FC<CustomTitlesBoxProps> = ({ titles, className })
         </>
     )
 }
-

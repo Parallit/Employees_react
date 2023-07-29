@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import $api from "src/axios";
-import style from './UserPage.module.scss';
 import { ProfileUserInfo } from "src/components/ProfileUserInfo/ProfileUserInfo";
 import { User } from "src/store/types.common";
 import { TitlePage } from "src/styles/TitlePage";
+import { Button } from "src/styles/Buttons/Button";
+import { styled } from "styled-components";
 
 export const UserPage: FC = () => {
     const [user, setUser ] = useState<User | null>(null)
@@ -26,10 +27,16 @@ export const UserPage: FC = () => {
     return (
         <>
         <TitlePage>User information</TitlePage>
-        <button onClick={goBackPage}>Go Back</button>
-        <div className={style.box_container}>
+        <Button onClick={goBackPage} children={'Go Back'} $primaryButton $padding="20px 30px" $margin="10px"/>
+        <Wrapper>
             <ProfileUserInfo user={user}/> 
-        </div>
+        </Wrapper>
         </>
     );
 }
+
+const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+`

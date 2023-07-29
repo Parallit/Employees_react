@@ -33,8 +33,8 @@ export const Users = () => {
   return (
     <>
       <TitlePage>Users</TitlePage>
-      <HandbookTitleBox titles={titles}/>
-      <HandbookUsersBox users={users}/>
+      <HandbookTitleBox titles={titles} />
+      <HandbookUsersBox users={users} />
     </>
   );
 };

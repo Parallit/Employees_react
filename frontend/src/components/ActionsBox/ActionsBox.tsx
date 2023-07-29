@@ -12,8 +12,8 @@ export const ActionsBox: FC<ActionsBoxProps> = ({ employee }) => {
     return (
         <>
             <Container>
-                <ModalButtonBox modalContentType={'edit'} employee={employee} buttonContent={<IconComponent type={"edit"} />}/>
-                <ModalButtonBox modalContentType={'remove'} employee={employee} buttonContent={<IconComponent type={"remove"} />}/>
+                <ModalButtonBox $secondaryButton $paddingButton="5px 10px" modalContentType={'edit'} employee={employee} buttonContent={<IconComponent type={"edit"} />}/>
+                <ModalButtonBox $dangerButton $paddingButton="5px 10px" modalContentType={'remove'} employee={employee} buttonContent={<IconComponent type={"remove"} />}/>
             </Container>
         </>
     );
@@ -21,6 +21,6 @@ export const ActionsBox: FC<ActionsBoxProps> = ({ employee }) => {
 
 const Container = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 `

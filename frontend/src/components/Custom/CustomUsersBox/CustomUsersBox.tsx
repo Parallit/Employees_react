@@ -28,11 +28,6 @@ export const CustomUsersBox: FC<CustomUsersBoxProps> = ({ users, className }) =>
                                 {unit.userId.firstName} {unit.userId.lastName}
                             </NavigateLink> */}
                         </li>
-                        <li>
-                            {/* {unit.userId._id === currentUser._id &&
-                                <ActionsBox employee={unit} />
-                            } */}
-                        </li>
                     </ul>
                 ))}
             </div>

@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react';
 
-interface CustomButtonModalProps {
+interface CustomButtonProps {
     children: ReactNode | string;
-    openModal: () => void;
+    onClick?: () => void;
     disabled?: boolean;
     $defaultColor?: string;
     $hoverColor?: string;
@@ -16,9 +16,9 @@ interface CustomButtonModalProps {
     className?: string
 };
 
-export const CustomButtonModal: FC<CustomButtonModalProps> = ({
+export const CustomButton: FC<CustomButtonProps> = ({
     children,
-    openModal,
+    onClick,
     disabled,
     $defaultColor,
     $hoverColor,
@@ -32,7 +32,7 @@ export const CustomButtonModal: FC<CustomButtonModalProps> = ({
 
     return (
         <>
-            <button onClick={openModal} className={className}>
+            <button onClick={onClick} className={className}>
                 {children}
             </button>
         </>

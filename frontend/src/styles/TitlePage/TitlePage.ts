@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 export const TitlePage = styled(CustomTitle)`
     color: ${({ $color, theme }) => $color || theme.colors.white};
     margin: ${({ $margin }) => $margin || "100px 0"};
-    padding: ${({ $margin }) => $margin || "0 10px"};
+    padding: ${({ $padding }) => $padding || "0 10px"};
     position: relative;
     text-align: center;
     letter-spacing: 1px;

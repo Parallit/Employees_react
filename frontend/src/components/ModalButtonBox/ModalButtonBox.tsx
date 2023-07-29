@@ -6,15 +6,26 @@ import { ModalPortal } from "src/components/ModalPortal";
 
 
 interface ModalButtonBoxProps {
-    modalContentType: 'add' | 'edit' | 'remove',
-    buttonContent: ReactNode | string,
     employee?: Employee,
-    marginButton?: string,
-    paddingButton?: string,
-    $primaryButton?: boolean
+    buttonContent: ReactNode | string,
+    modalContentType: 'add' | 'edit' | 'remove',
+    $primaryButton?: boolean,
+    $secondaryButton?: boolean,
+    $dangerButton?: boolean,
+    $marginButton?: string,
+    $paddingButton?: string,
 }
 
-export const ModalButtonBox: FC<ModalButtonBoxProps> = ({ modalContentType, buttonContent, employee, marginButton, paddingButton, $primaryButton }) => {
+export const ModalButtonBox: FC<ModalButtonBoxProps> = ({
+    employee,
+    buttonContent,
+    modalContentType,
+    $primaryButton,
+    $secondaryButton,
+    $dangerButton,
+    $marginButton,
+    $paddingButton,
+}) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
 
     return (
@@ -27,9 +38,14 @@ export const ModalButtonBox: FC<ModalButtonBoxProps> = ({ modalContentType, butt
                     employee={employee}
                 />
             </ModalPortal>
-            <div>
-                <ModalButton $primaryButton $margin={marginButton} $padding={paddingButton} children={buttonContent} openModal={() => setOpenModal(true)} />
-            </div>
+            <ModalButton
+                children={buttonContent}
+                onClick={() => setOpenModal(true)}
+                $primaryButton={$primaryButton}
+                $secondaryButton={$secondaryButton}
+                $dangerButton={$dangerButton}
+                $margin={$marginButton}
+                $padding={$paddingButton} />
         </>
     );
 }

@@ -1,5 +1,5 @@
 import { TitlePage } from "src/styles/TitlePage";
-import { styled } from "styled-components";
+import { Container, TextProjectName, Text } from "./StyledHomepage";
 
 export const Homepage = () => {
   return (
@@ -13,22 +13,3 @@ export const Homepage = () => {
     </>
   );
 };
-
-const Container = styled.div`
-  padding: 45px 45px;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 10px;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.8);
-`
-
-const TextProjectName = styled.h2`
-  margin: 0 0 50px 0;
-  padding: 0 20px;
-  letter-spacing: 1px;
-`
-
-const Text = styled.p`
-  padding: 0 20px;
-  letter-spacing: 2px;
-`

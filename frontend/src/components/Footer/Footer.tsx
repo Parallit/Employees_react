@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { styled } from 'styled-components';
+import { IconComponent } from 'src/components/Icon';
 
 export const Footer: FC = () => {
   return (
@@ -8,7 +9,9 @@ export const Footer: FC = () => {
         <TextBox>
           <TextHeading>employer's handbook project</TextHeading>
           <SocialBox>
-            <SocialItem>GitHub</SocialItem>
+            <SocialItem>
+              <IconComponent type={"github"} />
+            </SocialItem>
           </SocialBox>
         </TextBox>
         <CopyrightBox>
@@ -76,6 +79,10 @@ const SocialBox = styled.ul`
 
 const SocialItem = styled.li`
     color: #fff;
+    & svg {
+      width: 45px;
+      height: 45px;
+    }
 `
 
 const CopyrightBox = styled.div`

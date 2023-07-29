@@ -2,9 +2,15 @@ import { FC } from "react";
 import { styled } from "styled-components";
 import { keyframes } from 'styled-components'
 
-export const Spinner: FC = () => {
+interface SpinnerProps {
+    $width?: string,
+    $height?: string,
+    className?: string,
+}
+
+export const Spinner: FC<SpinnerProps> = ({$width, $height, className}) => {
     return (
-        <Preloader>
+        <Preloader className={className}>
             <Loader></Loader>
         </Preloader>
     );
@@ -32,13 +38,16 @@ export const Preloader = styled.div`
     z-index: 999999;
 `
 
-export const Loader = styled.div`
+export const Loader = styled.div<{
+    $width?: string,
+    $height?: string
+}>`
     display: block;
     position: relative;
     left: 50%;
     top: 50%;
-    width: 100px;
-    height: 100px;
+    width: ${({ $width }) => $width || '100px'};
+    height: ${({ $height }) => $height || '100px'};
     margin: -75px 0 0 -75px;
     border-radius: 50%;
     border: 3px solid transparent;
