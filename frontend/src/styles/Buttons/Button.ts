@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 export const Button = styled(CustomButton) <{
     $primaryButton?: boolean;
     $secondaryButton?: boolean;
-    $dangerButton?: boolean
+    $dangerButton?: boolean;
 }>`
     color: ${({ $defaultColor, theme }) => $defaultColor || theme.colors.white};
     padding: ${({ $padding }) => $padding || "10px 20px"};

@@ -1,7 +1,9 @@
 import { CustomTitlesBox } from "src/components/Custom/CustomTitlesBox";
 import { styled } from "styled-components";
 
-export const HandbookTitleBox = styled(CustomTitlesBox)`
+export const HandbookTitleBox = styled(CustomTitlesBox) <{
+    titles: string[]
+}>`
     min-height: 70px;
     color: ${({ theme }) => theme.colors.white};
     display: flex;

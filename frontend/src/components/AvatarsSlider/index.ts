@@ -1,0 +1,1 @@
+export { AvatarsSlider } from './AvatarSlider'

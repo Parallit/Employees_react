@@ -1,17 +1,17 @@
 import { TitlePage } from 'src/styles/TitlePage';
 import { HandbookTitleBox } from 'src/styles/HandbookTitleBox';
-import { useDispatch, useSelector } from 'react-redux';
+import { HandbookUsersBox } from 'src/components/HandbookUsersBox';
+import { ITitles } from 'src/store/types.common';
+import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'src/store';
-import { selectUsers } from 'src/store/users/selectors';
+import { Button } from 'src/styles/Buttons/Button';
 import { fetchUsers } from 'src/store/users/usersSlice';
-import { useEffect } from 'react';
-import { HandbookUsersBox } from 'src/styles/HandbookUsersBox';
-
+import { IconComponent } from 'src/components/Icon';
+import { WrapperEnd } from 'src/styles/Containers/WrapperEnd';
 
 export const Users = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const users = useSelector(selectUsers);
-  const titles = [
+  const titles: ITitles = [
     'First Name',
     'Last Name',
     'Position',
@@ -21,20 +21,19 @@ export const Users = () => {
     'Subordinates',
   ]
 
-
-  const handleUserList = () => {
-    dispatch(fetchUsers());
-  };
-
-  useEffect(() => {
-    handleUserList();
-  }, []);
-
   return (
     <>
       <TitlePage>Users</TitlePage>
+      <WrapperEnd>
+        <Button 
+          onClick={() => dispatch(fetchUsers())}
+          children={<IconComponent type={'reload'} />} 
+          $primaryButton 
+          $padding='20px 30px' 
+        />
+      </WrapperEnd>
       <HandbookTitleBox titles={titles} />
-      <HandbookUsersBox users={users} />
+      <HandbookUsersBox titles={titles} />
     </>
   );
 };

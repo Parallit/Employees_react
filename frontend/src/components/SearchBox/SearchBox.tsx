@@ -4,10 +4,8 @@ import { FilterSearch } from "../FilterSearch";
 import { IconComponent } from "src/components/Icon";
 import { Button } from "src/styles/Buttons/Button";
 
-type inputId = 'First Name' | 'Last Name' | 'Position' | 'Department' | 'Room' | 'Telephone' | 'Chief';
-
 interface inputData {
-    id: inputId,
+    id: string,
     value: string
 }
 interface SearchBoxProps {

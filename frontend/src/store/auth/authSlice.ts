@@ -83,13 +83,9 @@ const authSlice = createSlice({
         userLogin.fulfilled,
         (state, action: PayloadAction<AuthResponse>) => {
           localStorage.setItem('token', action.payload.accessToken);
-          console.log('LogIn fulfilled');
-
           state.isAuth = true;
           state.isLoading = false;
           state.AuthUser = action.payload.user;
-
-          console.log(state.isAuth, 'Auth state');
         }
       );
     builder

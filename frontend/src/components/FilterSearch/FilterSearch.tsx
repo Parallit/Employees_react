@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import { ModalButton } from 'src/styles/Buttons/ModalButton';
 import { styled } from 'styled-components';
 
 type inputId = 'First Name' | 'Last Name' | 'Position' | 'Department' | 'Room' | 'Telephone' | 'Chief';

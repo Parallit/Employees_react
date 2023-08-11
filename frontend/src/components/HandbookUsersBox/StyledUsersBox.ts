@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const StyledWrapper = styled.div`
+export const StyledUsersBox = styled.div`
   color: ${({ theme }) => theme.colors.white};
   border-radius: 15px;
   background: rgba(0, 0, 0, 0.9);
@@ -47,7 +47,7 @@ export const StyledWrapper = styled.div`
     position: absolute;
     left: -130px;
     opacity: 0;
-    transition: all 0.8s ease;
+    transition: 0.8s;
   }
 
   & ul:hover li:first-child {
@@ -66,8 +66,4 @@ export const StyledWrapper = styled.div`
     right: 10px;
     opacity: 1;
   }
-
-  & li:first-child:hover {
-    transform: scale(1.3);
-  }
-`;
+`

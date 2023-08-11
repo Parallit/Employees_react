@@ -22,3 +22,5 @@ export { AiOutlineLeft } from "react-icons/ai"
 //arrow right
 export { AiOutlineRight } from "react-icons/ai"
 
+//user
+export { AiOutlineUser } from "react-icons/ai"
