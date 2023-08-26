@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { editEmployee } from 'src/store/employees/employeesSlice';
 import { Employee } from 'src/store/types.common';
+import { AvatarsSlider } from '../AvatarsSlider';
 
 interface EmployeeEditFormProps {
     employee: Employee;
@@ -17,6 +18,7 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose 
     const [room, setRoom] = useState<string>('');
     const [department, setDepartment] = useState<string>('');
     const [telephone, setTelephone] = useState<string>('');
+    const [avatarId, setAvatarId] = useState<string>('');
     const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,15 +30,21 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose 
             room: room,
             department: department,
             telephone: telephone,
+            avatar: avatarId
         };
-        dispatch(editEmployee({ employee, newData: newDataEmployee}));
+        dispatch(editEmployee({ employee, newData: newDataEmployee}));        
         setFirstName('');
         setLastName('');
         setPosition('');
         setRoom('');
         setDepartment('');
+        setAvatarId('');
         onClose()
     };
+
+    const getAvatarId = (radioId: string) => {
+        setAvatarId(radioId)
+    }
 
     return (
         <>
@@ -120,6 +128,10 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose 
                         <label htmlFor="telephone" className={style.form_label}>
                             Phone number:
                         </label>
+                    </div>
+                    <div>
+                        <h4 className={style.form_heading}>Shoose an Avatar:</h4>    
+                        <AvatarsSlider getAvatarId={getAvatarId}/>
                     </div>
                     <button className={style.add_btn}>Click to complete edit</button>
                 </form>

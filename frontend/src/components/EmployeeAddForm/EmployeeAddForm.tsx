@@ -30,9 +30,7 @@ export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({onClose}) => {
       telephone: telephone,
       avatar: avatarId
     };
-    dispatch(addNewEmployee(newEmployee));
-    console.log(newEmployee);
-    
+    dispatch(addNewEmployee(newEmployee));  
     setFirstName('');
     setLastName('');
     setPosition('');

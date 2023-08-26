@@ -14,17 +14,17 @@ import { UserPage } from 'src/pages/UserPage';
 
 export const AppRouter: FC = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Homepage />} />
-        <Route path="login" element={<LogIn />} />
-        <Route path="about" element={<About />} />
-        <Route path="users" element={<PrivateRoute component={<Users />}  />} />
-        <Route path="employees" element={<PrivateRoute component={<EmployeesPage />} />} />
-        <Route path="employees/user/:id" element={<PrivateRoute component={<UserPage />} />} />
-        <Route path="profile" element={<PrivateRoute component={<Profile />} />} />
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Homepage />} />
+          <Route path="login" element={<LogIn />} />
+          <Route path="about" element={<About />} />
+          <Route path="users" element={<PrivateRoute component={<Users />}  />} />
+          <Route path="employees" element={<PrivateRoute component={<EmployeesPage />} />} />
+          <Route path="employees/user/:id" element={<PrivateRoute component={<UserPage />} />} />
+          <Route path="profile" element={<PrivateRoute component={<Profile />} />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
   );
 };

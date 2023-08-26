@@ -52,6 +52,7 @@ export const checkAuthUser = createAsyncThunk(
         `${process.env.REACT_APP_BASE_URL}/user/refresh`,
         { withCredentials: true }
       );
+      console.log("checkThunk");
       return res.data;
     } catch (error) {
       console.log('Error', error);

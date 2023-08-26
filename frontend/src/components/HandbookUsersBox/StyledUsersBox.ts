@@ -7,6 +7,7 @@ export const StyledUsersBox = styled.div`
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
   padding: 5px 20px;
   min-height: 150px;
+  position: relative;
 
   & ul {
     position: relative;

@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
-import { userLogout } from 'src/store/auth/authSlice';
+import { checkAuthUser, userLogout } from 'src/store/auth/authSlice';
 import { selectIsAuth, selectLoading } from 'src/store/auth/selectors';
 import { Footer } from 'src/components/Footer';
 import { NavigateLink } from 'src/styles/NavigateLink';

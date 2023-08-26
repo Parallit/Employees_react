@@ -9,6 +9,8 @@ import { fetchUsers } from "src/store/users/usersSlice";
 import { selectIsLoadingUsers, selectUsers } from "src/store/users/selectors";
 import { Spinner } from "../Spinner";
 import { AvatarIcon } from "../AvatarIcon";
+import { styled } from "styled-components";
+import { AvatarLinksBox } from "../AvatarLinksBox";
 
 interface inputData {
     id: string,
@@ -70,13 +72,16 @@ export const HandbookUsersBox: FC<HandbookUsersBoxProps> = ({ titles, className 
                             <li>{unit.department}</li>
                             <li>{unit.room}</li>
                             <li>{unit.telephone}</li>
-                            <li>{unit.employeesId.length} persons</li>
                             <li>
-                                { unit.employeesId.map((employee, idx) => (
+                                {/* { unit.employeesId.map((employee, idx) => (
                                     <NavigateLink key={idx} to={`user/${employee._id}`} $fontSize='15px' $textTransform='capitalize'>
                                         {employee.firstName} {employee.lastName}
                                     </NavigateLink>
-                                ))}
+                                ))} */}
+                                <AvatarLinksBox employees={unit.employeesId}/>
+                            </li>
+                            <li>
+                                
                             </li>
                         </ul> 
                     ))}
@@ -84,3 +89,18 @@ export const HandbookUsersBox: FC<HandbookUsersBoxProps> = ({ titles, className 
         </>
     );
 }
+
+const AvatarList = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+`
+
+const AvatarItem = styled.div`
+    position: relative;
+
+    &:not(:last-child) {
+        margin-left: -15px;
+    }
+`
