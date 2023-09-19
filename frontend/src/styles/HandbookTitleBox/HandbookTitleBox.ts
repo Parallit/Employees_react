@@ -14,7 +14,7 @@ export const HandbookTitleBox = styled(CustomTitlesBox) <{
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
     margin: 10px 0 0;
     padding: 0px 20px;
-
+    
     & ul {
         display: grid;
         grid-template-columns: repeat(7, 150px);

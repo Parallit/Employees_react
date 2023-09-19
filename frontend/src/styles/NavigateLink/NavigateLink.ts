@@ -9,7 +9,11 @@ export const NavigateLink = styled(CustomNavLink)`
     cursor: pointer;
     text-decoration: none;
     letter-spacing: 1px;
-    transition: 1s ease-in-out;
+    transition: all 0.5s ease-in-out;
+
+    &:hover {
+        color: ${({ $activeColor, theme }) => $activeColor || theme.colors.orange};
+    }
 
     &.active {
         color: ${({ $activeColor, theme }) => $activeColor || theme.colors.neonBlue};

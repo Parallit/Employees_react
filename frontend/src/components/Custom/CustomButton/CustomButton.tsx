@@ -13,6 +13,8 @@ interface CustomButtonProps {
     $primaryButton?: boolean,
     $secondary?: boolean,
     $danger?: boolean,
+    $boxShadow?: string,
+    $textTransform?: string;
     className?: string
 };
 
@@ -26,7 +28,9 @@ export const CustomButton: FC<CustomButtonProps> = ({
     $margin,
     $fontSize,
     $bg,
+    $boxShadow,
     $primaryButton,
+    $textTransform,
     className,
 }) => {
 

@@ -1,0 +1,1 @@
+export { ChiefInfoPage } from './ChiefInfoPage'

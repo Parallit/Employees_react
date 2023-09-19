@@ -9,6 +9,7 @@ import { WrapperCenter } from 'src/styles/Containers/WrapperCenter';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { fetchEmployees } from 'src/store/employees/employeesSlice';
+import { SearchContextProvider } from 'src/components/Context/SearchContext';
 
 export const EmployeesPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,7 +41,9 @@ export const EmployeesPage = () => {
         />
       </WrapperCenter>
       <HandbookTitleBox titles={titles} />
-      <HandbookEmployeesBox titles={titles}/>
+      <SearchContextProvider>
+        <HandbookEmployeesBox titles={titles}/>
+      </SearchContextProvider>
     </>
   );
 };

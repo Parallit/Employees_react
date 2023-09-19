@@ -8,6 +8,7 @@ import { Button } from 'src/styles/Buttons/Button';
 import { fetchUsers } from 'src/store/users/usersSlice';
 import { IconComponent } from 'src/components/Icon';
 import { WrapperEnd } from 'src/styles/Containers/WrapperEnd';
+import { SearchContextProvider } from 'src/components/Context/SearchContext';
 
 export const Users = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,7 +34,9 @@ export const Users = () => {
         />
       </WrapperEnd>
       <HandbookTitleBox titles={titles} />
-      <HandbookUsersBox titles={titles} />
+      <SearchContextProvider>
+        <HandbookUsersBox titles={titles} />
+      </SearchContextProvider>
     </>
   );
 };

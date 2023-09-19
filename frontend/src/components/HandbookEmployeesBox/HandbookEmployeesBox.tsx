@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionsBox } from "src/components/ActionsBox";
 import { selectAuthUser } from "src/store/auth/selectors";
@@ -9,8 +9,9 @@ import { AppDispatch } from "src/store";
 import { SearchBox } from "src/components/SearchBox";
 import { StyledWrapper } from "./StyledEmployeesBox";
 import { Employee, ITitle } from "src/store/types.common";
-import { Spinner } from "../Spinner";
-import { AvatarIcon } from "../AvatarIcon";
+import { Spinner } from "src/components/Spinner";
+import { AvatarIcon } from "src/components/AvatarIcon";
+import { useSearchContext } from "src/components/Hook/useSearchContext";
 
 interface inputData {
     id: ITitle,
@@ -23,30 +24,29 @@ interface HandbookEmployeesBoxProps {
 }
 
 export const HandbookEmployeesBox: FC<HandbookEmployeesBoxProps> = ({ titles, className }) => {
-    const [inputSearchData, setInputSearchData] = useState<inputData>({ id: 'First Name', value: '' });
-    const currentUser = useSelector(selectAuthUser);
     const employees = useSelector(selectEmployees);
+    const currentUser = useSelector(selectAuthUser);
     const isLoading = useSelector(selectIsLoadingEmployees);
     const dispatch = useDispatch<AppDispatch>();
-    const getInputData = (data: inputData) => {
-        setInputSearchData({
-            id: data.id,
-            value: data.value
-        });
-    }
+    const { inputSearchData } = useSearchContext();
+
     const handleInputData = (unit: Employee, inputData: inputData) => {
-        if (inputData.value.toLowerCase() === ('')) {
+        const lowerCaseValue = inputData.value.toLowerCase()
+        if (lowerCaseValue === ('')) {
             return unit
         }
         if (inputData.id === 'Chief') {
-            return (unit.userId.firstName).toLowerCase().includes(inputData.value)
+            const fullName = [unit.userId.firstName.toLowerCase(), unit.userId.lastName.toLowerCase()].join(" ");
+            return fullName.includes(lowerCaseValue)
         }
-        const unspacedData = inputData.id.split(' ').join('')
-        const noLowerCaseData = unspacedData.charAt(0).toLowerCase() + unspacedData.slice(1)
 
-        // const ts: {[key in Employee]: string} = 'lastName'
-        //@ts-ignore
-        return unit[noLowerCaseData].toLowerCase().includes(inputData.value)
+        const unspacedData = inputData.id.split(' ').join('');
+        const noLowerCaseData = unspacedData.charAt(0).toLowerCase() + unspacedData.slice(1);
+        const property = unit[noLowerCaseData as keyof Employee];
+
+        if(typeof property === "string") {
+            return property.toLowerCase().includes(lowerCaseValue)
+        } 
     }
 
     useEffect(() => {
@@ -55,7 +55,7 @@ export const HandbookEmployeesBox: FC<HandbookEmployeesBoxProps> = ({ titles, cl
 
     return (
         <>
-            <SearchBox titles={titles} getInputData={getInputData} />
+            <SearchBox titles={titles} />
             <StyledWrapper className={className}>
                 {isLoading ? <Spinner />
                     :

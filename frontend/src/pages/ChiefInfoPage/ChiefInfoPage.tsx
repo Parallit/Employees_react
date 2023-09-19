@@ -7,7 +7,7 @@ import { TitlePage } from "src/styles/TitlePage";
 import { Button } from "src/styles/Buttons/Button";
 import { styled } from "styled-components";
 
-export const UserPage: FC = () => {
+export const ChiefInfoPage: FC = () => {
     const [user, setUser ] = useState<User | null>(null)
     const { id } = useParams();
 

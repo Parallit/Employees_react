@@ -19,7 +19,7 @@ export const Footer: FC = () => {
             Copyright &copy; {new Date().getFullYear()} All rights reserved |
             This project is made with &#10084; by
             <NameLink
-              href="https://github.com/Parallitik"
+              href="https://github.com/Parallite"
             >
               {' '}
               Parallitik

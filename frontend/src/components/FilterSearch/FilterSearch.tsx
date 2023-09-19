@@ -1,20 +1,17 @@
 import { FC, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import { useSearchContext } from '../Hook/useSearchContext';
 
 type inputId = 'First Name' | 'Last Name' | 'Position' | 'Department' | 'Room' | 'Telephone' | 'Chief';
-interface inputData {
-  id: inputId,
-  value: string
-}
 
 interface FilterSearchProps {
   className?: string,
-  title: string,
-  getInputData: (data: inputData) => void
+  title: string
 }
 
-export const FilterSearch: FC<FilterSearchProps> = ({ className, title, getInputData }) => {
+export const FilterSearch: FC<FilterSearchProps> = ({ className, title }) => {
   const [value, setValue] = useState<string>('');
+  const { getInputData } = useSearchContext();
 
   const onChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);

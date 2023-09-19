@@ -1,7 +1,6 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { User } from "src/store/types.common";
-import { NavigateLink } from "src/styles/NavigateLink";
 import { StyledUsersBox } from "./StyledUsersBox";
 import { SearchBox } from "src/components/SearchBox";
 import { AppDispatch } from "src/store";
@@ -9,8 +8,8 @@ import { fetchUsers } from "src/store/users/usersSlice";
 import { selectIsLoadingUsers, selectUsers } from "src/store/users/selectors";
 import { Spinner } from "../Spinner";
 import { AvatarIcon } from "../AvatarIcon";
-import { styled } from "styled-components";
-import { AvatarLinksBox } from "../AvatarLinksBox";
+import { useSearchContext } from "src/components/Hook/useSearchContext";
+import { SubordinatesBox } from "../SubordinatesBox";
 
 interface inputData {
     id: string,
@@ -23,30 +22,34 @@ interface HandbookUsersBoxProps {
 }
 
 export const HandbookUsersBox: FC<HandbookUsersBoxProps> = ({ titles, className }) => {
-    const [inputSearchData, setInputSearchData] = useState<inputData>({ id: 'First Name', value: '' });
     const users = useSelector(selectUsers);
     const isLoading = useSelector(selectIsLoadingUsers);
     const dispatch = useDispatch<AppDispatch>();
-
-    const getInputData = (data: inputData) => {
-        setInputSearchData({
-            id: data.id,
-            value: data.value
-        });
-    }
+    const { inputSearchData } = useSearchContext()
 
     const handleInputData = (unit: User, inputData: inputData) => {
-        if (inputData.value.toLowerCase() === ('')) {
+        const lowerCaseValue = inputData.value.toLowerCase();
+
+        if (lowerCaseValue === ('')) {
             return unit
         }
-        // Тут массив а не значение
-        // if (inputData.id === 'Subordinates') {
-        //     return (unit.employeesId).toLowerCase().includes(inputData.value)
-        // }
-        const unspacedData = inputData.id.split(' ').join('')
+
+        if (inputData.id === 'Subordinates') {
+            const employeeList = unit.employeesId;
+            const isFindValue = employeeList.find(employee => {
+                const fullName = [employee.firstName.toLowerCase(), employee.lastName.toLowerCase()].join(" ");
+                return fullName.includes(lowerCaseValue);
+            })
+            return isFindValue
+        }
+
+        const unspacedData = inputData.id.split(' ').join('');
         const noLowerCaseData = unspacedData.charAt(0).toLowerCase() + unspacedData.slice(1)
-        //@ts-ignore
-        return unit[noLowerCaseData].toLowerCase().includes(inputData.value)
+        const property = unit[noLowerCaseData as keyof User];       
+
+        if(typeof property === "string") {
+            return property.toLowerCase().includes(lowerCaseValue)
+        } 
     }
 
     useEffect(() => {
@@ -55,7 +58,7 @@ export const HandbookUsersBox: FC<HandbookUsersBoxProps> = ({ titles, className 
 
     return (
         <>  
-            <SearchBox titles={titles} getInputData={getInputData} />
+            <SearchBox titles={titles} />
             <StyledUsersBox className={className}>
             {isLoading ? <Spinner /> 
                 :
@@ -73,34 +76,12 @@ export const HandbookUsersBox: FC<HandbookUsersBoxProps> = ({ titles, className 
                             <li>{unit.room}</li>
                             <li>{unit.telephone}</li>
                             <li>
-                                {/* { unit.employeesId.map((employee, idx) => (
-                                    <NavigateLink key={idx} to={`user/${employee._id}`} $fontSize='15px' $textTransform='capitalize'>
-                                        {employee.firstName} {employee.lastName}
-                                    </NavigateLink>
-                                ))} */}
-                                <AvatarLinksBox employees={unit.employeesId}/>
+                                <SubordinatesBox user={unit} />
                             </li>
-                            <li>
-                                
-                            </li>
+                            <li></li>
                         </ul> 
                     ))}
             </StyledUsersBox>
         </>
     );
 }
-
-const AvatarList = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row-reverse;
-`
-
-const AvatarItem = styled.div`
-    position: relative;
-
-    &:not(:last-child) {
-        margin-left: -15px;
-    }
-`

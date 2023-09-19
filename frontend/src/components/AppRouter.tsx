@@ -9,7 +9,8 @@ import { LogIn } from 'src/pages/LogIn';
 import { NotFoundPage } from 'src/pages/NotFoundPage';
 import { PrivateRoute } from 'src/components/PrivateRoter';
 import { Profile } from 'src/pages/Profile';
-import { UserPage } from 'src/pages/UserPage';
+import { ChiefInfoPage } from 'src/pages/ChiefInfoPage';
+import { SubordinateInfoPage } from 'src/pages/SubordinateInfoPage';
 
 
 export const AppRouter: FC = () => {
@@ -20,8 +21,9 @@ export const AppRouter: FC = () => {
           <Route path="login" element={<LogIn />} />
           <Route path="about" element={<About />} />
           <Route path="users" element={<PrivateRoute component={<Users />}  />} />
+          <Route path="users/employee/:id" element={<PrivateRoute component={<SubordinateInfoPage />}  />} />
           <Route path="employees" element={<PrivateRoute component={<EmployeesPage />} />} />
-          <Route path="employees/user/:id" element={<PrivateRoute component={<UserPage />} />} />
+          <Route path="employees/user/:id" element={<PrivateRoute component={<ChiefInfoPage />} />} />
           <Route path="profile" element={<PrivateRoute component={<Profile />} />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />

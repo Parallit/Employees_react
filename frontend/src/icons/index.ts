@@ -22,5 +22,14 @@ export { AiOutlineLeft } from "react-icons/ai"
 //arrow right
 export { AiOutlineRight } from "react-icons/ai"
 
+//reload
+export { AiOutlineReload } from "react-icons/ai"
+
+//open
+export { AiOutlineCaretDown } from "react-icons/ai"
+
+//close 
+export { AiOutlineCaretUp } from "react-icons/ai"
+
 //user
 export { AiOutlineUser } from "react-icons/ai"

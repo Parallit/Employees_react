@@ -8,8 +8,10 @@ export const StyledUsersBox = styled.div`
   padding: 5px 20px;
   min-height: 150px;
   position: relative;
+  
 
   & ul {
+    padding: 5px 5px;
     position: relative;
     display: grid;
     grid-template-columns: repeat(7, 150px);
@@ -35,6 +37,7 @@ export const StyledUsersBox = styled.div`
       rgba(43, 3, 35, 1) 50%,
       rgba(20, 10, 25, 1) 100%
     );
+    z-index: 999;
     transform: scale(1.2);
   }
 

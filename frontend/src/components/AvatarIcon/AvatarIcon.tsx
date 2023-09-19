@@ -13,11 +13,11 @@ export const AvatarIcon: FC<AvatarIconProps> = ({ name, width, height, fill, cla
     return (
         <>
             {name ?
-                <svg viewBox="0 0 61.8 61.809" width={width} height={height} fill={fill}>
+                <svg viewBox="0 0 61.8 61.809" width={width} height={height} fill={fill} className={className}>
                     <use href={`${sprite}#${name}`} color='white' />
                 </svg>
                 :
-                <svg viewBox="0 0 61.8 61.809" width={width} height={height} fill={fill}>
+                <svg viewBox="0 0 61.8 61.809" width={width} height={height} fill={fill} className={className}>
                     <use href='default' color='white' />
                 </svg>
             }

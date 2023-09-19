@@ -1,22 +1,20 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { FilterSearch } from "../FilterSearch";
 import { IconComponent } from "src/components/Icon";
 import { Button } from "src/styles/Buttons/Button";
+import { useSearchContext } from "../Hook/useSearchContext";
 
-interface inputData {
-    id: string,
-    value: string
-}
 interface SearchBoxProps {
     className?: string,
-    getInputData: (data: inputData) => void,
     titles: string[]
 }
 
-export const SearchBox: FC<SearchBoxProps> = ({ titles, getInputData }) => {
+export const SearchBox: FC<SearchBoxProps> = ({ titles }) => {
     const [curInputId, setCurInputId] = useState<string>('First Name');
     const [curGridPosition, setCurGridPosition] = useState<string>('1');
+    const [isActiveInput, setIsActiveInput] = useState<boolean>(true);
+    const { inputSearchData } = useSearchContext();
 
     const handleClickPrev = (inputIdList: string[], curInputId: string) => {
         let id = inputIdList.findIndex((el) => el === curInputId)
@@ -36,11 +34,25 @@ export const SearchBox: FC<SearchBoxProps> = ({ titles, getInputData }) => {
         }
     }
 
+    const handleRenderButton = () => {
+        if(inputSearchData.value) {
+            setIsActiveInput(false)
+        } else {
+            setIsActiveInput(true)
+        }
+    }
+
+    useEffect(() => {
+        handleRenderButton();
+    }, [inputSearchData.value])
+
     return (
         <>
             <SearchWrapper>
                     <Search>
                         <li>
+                            {
+                                isActiveInput && 
                             <Button
                                 children={<IconComponent type={"arrow-left"} />}
                                 onClick={() => handleClickPrev(titles, curInputId)}
@@ -48,11 +60,14 @@ export const SearchBox: FC<SearchBoxProps> = ({ titles, getInputData }) => {
                                 $margin="0"
                                 $padding="5px 10px"
                             />
+                            }
                         </li>
                         <MainLi $gridPosition={curGridPosition}>
-                            <FilterSearch title={curInputId} getInputData={getInputData} />
+                            <FilterSearch title={curInputId} />
                         </MainLi>
                         <li>
+                            {
+                                isActiveInput && 
                             <Button
                                 children={<IconComponent type={"arrow-right"} />}
                                 onClick={() => handleClickNext(titles, curInputId)}
@@ -60,6 +75,7 @@ export const SearchBox: FC<SearchBoxProps> = ({ titles, getInputData }) => {
                                 $margin="0"
                                 $padding="5px 10px"
                             />
+                            }
                         </li>
                     </Search>
             </SearchWrapper>

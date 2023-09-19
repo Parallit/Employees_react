@@ -1,6 +1,18 @@
 import { FC } from 'react';
-import { AiOutlineReload } from 'react-icons/ai';
-import { AiFillEdit, AiFillDelete, AiOutlineRight, AiOutlineLogout, AiOutlineLogin, AiFillGithub, AiOutlineSearch, AiOutlineLeft, AiOutlineUser } from "src/icons";
+import {
+    AiFillEdit,
+    AiFillDelete,
+    AiOutlineRight,
+    AiOutlineLogout,
+    AiOutlineLogin,
+    AiFillGithub,
+    AiOutlineSearch,
+    AiOutlineLeft,
+    AiOutlineUser,
+    AiOutlineCaretDown,
+    AiOutlineCaretUp,
+    AiOutlineReload
+} from "src/icons";
 
 interface IconComponentProps {
     type: string,
@@ -40,13 +52,19 @@ const icons = (type: string) => {
         case "reload": {
             return <AiOutlineReload />
         }
+        case "open": {
+            return <AiOutlineCaretDown />
+        }
+        case "close": {
+            return <AiOutlineCaretUp />
+        }
         default: {
             return <AiOutlineRight />;
         }
     }
 };
 
-export const IconComponent: FC<IconComponentProps> = ({ type, width, height}) => {
+export const IconComponent: FC<IconComponentProps> = ({ type, width, height }) => {
     return (
         <>
             <i>
