@@ -7,14 +7,15 @@ export const DangerButton = styled(CustomButton)`
   margin: ${({ $margin }) => $margin || "10px"};
   font-size: ${({ $fontSize }) => $fontSize || "16px"};
   cursor: ${({ disabled }) => (!disabled ? "pointer" : "not-allowed")};
+  outline: ${({ $outline }) => $outline || "1px solid #fff"};
   border: none;
   border-radius: 10px;
   letter-spacing: 4px;
   text-transform: uppercase;
   position: relative;
   transition: all 0.5s ease-in-out;
-  outline: 1px solid #fff;
   background: none;
+  z-index: 1;
 
   &:hover {
     outline: none;

@@ -10,13 +10,13 @@ interface AvatarLinksBoxProps {
 export const AvatarLinksBox: FC<AvatarLinksBoxProps> = ({ employees }) => {
     return (
         <>
-            <AvatarList>
+            {/* <AvatarList>
                 {employees.map((employee) => (
                     <AvatarItem key={employee._id}>
                         <AvatarIcon name={employee.avatar} width="45px" height="45px" />
                     </AvatarItem>
                 ))}
-            </AvatarList>
+            </AvatarList> */}
         </>
     );
 }

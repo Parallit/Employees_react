@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const StyledWrapper = styled.div`
+export const StyledEmployeesBox = styled.div`
   color: ${({ theme }) => theme.colors.white};
   border-radius: 15px;
   background: rgba(0, 0, 0, 0.9);

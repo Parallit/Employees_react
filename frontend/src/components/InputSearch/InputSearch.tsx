@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from 'react';
-import { styled } from 'styled-components';
 import { useSearchContext } from '../Hook/useSearchContext';
+import { Input } from './StyledInput';
 
 type inputId = 'First Name' | 'Last Name' | 'Position' | 'Department' | 'Room' | 'Telephone' | 'Chief';
 
-interface FilterSearchProps {
+interface InputSearchProps {
   className?: string,
   title: string
 }
 
-export const FilterSearch: FC<FilterSearchProps> = ({ className, title }) => {
+export const InputSearch: FC<InputSearchProps> = ({ className, title }) => {
   const [value, setValue] = useState<string>('');
   const { getInputData } = useSearchContext();
 
@@ -40,24 +40,3 @@ export const FilterSearch: FC<FilterSearchProps> = ({ className, title }) => {
     </>
   );
 };
-
-
-const Input = styled.input`
-    background: rgba(0, 0, 0, 0.9);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
-    color: #fff;
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #03e9f4;
-    border-top: 1px solid #e55455;
-    border-radius: 10px;
-    height: 80%;
-    text-align: center;
-
-    &:focus~& label {
-    top: -20px;
-    left: 0;
-    color: #03e9f4;
-    font-size: 12px;
-    }
-`

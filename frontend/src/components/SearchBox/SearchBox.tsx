@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { styled } from "styled-components";
-import { FilterSearch } from "../FilterSearch";
+import { InputSearch } from "src/components/InputSearch";
 import { IconComponent } from "src/components/Icon";
-import { Button } from "src/styles/Buttons/Button";
-import { useSearchContext } from "../Hook/useSearchContext";
+import { PrimaryButton } from "src/styles/Buttons/PrimaryButton";
+import { useSearchContext } from "src/components/Hook/useSearchContext";
+import { InputItem, SearchContainer } from "./StyledSearchBox";
 
 interface SearchBoxProps {
     className?: string,
@@ -35,7 +35,7 @@ export const SearchBox: FC<SearchBoxProps> = ({ titles }) => {
     }
 
     const handleRenderButton = () => {
-        if(inputSearchData.value) {
+        if (inputSearchData.value) {
             setIsActiveInput(false)
         } else {
             setIsActiveInput(true)
@@ -48,100 +48,35 @@ export const SearchBox: FC<SearchBoxProps> = ({ titles }) => {
 
     return (
         <>
-            <SearchWrapper>
-                    <Search>
-                        <li>
-                            {
-                                isActiveInput && 
-                            <Button
+            <SearchContainer>
+                <ul>
+                    <li>
+                        {
+                            isActiveInput &&
+                            <PrimaryButton
                                 children={<IconComponent type={"arrow-left"} />}
                                 onClick={() => handleClickPrev(titles, curInputId)}
-                                $primaryButton
                                 $margin="0"
                                 $padding="5px 10px"
                             />
-                            }
-                        </li>
-                        <MainLi $gridPosition={curGridPosition}>
-                            <FilterSearch title={curInputId} />
-                        </MainLi>
-                        <li>
-                            {
-                                isActiveInput && 
-                            <Button
+                        }
+                    </li>
+                    <InputItem $gridPosition={curGridPosition}>
+                        <InputSearch title={curInputId} />
+                    </InputItem>
+                    <li>
+                        {
+                            isActiveInput &&
+                            <PrimaryButton
                                 children={<IconComponent type={"arrow-right"} />}
                                 onClick={() => handleClickNext(titles, curInputId)}
-                                $primaryButton
                                 $margin="0"
                                 $padding="5px 10px"
                             />
                             }
-                        </li>
-                    </Search>
-            </SearchWrapper>
+                    </li>
+                </ul>
+            </SearchContainer>
         </>
     );
 }
-
-
-const SearchWrapper = styled.div`
-    margin: 0 0 30px 0;
-    color: #fff;
-    max-width: 100%;
-    min-height: 50px;
-    border-radius: 0 0 15px 15px;
-    background: rgba(0, 0, 0, 0.9);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
-    padding: 10px 20px;
-    position: relative;
-
-`
-
-const MainLi = styled.li<{ 
-    $gridPosition?: string
-}>`
-    grid-column-start: ${({ $gridPosition }) => $gridPosition || "1"};
-    transition: all 2s ease-in-out;
-`
-
-const Search = styled.ul`
-    display: grid;
-    grid-template-columns: repeat(7, 150px);
-    justify-content: center;
-    text-align: center;
-    column-gap: 15px;
-    margin: 0;
-    min-height: 50px;
-    position: relative;
-
-    & li {
-        list-style-type: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        & svg {
-            width: 35px;
-            height: 35px;
-        }
-    }
-
-    & li:first-child {
-        position: absolute;
-        left: 25px;
-        top: 0;
-        transition: all 0.5s ease-in-out;
-    }
-
-    & li:last-child {
-        position: absolute;
-        right: 25px;
-        top: 0;
-        transition: all 0.5s ease-in-out;
-    }
-
-
-
-`
-
-

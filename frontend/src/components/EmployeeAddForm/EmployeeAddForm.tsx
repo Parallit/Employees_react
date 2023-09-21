@@ -1,22 +1,36 @@
 import { FC, useState } from 'react';
-import style from './EmployeeAddForm.module.scss';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { addNewEmployee } from 'src/store/employees/employeesSlice';
-import { AvatarsSlider } from '../AvatarsSlider';
+import { AvatarFormBox } from 'src/components/AvatarFormBox';
+import { InputForm } from 'src/styles/Inputs/InputForm';
+import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
+import { FormContainer } from './StyledEmployeeAddForm';
+import { AvatarIcon } from '../AvatarIcon';
 
 interface EmployeeAddFormProps {
   onClose: () => void;
 }
 
-export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({onClose}) => {
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
-  const [position, setPosition] = useState<string>('');
-  const [room, setRoom] = useState<string>('');
-  const [department, setDepartment] = useState<string>('');
-  const [telephone, setTelephone] = useState<string>('');
-  const [avatarId, setAvatarId] = useState<string>('');
+export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({ onClose }) => {
+  const [avatarId, setAvatarId] = useState<string>('default');
+  const [fieldState, setFieldState] = useState({
+    firstName: "",
+    lastName: "",
+    position: "",
+    room: "",
+    department: "",
+    telephone: "",
+  });
+  const {
+    firstName,
+    lastName,
+    position,
+    room,
+    department,
+    telephone
+  } = fieldState;
+
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,15 +44,17 @@ export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({onClose}) => {
       telephone: telephone,
       avatar: avatarId
     };
-    dispatch(addNewEmployee(newEmployee));  
-    setFirstName('');
-    setLastName('');
-    setPosition('');
-    setRoom('');
-    setDepartment('');
-    setAvatarId('');
+    dispatch(addNewEmployee(newEmployee));
     onClose();
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: value
+    }))
+  }
 
   const getAvatarId = (radioId: string) => {
     setAvatarId(radioId)
@@ -46,94 +62,67 @@ export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({onClose}) => {
 
   return (
     <>
-      <div className={style.container}>
-        <h3 className={style.form_heading}>Employee information</h3>
-        <form onSubmit={handleSubmit} className={style.form_info}>
-          <div className={style.input_wrp}>
-            <input
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-              className={style.form_input}
-              type="text"
-              id="firstName"
-              required
-            />
-            <label htmlFor="firstName" className={style.form_label}>
-              First Name:
-            </label>
-          </div>
-          <div className={style.input_wrp}>
-            <input
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-              className={style.form_input}
-              type="text"
-              id="lastName"
-              required
-            />
-            <label htmlFor="lastName" className={style.form_label}>
-              Last Name:
-            </label>
-          </div>
-          <div className={style.input_wrp}>
-            <input
-              onChange={(e) => setPosition(e.target.value)}
-              value={position}
-              className={style.form_input}
-              type="text"
-              id="position"
-              required
-            />
-            <label htmlFor="position" className={style.form_label}>
-              Position:
-            </label>
-          </div>
-          <div className={style.input_wrp}>
-            <input
-              onChange={(e) => setRoom(e.target.value)}
-              value={room}
-              className={style.form_input}
-              type="text"
-              id="room"
-              required
-            />
-            <label htmlFor="room" className={style.form_label}>
-              Room:
-            </label>
-          </div>
-          <div className={style.input_wrp}>
-            <input
-              onChange={(e) => setDepartment(e.target.value)}
-              value={department}
-              className={style.form_input}
-              type="text"
-              id="department"
-              required
-            />
-            <label htmlFor="department" className={style.form_label}>
-              Department:
-            </label>
-          </div>
-          <div className={style.input_wrp}>
-            <input
-              onChange={(e) => setTelephone(e.target.value)}
-              value={telephone}
-              className={style.form_input}
-              type="text"
-              id="telephone"
-              required
-            />
-            <label htmlFor="telephone" className={style.form_label}>
-              Phone number:
-            </label>
-          </div>
+      <FormContainer>
+        <h3>Employee information</h3>
+        <AvatarIcon width={'80px'} height={'80px'} name={avatarId}/>
+        <form onSubmit={handleSubmit}>
+          <InputForm
+            required
+            value={fieldState.firstName}
+            name={'firstName'}
+            id={'firstName'}
+            labelName={'First Name'}
+            type={'text'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.lastName}
+            name={'lastName'}
+            id={'lastName'}
+            labelName={'Last Name'}
+            type={'text'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.position}
+            name={'position'}
+            id={'position'}
+            labelName={'Position'}
+            type={'text'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.room}
+            name={'room'}
+            id={'room'}
+            labelName={'Room'}
+            type={'text'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.department}
+            name={'department'}
+            id={'department'}
+            labelName={'Department'}
+            type={'text'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.telephone}
+            name={'telephone'}
+            id={'telephone'}
+            labelName={'Tel.'}
+            type={'text'}
+            onChange={handleChange} />
           <div>
-            <h4 className={style.form_heading}>Shoose an Avatar:</h4>    
-            <AvatarsSlider getAvatarId={getAvatarId}/>
+            <h4>Shoose an Avatar:</h4>
+            <AvatarFormBox getAvatarId={getAvatarId} />
           </div>
-          <button className={style.add_btn}>Click to add new employee</button>
+          <PrimaryButton>
+            Click to add new employee
+          </PrimaryButton>
         </form>
-      </div>
+      </FormContainer>
     </>
   );
 };

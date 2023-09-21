@@ -22,11 +22,11 @@ export const ChiefInfoPage: FC = () => {
 
     useEffect(() => {
         fetchUser()   
-    }, [id])
+    }, [])
 
     return (
         <>
-        <TitlePage>User information</TitlePage>
+        <TitlePage>Chief information</TitlePage>
         <Button onClick={goBackPage} children={'Go Back'} $primaryButton $padding="20px 30px" $margin="10px"/>
         <Wrapper>
             <ProfileUserInfo user={user}/> 

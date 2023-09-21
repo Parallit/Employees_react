@@ -7,7 +7,7 @@ import { selectEmployees, selectIsLoadingEmployees } from "src/store/employees/s
 import { fetchEmployees } from "src/store/employees/employeesSlice";
 import { AppDispatch } from "src/store";
 import { SearchBox } from "src/components/SearchBox";
-import { StyledWrapper } from "./StyledEmployeesBox";
+import { StyledEmployeesBox } from "./StyledEmployeesBox";
 import { Employee, ITitle } from "src/store/types.common";
 import { Spinner } from "src/components/Spinner";
 import { AvatarIcon } from "src/components/AvatarIcon";
@@ -56,7 +56,7 @@ export const HandbookEmployeesBox: FC<HandbookEmployeesBoxProps> = ({ titles, cl
     return (
         <>
             <SearchBox titles={titles} />
-            <StyledWrapper className={className}>
+            <StyledEmployeesBox className={className}>
                 {isLoading ? <Spinner />
                     :
                     employees
@@ -84,7 +84,7 @@ export const HandbookEmployeesBox: FC<HandbookEmployeesBoxProps> = ({ titles, cl
                                 </li>
                             </ul>
                         ))}
-            </StyledWrapper>
+            </StyledEmployeesBox>
         </>
     );
 }
