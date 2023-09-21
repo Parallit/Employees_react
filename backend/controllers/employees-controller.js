@@ -28,6 +28,16 @@ class EmployeesController {
             next(err)
         }
     }
+    // GET /api/employees/user/:id
+    async getUserOfEmployee(req, res, next) {
+        try {
+            const { id } = req.params;
+            const user = await EmployeesService.getUserOfEmployee(id)
+            return res.status(200).json(user)
+        } catch (err) {
+            next(err)
+        }
+    }
     /**
      * @route POST /api/employees/add
      * @desc add employee
@@ -44,7 +54,7 @@ class EmployeesController {
         }
     }
     /**
-     * @route PUT /api/employees/edit/:id
+     * @route PATCH /api/employees/edit/:id
      * @desc edit data of employee
      * @access Private
      */
@@ -54,7 +64,7 @@ class EmployeesController {
             const { id } = req.params;
             const { refreshToken } = req.cookies;
             const updatedEmployee = await EmployeesService.editDataEmployee(id, data, refreshToken)
-            res.status(204)
+            res.status(204).json(updatedEmployee)
         } catch (err) {
             next(err)
         }
@@ -69,7 +79,7 @@ class EmployeesController {
         try {
             const { refreshToken } = req.cookies;
             const removedEmployee = await EmployeesService.removeEmployee(id, refreshToken);
-            res.status(204)
+            res.status(204).json(removedEmployee)
         } catch (err) {
             next(err)
         }

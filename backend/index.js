@@ -8,6 +8,7 @@ import 'dotenv/config';
 
 import UsersRouter from './routes/users.js'
 import EmployeesRouter from './routes/employees.js'
+import AvatarsRouter from './routes/avatars.js'
 import { errorMiddleware } from './middlewares/error-middleware.js'
 
 const DB_URL = process.env.DB_URL;
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.get('/status', (_, res) => res.send('OK'));
 app.use('/api/user', UsersRouter);
 app.use('/api/employees', EmployeesRouter);
+app.use('/api/avatars', AvatarsRouter);
 
 app.use(errorMiddleware);
 

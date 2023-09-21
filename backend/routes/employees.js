@@ -6,17 +6,10 @@ const router = express.Router();
 
 // /api/employees
 router.get('/', authMiddleware, EmployeesController.getAllEmployees);
-
-// /api/employees/:id
 router.get('/:id', authMiddleware, EmployeesController.getEmployee);
-
-// /api/employees/add
+router.get('/user/:id', authMiddleware, EmployeesController.getUserOfEmployee);
 router.post('/add', authMiddleware, EmployeesController.addNewEmployee);
-
-// /api/employees//edit/:id
 router.patch('/edit/:id', authMiddleware, EmployeesController.editDataEmployee);
-
-// /api/employees/remove/:id
 router.delete('/remove/:id', authMiddleware, EmployeesController.removeEmployee);
 
 export default router;

@@ -3,26 +3,23 @@ import tokenService from './token-service.js';
 import UserDto from '../dtos/user-dto.js';
 import { User } from '../models/user-model.js';
 import { ApiError } from '../exceptions/api-error.js';
+import { Employee } from '../models/employee-model.js';
 
 
 class UserService {
-    async registration(email, password, name) {
+    async registration(email, password, firstName, lastName) {
         const candidate = await User.findOne({ email })
-        const candidateName = await User.findOne({ name })
         if (candidate) {
             throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует`);
         }
-        if (candidateName) {
-            throw ApiError.BadRequest(`Пользователь с именем ${name} уже существует`);
-        }
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
-        const user = await User.create({ email, password: hashPassword, name });
+        const user = await User.create({ email, password: hashPassword, firstName, lastName });
 
         const userDto = new UserDto(user)
         const tokens = await tokenService.generateTokens({ ...userDto })
 
-        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+        await tokenService.saveToken(userDto._id, tokens.refreshToken);
         return { ...tokens, user: userDto }
     }
     async login(email, password) {
@@ -36,7 +33,7 @@ class UserService {
         }
         const userDto = new UserDto(user);
         const tokens = await tokenService.generateTokens({ ...userDto })
-        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+        await tokenService.saveToken(userDto._id, tokens.refreshToken);
         return { ...tokens, user: userDto }
     }
     async logout(refreshToken) {
@@ -52,20 +49,36 @@ class UserService {
         if (!userData || !tokenFromDB) {
             throw ApiError.UnathorizedError()
         }
-        const user = await User.findById(userData.id);
+        const user = await User.findById(userData._id);
         // вынести в отдельную функцию дублирующийся код
         const userDto = new UserDto(user)
         const tokens = await tokenService.generateTokens({ ...userDto })
-        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+        await tokenService.saveToken(userDto._id, tokens.refreshToken);
         return { ...tokens, user: userDto }
+    }
+    async getAllUsers() {
+        const users = await User.find().populate('employeesId');
+        return users
     }
     async getCurrentUser(refreshToken) {
         const userData = await tokenService.validateRefreshToken(refreshToken);
-        return userData
+        const user = await User.findById(userData._id);
+        const userDto = new UserDto(user)
+        return userDto
     }
-    async getAllUsers() {
-        const users = await User.find();
-        return users
+    async updateUser(id, newData) {
+        const updatedUser = await User.findByIdAndUpdate(id, newData, { new: true });
+        const userDto = new UserDto(updatedUser)
+        return userDto
+    }
+    async removeUser(id, refreshToken) {
+        if (!id || !refreshToken) {
+            throw ApiError.BadRequest()
+        }
+        const removedUser = await User.findByIdAndDelete(id)
+        await Employee.deleteMany({ userId: id })
+        await tokenService.removeToken(refreshToken)
+        return removedUser
     }
 }
 

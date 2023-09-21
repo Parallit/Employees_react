@@ -13,7 +13,10 @@ router.post('/registration',
 router.post('/login', UserController.login);
 router.post('/logout', UserController.logout);
 router.get('/refresh', UserController.refresh);
-router.get('/current', authMiddleware, UserController.current);
+
 router.get('/users', authMiddleware, UserController.getAllUsers);
+router.get('/current', authMiddleware, UserController.current);
+router.patch('/edit/:id', authMiddleware, UserController.updateUserData);
+router.delete('/remove/:id', authMiddleware, UserController.removeUser);
 
 export default router;
