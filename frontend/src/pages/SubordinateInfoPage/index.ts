@@ -1,0 +1,1 @@
+export { SubordinateInfoPage } from './SubordinateInfoPage';

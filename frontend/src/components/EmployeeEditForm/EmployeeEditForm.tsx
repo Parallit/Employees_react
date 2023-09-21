@@ -1,21 +1,37 @@
 import { FC, useState } from 'react';
-import style from './EmployeeEditForm.module.scss';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { editEmployee } from 'src/store/employees/employeesSlice';
 import { Employee } from 'src/store/types.common';
+import { AvatarFormBox } from 'src/components/AvatarFormBox';
+import { InputForm } from 'src/styles/Inputs/InputForm';
+import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
+import { FormContainer } from './StyledEmployeeEditForm';
 
 interface EmployeeEditFormProps {
-    employee: Employee
+    employee: Employee;
+    onClose: () => void;
 }
 
-export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee }) => {
-    const [firstName, setFirstName] = useState<string>('');
-    const [lastName, setLastName] = useState<string>('');
-    const [position, setPosition] = useState<string>('');
-    const [room, setRoom] = useState<string>('');
-    const [department, setDepartment] = useState<string>('');
-    const [telephone, setTelephone] = useState<string>('');
+export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose }) => {
+    const [avatarId, setAvatarId] = useState<string>();
+    const [fieldState, setFieldState] = useState({
+        firstName: employee.firstName,
+        lastName: employee.lastName,
+        position: employee.position,
+        room: employee.room,
+        department: employee.department,
+        telephone: employee.telephone,
+    });
+    const {
+        firstName,
+        lastName,
+        position,
+        room,
+        department,
+        telephone
+    } = fieldState;
+
     const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,101 +43,86 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee }) => {
             room: room,
             department: department,
             telephone: telephone,
+            avatar: avatarId
         };
-        dispatch(editEmployee({ employee, newData: newDataEmployee}));
-        setFirstName('');
-        setLastName('');
-        setPosition('');
-        setRoom('');
-        setDepartment('');
+        dispatch(editEmployee({ employee, newData: newDataEmployee }));
+        onClose()
     };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFieldState((prevState) => ({
+            ...prevState,
+            [name]: value
+        }))
+    }
+
+    const getAvatarId = (radioId: string) => {
+        setAvatarId(radioId)
+    }
 
     return (
         <>
-            <div className={style.container}>
-                <h3 className={style.form_heading}>Employee information</h3>
-                <form onSubmit={handleSubmit} className={style.form_info}>
-                    <div className={style.input_wrp}>
-                        <input
-                            onChange={(e) => setFirstName(e.target.value)}
-                            value={firstName}
-                            className={style.form_input}
-                            type="text"
-                            id="firstName"
+            <FormContainer>
+                <h3>Employee information</h3>
+                <form onSubmit={handleSubmit}>
+                        <InputForm
                             required
-                        />
-                        <label htmlFor="firstName" className={style.form_label}>
-                            First Name:
-                        </label>
-                    </div>
-                    <div className={style.input_wrp}>
-                        <input
-                            onChange={(e) => setLastName(e.target.value)}
-                            value={lastName}
-                            className={style.form_input}
-                            type="text"
-                            id="lastName"
+                            value={fieldState.firstName}
+                            name={'firstName'}
+                            id={'firstName'}
+                            labelName={'First Name'}
+                            type={'text'}
+                            onChange={handleChange} />
+                        <InputForm
                             required
-                        />
-                        <label htmlFor="lastName" className={style.form_label}>
-                            Last Name:
-                        </label>
-                    </div>
-                    <div className={style.input_wrp}>
-                        <input
-                            onChange={(e) => setPosition(e.target.value)}
-                            value={position}
-                            className={style.form_input}
-                            type="text"
-                            id="position"
+                            value={fieldState.lastName}
+                            name={'lastName'}
+                            id={'lastName'}
+                            labelName={'Last Name'}
+                            type={'text'}
+                            onChange={handleChange} />
+                        <InputForm
                             required
-                        />
-                        <label htmlFor="position" className={style.form_label}>
-                            Position:
-                        </label>
-                    </div>
-                    <div className={style.input_wrp}>
-                        <input
-                            onChange={(e) => setRoom(e.target.value)}
-                            value={room}
-                            className={style.form_input}
-                            type="text"
-                            id="room"
+                            value={fieldState.position}
+                            name={'position'}
+                            id={'position'}
+                            labelName={'Position'}
+                            type={'text'}
+                            onChange={handleChange} />
+                        <InputForm
                             required
-                        />
-                        <label htmlFor="room" className={style.form_label}>
-                            Room:
-                        </label>
-                    </div>
-                    <div className={style.input_wrp}>
-                        <input
-                            onChange={(e) => setDepartment(e.target.value)}
-                            value={department}
-                            className={style.form_input}
-                            type="text"
-                            id="department"
+                            value={fieldState.room}
+                            name={'room'}
+                            id={'room'}
+                            labelName={'Room'}
+                            type={'text'}
+                            onChange={handleChange} />
+                        <InputForm
                             required
-                        />
-                        <label htmlFor="department" className={style.form_label}>
-                            Department:
-                        </label>
-                    </div>
-                    <div className={style.input_wrp}>
-                        <input
-                            onChange={(e) => setTelephone(e.target.value)}
-                            value={telephone}
-                            className={style.form_input}
-                            type="text"
-                            id="telephone"
+                            value={fieldState.department}
+                            name={'department'}
+                            id={'department'}
+                            labelName={'Department'}
+                            type={'text'}
+                            onChange={handleChange} />
+                        <InputForm
                             required
-                        />
-                        <label htmlFor="telephone" className={style.form_label}>
-                            Phone number:
-                        </label>
-                    </div>
-                    <button className={style.add_btn}>Click to complete edit</button>
+                            value={fieldState.telephone}
+                            name={'telephone'}
+                            id={'telephone'}
+                            labelName={'Tel.'}
+                            type={'text'}
+                            onChange={handleChange} />
+                        <div>
+                            <h4>Shoose an Avatar:</h4>
+                            <AvatarFormBox getAvatarId={getAvatarId} />
+                        </div>
+                        <PrimaryButton>
+                            Click to complete edit
+                        </PrimaryButton>
                 </form>
-            </div>
+            </FormContainer>
         </>
     );
 };

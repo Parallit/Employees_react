@@ -3,10 +3,25 @@ import { styled } from "styled-components";
 
 export const TitlePage = styled(CustomTitle)`
     color: ${({ $color, theme }) => $color || theme.colors.white};
-    font-size: ${({ $fontSize, theme }) => $fontSize || theme.fontSize.extraLarge};
-    text-transform: ${({ $textTransform }) => $textTransform || "uppercase"};
-    margin: ${({ $margin }) => $margin || "20px 0 20px"};
-    padding: ${({ $margin }) => $margin || "0 20px 0 20px"};
+    margin: ${({ $margin }) => $margin || "100px 0"};
+    padding: ${({ $padding }) => $padding || "0 10px"};
+    position: relative;
     text-align: center;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    text-align: left;
+
+    & h1 {
+        font-size: ${({ $fontSize }) => $fontSize || '40px'};
+        text-transform: ${({ $textTransform }) => $textTransform || "uppercase"};
+    }
+
+    &::before {
+        position: absolute;
+        content: '';
+        left: -10px;
+        width: 5px;
+        height: 100%;
+        border-radius: 4px;
+        background: linear-gradient(166deg, rgba(249,123,30,1) 25%, rgba(205,40,149,1) 81%);
+    }
 `

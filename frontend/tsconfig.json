@@ -14,7 +14,7 @@
         "./src/store/*"
       ],
       "svg/*": [
-        "./src/assets/svg/*"
+        "src/assets/svg/*"
       ],
     },
     /* Projects */
@@ -110,5 +110,5 @@
     "src/**/*",
     "./jest.config.js",
     "styled.d.ts"
-  ]
+, "src/assets"  ]
 }

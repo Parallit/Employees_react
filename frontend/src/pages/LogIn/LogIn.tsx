@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { LoginForm } from 'src/components/AuthForm/LoginForm';
 import { RegistrationForm } from 'src/components/AuthForm/RegistrationForm';
+import { styled } from 'styled-components';
 
 export const LogIn: FC = () => {
   const [currentForm, setCurrentForm] = useState('login');
@@ -10,10 +11,22 @@ export const LogIn: FC = () => {
   return (
     <>
       {currentForm === 'login' ? (
-        <LoginForm onFormSwitch={toogleForm} />
+        <Container>
+          <LoginForm onFormSwitch={toogleForm} />
+        </Container>
       ) : (
-        <RegistrationForm onFormSwitch={toogleForm} />
+        <Container>
+          <RegistrationForm onFormSwitch={toogleForm} />
+        </Container>
       )}
     </>
   );
 };
+
+
+const Container = styled.div`
+  margin: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

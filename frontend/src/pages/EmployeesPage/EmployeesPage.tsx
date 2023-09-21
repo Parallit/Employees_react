@@ -1,24 +1,19 @@
-import { ButtonModal } from 'src/components/ButtonModal';
-import { EmployeeList } from 'src/components/EmployeeList';
-import style from './EmployeesPage.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from 'src/store';
-import { selectEmployees } from 'src/store/employees/selectors';
-import { fetchEmployees } from 'src/store/employees/employeesSlice';
-import { ReactNode, useEffect, useState } from 'react';
-import { Modal } from 'src/components/Modal';
-import { EmployeeAddForm } from 'src/components/EmployeeAddForm';
 import { TitlePage } from 'src/styles/TitlePage';
+import { HandbookEmployeesBox } from 'src/components/HandbookEmployeesBox';
+import { ModalButtonBox } from 'src/components/ModalButtonBox';
 import { HandbookTitleBox } from 'src/styles/HandbookTitleBox';
-import { HandbookContentBox } from 'src/styles/HandbookContentBox';
+import { ITitles } from 'src/store/types.common';
+import { Button } from 'src/styles/Buttons/Button';
+import { IconComponent } from 'src/components/Icon';
+import { WrapperCenter } from 'src/styles/Containers/WrapperCenter';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from 'src/store';
+import { fetchEmployees } from 'src/store/employees/employeesSlice';
+import { SearchContextProvider } from 'src/components/Context/SearchContext';
 
 export const EmployeesPage = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [modalChildren, setModalChildren] = useState<ReactNode | null>(null);
-  const employees = useSelector(selectEmployees);
   const dispatch = useDispatch<AppDispatch>();
-  
-  const titles = [
+  const titles: ITitles = [
     'First Name',
     'Last Name',
     'Position',
@@ -26,32 +21,29 @@ export const EmployeesPage = () => {
     'Room',
     'Telephone',
     'Chief',
-    'Actions'
   ]
-
-  const handleClickModal = (children: ReactNode) => {
-    setModalChildren(children)
-    setOpenModal(true)
-  }
-
-  useEffect(() => {
-    dispatch(fetchEmployees());
-  }, []);
 
   return (
     <>
       <TitlePage>Employees</TitlePage>
-      <Modal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        children={modalChildren}
-      />
-      <div className={style.interface}>
-        <ButtonModal handleClickModal={handleClickModal} children={<EmployeeAddForm/>} content={'Add +'}/>
-      </div>
+      <WrapperCenter>
+        <ModalButtonBox
+          modalContentType={'add'}
+          buttonContent={'Add +'}
+          $primaryButton
+          $paddingButton='20px 30px' 
+        />
+        <Button 
+          onClick={() => dispatch(fetchEmployees())}
+          children={<IconComponent type={'reload'} />} 
+          $primaryButton 
+          $padding='20px 30px' 
+        />
+      </WrapperCenter>
       <HandbookTitleBox titles={titles} />
-      {/* <HandbookContentBox people={employees}/> */}
-      {/* <EmployeeList employees={employees} handleClickModal={handleClickModal} onClose={() => setOpenModal(false)}/> */}
+      <SearchContextProvider>
+        <HandbookEmployeesBox titles={titles}/>
+      </SearchContextProvider>
     </>
   );
 };

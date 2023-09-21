@@ -2,13 +2,16 @@ import { ITheme } from "src/interfaces/styled";
 
 export const baseTheme: ITheme = {
     colors: {
-        blue: '#03e9f4',
+        neonBlue: '#03e9f4',
         white: '#fff',
         orange: '#ff7101',
         danger: '#ff6781 ',
-
-        bg: '#00000080',
-        // font: '#19191B',
+    },
+    bg: {
+        darkBlue: '#00000080',
+        neonBlue: '#03e9f4',
+        orange: '#ff7101',
+        danger: '#ff6781 ',
     },
     fontSize: {
         extraLarge: '22px',

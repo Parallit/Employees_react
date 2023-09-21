@@ -2,9 +2,15 @@ import { FC } from "react";
 import { styled } from "styled-components";
 import { keyframes } from 'styled-components'
 
-export const Spinner: FC = () => {
+interface SpinnerProps {
+    $width?: string,
+    $height?: string,
+    className?: string,
+}
+
+export const Spinner: FC<SpinnerProps> = ({$width, $height, className}) => {
     return (
-        <Preloader>
+        <Preloader className={className}>
             <Loader></Loader>
         </Preloader>
     );
@@ -24,25 +30,29 @@ const spin = keyframes`
 `
 
 export const Preloader = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
     z-index: 999999;
 `
 
-export const Loader = styled.div`
+export const Loader = styled.div<{
+    $width?: string,
+    $height?: string
+}>`
     display: block;
     position: relative;
     left: 50%;
     top: 50%;
-    width: 100px;
-    height: 100px;
-    margin: -75px 0 0 -75px;
+    width: ${({ $width }) => $width || '100px'};
+    height: ${({ $height }) => $height || '100px'};
+    margin: -50px 0 0 -50px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: ${({ theme }) => theme.colors.blue};
+    border-top-color: ${({ theme }) => theme.colors.neonBlue};
     -webkit-animation: ${spin} 2s linear infinite;
     animation: ${spin} 2s linear infinite;
 

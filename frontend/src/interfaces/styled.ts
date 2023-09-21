@@ -1,12 +1,15 @@
 export interface ITheme {
     colors: {
-        blue: string
+        neonBlue: string
         white: string
         orange: string
         danger: string
-
-        bg: string,
-        // font: string,
+    },
+    bg: {
+        darkBlue: string
+        neonBlue: string
+        orange: string
+        danger: string
     },
     fontSize: {
         extraLarge: string,

@@ -61,30 +61,30 @@ export const removeEmployee = createAsyncThunk(
 
 const initialState: EmployeesState = {
   newEmployee: {} as AddEmployeeRequest,
+  isLoadingEmployees: false,
   employees: [],
-  filteredEmployees: [],
 };
 
 const usersSlice = createSlice({
   name: 'employees',
   initialState,
-  reducers: {
-    // доделать
-    getFiltered: (state, action: PayloadAction<string>) => {
-      state.filteredEmployees = [...state.employees].filter(
-        (employee) => employee.firstName === action.payload
-      );
-      // state.employees = state.employees.filter((employee) => employee._id !== action.payload._id);
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      fetchEmployees.fulfilled,
-      (state, action: PayloadAction<Employees>) => {
-        state.employees = action.payload;
-        state.filteredEmployees = action.payload;
-      }
-    );
+    builder
+      .addCase(
+        fetchEmployees.pending,
+        (state, _) => {
+          state.isLoadingEmployees = true;
+        }
+      )
+      .addCase(
+        fetchEmployees.fulfilled,
+        (state, action: PayloadAction<Employees>) => {
+          state.employees = action.payload;
+          state.isLoadingEmployees = false;
+        }
+      );
+
     builder.addCase(
       addNewEmployee.fulfilled,
       (state, action: PayloadAction<Employee>) => {

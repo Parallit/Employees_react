@@ -3,7 +3,7 @@ import { Employees } from 'src/store/types.common';
 export interface EmployeesState {
   employees: Employees;
   newEmployee: AddEmployeeRequest;
-  filteredEmployees: Employees;
+  isLoadingEmployees: boolean
 }
 
 export interface AddEmployeeRequest {

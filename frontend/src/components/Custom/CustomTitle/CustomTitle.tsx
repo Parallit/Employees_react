@@ -8,6 +8,7 @@ interface CustomTitleProps {
     $margin?: string;
     $textAlign?: string;
     $padding?: string;
+    className?: string
 }
 
 export const CustomTitle: FC<CustomTitleProps> = ({
@@ -18,13 +19,13 @@ export const CustomTitle: FC<CustomTitleProps> = ({
     $margin,
     $textAlign,
     $padding,
-    ...props
+    className
 }) => {
     return (
-        <h1
-            {...props}
-        >
-            {children}
-        </h1>
+        <div className={className}>
+            <h1>
+                {children}
+            </h1>
+        </div>
     );
 };

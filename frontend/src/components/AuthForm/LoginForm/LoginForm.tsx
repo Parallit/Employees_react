@@ -1,18 +1,23 @@
 import React, { FC, useState } from 'react';
-import style from '../Form.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { userLogin } from 'src/store/auth/authSlice';
 import { AppDispatch } from 'src/store';
 import { useLocation, useNavigate } from 'react-router-dom'
-import { selectIsAuth } from 'src/store/auth/selectors';
+import { InputForm } from 'src/styles/Inputs/InputForm';
+import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
+import { FormContainer, FormTitle } from './StyledLoginForm';
+import { baseTheme } from 'src/styles/theme';
 
 interface LoginFormProp {
   onFormSwitch: (formName: string) => void;
 }
 
 export const LoginForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [fieldState, setFieldState] = useState({
+    email: "",
+    password: ""
+  });
+  const { email, password } = fieldState;
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -29,54 +34,63 @@ export const LoginForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
           password: password,
         })
       );
-      setEmail('');
-      setPassword('');
+      setFieldState({
+        email: "",
+        password: ""
+      })
       navigate(from, { replace: true });
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: value
+    }))
+  }
+
   return (
     <>
-      <div className={style.login_wrp}>
-        <h2 className={style.login_title}>Login</h2>
+      <FormContainer>
+        <FormTitle>Sign In</FormTitle>
         <form onSubmit={handleSubmit}>
-          <div className={style.user_wrp}>
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              className={style.user_input}
-              type="text"
-              id="email"
-              required
-            />
-            <label className={style.user_label} htmlFor="email">
-              Email:{' '}
-            </label>
-          </div>
-          <div className={style.user_wrp}>
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              className={style.user_input}
-              type="password"
-              id="password"
-              required
-            />
-            <label className={style.user_label} htmlFor="password">
-              Password:{' '}
-            </label>
-          </div>
-          <div>
-            <button className={style.login_btn}>Submit</button>
-          </div>
+          <InputForm
+            required
+            value={fieldState.email}
+            name={'email'}
+            id={'email'}
+            labelName={'Email'}
+            type={'text'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.password}
+            name={'password'}
+            id={'password'}
+            labelName={'Password'}
+            type={'password'}
+            onChange={handleChange} />
+          <PrimaryButton
+            $bg='none'
+            $boxShadow='none'
+            $defaultColor={baseTheme.colors.neonBlue}
+            $hoverColor={baseTheme.colors.white}
+          >
+            Submit
+          </PrimaryButton>
         </form>
-        <button
+        <PrimaryButton
           onClick={() => onFormSwitch('registration')}
-          className={style.to_another_form}
+          $bg='none'
+          $boxShadow='none'
+          $textTransform='none'
+          $defaultColor={baseTheme.colors.neonBlue}
+          $hoverColor={baseTheme.colors.white}
         >
           Dont&apos;t have an account? Register here
-        </button>
-      </div>
+        </PrimaryButton>
+      </FormContainer>
     </>
   );
 };

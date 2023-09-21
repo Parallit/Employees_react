@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import style from './ProfileUserInfo.module.scss';
 import { User } from 'src/store/types.common';
+import { AvatarIcon } from '../AvatarIcon';
 
 interface CurrentUserProps {
   user: User | null;
@@ -8,10 +9,12 @@ interface CurrentUserProps {
 
 // не меняется информация при удалении сотрудников
 export const ProfileUserInfo: FC<CurrentUserProps> = ({ user }) => {
+  console.log(user);
+  
   return (
     <>
       <div className={style.container}>
-        <img src="" alt="user-photo" className={style.user_photo} />
+        <AvatarIcon name={user?.avatar} width="50px" height="50px" />
         {/* <h2 className={style.title}>Your profile</h2> */}
         <div className={style.user_subordinates_box}>
           <div className={style.user_subordinates_amount}>

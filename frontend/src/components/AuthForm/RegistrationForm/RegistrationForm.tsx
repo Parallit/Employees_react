@@ -1,26 +1,32 @@
 import React, { FC, useState } from 'react';
-import style from '../Form.module.scss';
 import { useDispatch } from 'react-redux';
 import { userRegistration } from 'src/store/auth/authSlice';
 import { AppDispatch } from 'src/store';
-import { useNavigate } from 'react-router-dom';
+import { FormContainer, FormTitle } from './StyledRegistrationForm';
+import { InputForm } from 'src/styles/Inputs/InputForm';
+import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
+import { baseTheme } from 'src/styles/theme';
 
-interface LoginFormProp {
+interface RegistrationFormProp {
   onFormSwitch: (formName: string) => void;
 }
 
-export const RegistrationForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+export const RegistrationForm: FC<RegistrationFormProp> = ({ onFormSwitch }) => {
+  const [fieldState, setFieldState] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+  const { firstName, lastName, email, password, confirmPassword } = fieldState;
+
 
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (firstName && lastName && email && password) {
+    if (firstName && lastName && email && (password === confirmPassword)) {
       dispatch(
         userRegistration({
           firstName: firstName,
@@ -29,81 +35,90 @@ export const RegistrationForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
           password: password,
         })
       );
+      setFieldState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+      })
+      onFormSwitch('login')
     }
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setPassword('');
-
-    onFormSwitch('login')
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: value
+    }))
+  }
 
   return (
     <>
-      <div className={style.login_wrp}>
-        <h2 className={style.login_title}>Registration</h2>
+      <FormContainer>
+        <FormTitle>Sign In</FormTitle>
         <form onSubmit={handleSubmit}>
-          <div className={style.user_wrp}>
-            <input
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-              className={style.user_input}
-              type="text"
-              id="firstName"
-              required
-            />
-            <label htmlFor="firstName" className={style.user_label}>
-              First Name:{' '}
-            </label>
-          </div>
-          <div className={style.user_wrp}>
-            <input
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-              className={style.user_input}
-              type="text"
-              id="lastName"
-              required
-            />
-            <label htmlFor="lastName" className={style.user_label}>
-              Last Name:{' '}
-            </label>
-          </div>
-          <div className={style.user_wrp}>
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              className={style.user_input}
-              type="text"
-              id="email"
-              required
-            />
-            <label htmlFor="email" className={style.user_label}>
-              Email:{' '}
-            </label>
-          </div>
-          <div className={style.user_wrp}>
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              className={style.user_input}
-              type="password"
-              id="password"
-              required
-            />
-            <label htmlFor="password" className={style.user_label}>
-              Password:{' '}
-            </label>
-          </div>
-          <button className={style.login_btn}>Rigistration</button>
-          <button
-            onClick={() => onFormSwitch('login')}
-            className={style.to_another_form}
+          <InputForm
+            required
+            value={fieldState.firstName}
+            name={'firstName'}
+            id={'firstName'}
+            labelName={'First Name'}
+            type={'text'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.lastName}
+            name={'lastName'}
+            id={'lastName'}
+            labelName={'Last Name'}
+            type={'text'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.email}
+            name={'email'}
+            id={'email'}
+            labelName={'Email'}
+            type={'email'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.password}
+            name={'password'}
+            id={'password'}
+            labelName={'Password'}
+            type={'password'}
+            onChange={handleChange} />
+          <InputForm
+            required
+            value={fieldState.confirmPassword}
+            name={'confirmPassword'}
+            id={'confirmPassword'}
+            labelName={'Password confirmation'}
+            type={'password'}
+            onChange={handleChange} />
+          <PrimaryButton
+            $bg='none'
+            $boxShadow='none'
+            $defaultColor={baseTheme.colors.neonBlue}
+            $hoverColor={baseTheme.colors.white}
           >
-            Already have an account? Login here
-          </button>
+            Submit
+          </PrimaryButton>
         </form>
-      </div>
+        <PrimaryButton
+          onClick={() => onFormSwitch('login')}
+          $bg='none'
+          $boxShadow='none'
+          $textTransform='none'
+          $defaultColor={baseTheme.colors.neonBlue}
+          $hoverColor={baseTheme.colors.white}
+        >
+          Already have an account ? Login here
+        </PrimaryButton>
+      </FormContainer>
     </>
   );
 };
