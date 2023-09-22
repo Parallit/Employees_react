@@ -7,6 +7,7 @@ import { AvatarFormBox } from 'src/components/AvatarFormBox';
 import { InputForm } from 'src/styles/Inputs/InputForm';
 import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
 import { FormContainer } from './StyledEmployeeEditForm';
+import { AvatarIcon } from '../AvatarIcon';
 
 interface EmployeeEditFormProps {
     employee: Employee;
@@ -14,7 +15,7 @@ interface EmployeeEditFormProps {
 }
 
 export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose }) => {
-    const [avatarId, setAvatarId] = useState<string>();
+    const [avatarId, setAvatarId] = useState<string>(employee.avatar);
     const [fieldState, setFieldState] = useState({
         firstName: employee.firstName,
         lastName: employee.lastName,
@@ -65,6 +66,7 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose 
         <>
             <FormContainer>
                 <h3>Employee information</h3>
+                <AvatarIcon width={'80px'} height={'80px'} name={avatarId}/>
                 <form onSubmit={handleSubmit}>
                         <InputForm
                             required

@@ -10,6 +10,7 @@ import { Spinner } from "../Spinner";
 import { AvatarIcon } from "../AvatarIcon";
 import { useSearchContext } from "src/components/Hook/useSearchContext";
 import { SubordinatesBox } from "../SubordinatesBox";
+import { ModalButtonBox } from "../ModalButtonBox";
 
 interface inputData {
     id: string,
@@ -45,11 +46,11 @@ export const HandbookUsersBox: FC<HandbookUsersBoxProps> = ({ titles, className 
 
         const unspacedData = inputData.id.split(' ').join('');
         const noLowerCaseData = unspacedData.charAt(0).toLowerCase() + unspacedData.slice(1)
-        const property = unit[noLowerCaseData as keyof User];       
+        const property = unit[noLowerCaseData as keyof User];
 
-        if(typeof property === "string") {
+        if (typeof property === "string") {
             return property.toLowerCase().includes(lowerCaseValue)
-        } 
+        }
     }
 
     useEffect(() => {
@@ -57,30 +58,34 @@ export const HandbookUsersBox: FC<HandbookUsersBoxProps> = ({ titles, className 
     }, []);
 
     return (
-        <>  
+        <>
             <SearchBox titles={titles} />
             <StyledUsersBox className={className}>
-            {isLoading ? <Spinner /> 
-                :
-                users
-                    .filter(unit => handleInputData(unit, inputSearchData))
-                    .map((unit) => (
-                        <ul key={unit._id}>
-                            <li>
-                                <AvatarIcon name={unit.avatar} width={"50px"} height={"50px"} />
-                            </li>
-                            <li>{unit.firstName}</li>
-                            <li>{unit.lastName}</li>
-                            <li>{unit.position}</li>
-                            <li>{unit.department}</li>
-                            <li>{unit.room}</li>
-                            <li>{unit.telephone}</li>
-                            <li>
-                                <SubordinatesBox user={unit} />
-                            </li>
-                            <li></li>
-                        </ul> 
-                    ))}
+                {isLoading ? <Spinner />
+                    :
+                    users
+                        .filter(unit => handleInputData(unit, inputSearchData))
+                        .map((unit) => (
+                            <ul key={unit._id}>
+                                <li>
+                                    <AvatarIcon name={unit.avatar} width={"50px"} height={"50px"} />
+                                </li>
+                                <li>{unit.firstName}</li>
+                                <li>{unit.lastName}</li>
+                                <li>{unit.position}</li>
+                                <li>{unit.department}</li>
+                                <li>{unit.room}</li>
+                                <li>{unit.telephone}</li>
+                                <li>
+                                    <ModalButtonBox
+                                        user={unit}
+                                        buttonContent={unit.employeesId.length}
+                                        modalContentType={"subordinates"}
+                                        $secondaryButton />
+                                </li>
+                                <li></li>
+                            </ul>
+                        ))}
             </StyledUsersBox>
         </>
     );

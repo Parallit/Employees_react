@@ -1,14 +1,15 @@
 import { FC, ReactNode, useState } from "react";
 import { Modal } from "src/components/Modal";
-import { Employee } from "src/store/types.common";
+import { Employee, User } from "src/store/types.common";
 import { ModalButton } from "src/styles/Buttons/ModalButton";
 import { ModalPortal } from "src/components/ModalPortal";
 
 
 interface ModalButtonBoxProps {
     employee?: Employee,
+    user?: User,
     buttonContent: ReactNode | string,
-    modalContentType: 'add' | 'edit' | 'remove',
+    modalContentType: 'add' | 'edit' | 'remove' | "subordinates",
     $primaryButton?: boolean,
     $secondaryButton?: boolean,
     $dangerButton?: boolean,
@@ -18,6 +19,7 @@ interface ModalButtonBoxProps {
 
 export const ModalButtonBox: FC<ModalButtonBoxProps> = ({
     employee,
+    user,
     buttonContent,
     modalContentType,
     $primaryButton,
@@ -36,6 +38,7 @@ export const ModalButtonBox: FC<ModalButtonBoxProps> = ({
                     onClose={() => setOpenModal(false)}
                     modalContentType={modalContentType}
                     employee={employee}
+                    user={user}
                 />
             </ModalPortal>
             <ModalButton

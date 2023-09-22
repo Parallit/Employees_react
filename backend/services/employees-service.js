@@ -1,13 +1,13 @@
+
 import { Employee } from '../models/employee-model.js'
 import { User } from '../models/user-model.js'
 import tokenService from './token-service.js';
 import UserDto from '../dtos/user-dto.js';
 import { ApiError } from '../exceptions/api-error.js';
-import EmployeeDto from '../dtos/employee-dto.js'
 
 class EmployeesService {
     async getAllEmployees() {
-        const employees = await Employee.find();
+        const employees = await Employee.find().populate('userId');
         return employees
     }
     async getEmployee(id) {
@@ -16,6 +16,13 @@ class EmployeesService {
             throw ApiError.BadRequest('Сотрудник не найден');
         }
         return employee
+    }
+    async getUserOfEmployee(id) {
+        const user = await User.findById(id).populate('employeesId');
+        if (!user) {
+            throw ApiError.BadRequest('Сотрудник не найден');
+        }
+        return user
     }
     async addNewEmployee(data, refreshToken) {
         const currentUser = await tokenService.validateRefreshToken(refreshToken);
@@ -27,43 +34,48 @@ class EmployeesService {
         if (existEmployee) {
             throw ApiError.BadRequest('Сотрудник с таким именем и фамилией уже существует')
         }
-        const currentUserFromDB = await User.findById(currentUser.id);
+        const currentUserFromDB = await User.findById(currentUser._id);
         const userDto = new UserDto(currentUserFromDB);
 
-        const newEmployeeData = { ...data, userId: userDto.id };
-        const createdEmployee = await Employee.create(newEmployeeData);
-        await User.findByIdAndUpdate(currentUser.id, { $push: { employeesId: createdEmployee.id } })
+        const newEmployeeData = { userId: userDto._id, ...data };
+        const createdEmployee = (await Employee.create(newEmployeeData)).populate('userId');
 
-        return newEmployeeData
+        await User.findByIdAndUpdate(currentUser._id, { $push: { employeesId: (await createdEmployee)._id } })
+
+        return createdEmployee
     }
     async editDataEmployee(id, data, refreshToken) {
         const currentUser = await tokenService.validateRefreshToken(refreshToken);
-        const currentUserFromDB = await User.findById(currentUser.id);
+        const currentUserFromDB = await User.findById(currentUser._id);
         const employeeFromDB = await Employee.findById(id);
-        if (currentUserFromDB.id !== employeeFromDB.userId.toString()) {
+        if (currentUserFromDB._id.toString() !== employeeFromDB.userId.toString()) {
             throw ApiError.BadRequest('У вас нет прав на редактирование данных указанного сотрудника')
         }
-        const { firstName, lastName, age, address } = data;
-        if (!firstName || !lastName || !age || !address) {
+        const { firstName, lastName, position, room, department, telephone, avatar } = data;
+
+        if (!firstName || !lastName || !position || !room || !department || !telephone || !avatar) {
             throw ApiError.BadRequest('Заполните все требуемые поля сотрудника')
         }
-        const updatedEmployeeData = await Employee.findByIdAndUpdate(employeeFromDB.id, {
+        const updatedEmployeeData = await Employee.findByIdAndUpdate(employeeFromDB._id, {
             firstName: firstName,
             lastName: lastName,
-            age: age,
-            address: address
+            position: position,
+            room: room,
+            department: department,
+            telephone: telephone,
+            avatar: avatar,
         })
         return updatedEmployeeData
     }
     async removeEmployee(id, refreshToken) {
         const currentUser = await tokenService.validateRefreshToken(refreshToken);
-        const currentUserFromDB = await User.findById(currentUser.id);
+        const currentUserFromDB = await User.findById(currentUser._id);
         const employeeFromDB = await Employee.findById(id);
-        if (currentUserFromDB.id !== employeeFromDB.userId.toString()) {
+        if (currentUserFromDB._id.toString() !== employeeFromDB.userId.toString()) {
             throw ApiError.BadRequest('У вас нет прав на удаление данного сотрудника')
         }
         const removedEmployee = await Employee.findByIdAndDelete(id);
-        const updatedUserData = await User.findByIdAndUpdate(currentUser.id, { $pull: { employeesId: employeeFromDB.id } })
+        const updatedUserData = await User.findByIdAndUpdate(currentUser._id, { $pull: { employeesId: employeeFromDB._id } })
         return removedEmployee
     }
 }
