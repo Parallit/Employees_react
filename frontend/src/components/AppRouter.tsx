@@ -22,6 +22,7 @@ export const AppRouter: FC = () => {
           <Route path="about" element={<About />} />
           <Route path="users" element={<PrivateRoute component={<Users />}  />} />
           <Route path="users/employee/:id" element={<PrivateRoute component={<SubordinateInfoPage />}  />} />
+          <Route path="/employees/:id" element={<PrivateRoute component={<SubordinateInfoPage />}  />} />
           <Route path="employees" element={<PrivateRoute component={<EmployeesPage />} />} />
           <Route path="employees/user/:id" element={<PrivateRoute component={<ChiefInfoPage />} />} />
           <Route path="profile" element={<PrivateRoute component={<Profile />} />} />

@@ -23,7 +23,7 @@ export const SubordinatesLinkBox: FC<SubordinatesLinkBoxProps> = ({ subordinates
                         <SubordinateBox key={employee._id}>
                             <AvatarIcon name={employee.avatar} width={"60px"} height={"60px"} />
                             <SubordinateLink>
-                                <NavigateLink to={`user/${employee._id}`} $fontSize='18px' $textTransform='capitalize'>
+                                <NavigateLink to={`employee/${employee._id}`} $fontSize='18px' $textTransform='capitalize'>
                                     {employee.firstName} {employee.lastName}
                                 </NavigateLink>
                             </SubordinateLink>

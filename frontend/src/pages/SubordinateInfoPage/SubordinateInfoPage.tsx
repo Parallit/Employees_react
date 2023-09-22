@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import $api from "src/axios";
-import { ProfileUserInfo } from "src/components/ProfileUserInfo/ProfileUserInfo";
 import { Employee } from "src/store/types.common";
 import { TitlePage } from "src/styles/TitlePage";
 import { Button } from "src/styles/Buttons/Button";
 import { styled } from "styled-components";
+import { SubordinateInfo } from "src/components/SubordinateInfo";
 
 export const SubordinateInfoPage: FC = () => {
     const [employee, seEmployee ] = useState<Employee | null>(null)
@@ -15,9 +15,9 @@ export const SubordinateInfoPage: FC = () => {
     const goBackPage = () => {
         navigate(-1)
     }
-    // доделать бэк
+
     const fetchEmployee = async () =>  {
-        const res = await $api.get(`/employees/user/${id}`);
+        const res = await $api.get(`/employees/${id}`);
         seEmployee(res.data)
     }
 
@@ -30,7 +30,9 @@ export const SubordinateInfoPage: FC = () => {
         <TitlePage>User information</TitlePage>
         <Button onClick={goBackPage} children={'Go Back'} $primaryButton $padding="20px 30px" $margin="10px"/>
         <Wrapper>
-            {/* <ProfileUserInfo user={employee}/>  */}
+            {employee && 
+                    <SubordinateInfo subordinate={employee} />
+            }
         </Wrapper>
         </>
     );
