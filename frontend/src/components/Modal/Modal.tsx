@@ -3,16 +3,18 @@ import style from './Modal.module.scss';
 import { EmployeeAddForm } from '../EmployeeAddForm';
 import { EmployeeEditForm } from '../EmployeeEditForm';
 import { EmployeeRemoveWarn } from '../EmployeeRemoveWarn';
-import { Employee } from 'src/store/types.common';
+import { Employee, User } from 'src/store/types.common';
+import { SubordinatesLinkBox } from '../SubordinatesLinkBox';
 
 interface ModalProps {
   open: boolean;
   onClose: () => void;
   modalContentType: string;
-  employee?: Employee
+  employee?: Employee;
+  user?: User
 }
 
-export const Modal: FC<ModalProps> = ({ open, onClose, modalContentType, employee }) => {
+export const Modal: FC<ModalProps> = ({ open, onClose, modalContentType, employee, user }) => {
   if (!open) return null;
 
     const getModalContent = (modalContentType: string) => {
@@ -27,6 +29,10 @@ export const Modal: FC<ModalProps> = ({ open, onClose, modalContentType, employe
           case 'remove': {
             if(employee)
               return <EmployeeRemoveWarn employee={employee} onClose={onClose}/>
+          }
+          case 'subordinates': {
+            if(user)
+              return <SubordinatesLinkBox subordinates={user.employeesId}/>
           }
       }
     };
