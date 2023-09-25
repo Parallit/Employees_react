@@ -62,13 +62,13 @@ class UserService {
     }
     async getCurrentUser(refreshToken) {
         const userData = await tokenService.validateRefreshToken(refreshToken);
-        const user = await User.findById(userData._id);
+        const user = await User.findById(userData._id).populate('employeesId');
         const userDto = new UserDto(user)
         return userDto
     }
     async updateUser(id, newData) {
-        const updatedUser = await User.findByIdAndUpdate(id, newData, { new: true });
-        const userDto = new UserDto(updatedUser)
+        const updatedUser = await User.findByIdAndUpdate(id, newData, { new: true }).populate('employeesId');
+        const userDto = new UserDto(updatedUser);
         return userDto
     }
     async removeUser(id, refreshToken) {

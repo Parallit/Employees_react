@@ -12,14 +12,17 @@ interface SubordinatesLinkBoxProps {
 }
 
 export const SubordinatesLinkBox: FC<SubordinatesLinkBoxProps> = ({ subordinates, $width, $maxHeight, className }) => {
+    console.log(subordinates);
+    
     return (
         <ContainerInfo className={className} $width={$width} $maxHeight={$maxHeight}>
             <TitleContainer>
                 <h3>Subordinates:</h3>
             </TitleContainer>
             <SuborditanesContainer>
-                {
-                    subordinates.map((employee) => (
+                {   
+                    subordinates
+                    ? subordinates.map((employee) => (
                         <SubordinateBox key={employee._id}>
                             <AvatarIcon name={employee.avatar} width={"60px"} height={"60px"} />
                             <SubordinateLink>
@@ -29,6 +32,8 @@ export const SubordinatesLinkBox: FC<SubordinatesLinkBoxProps> = ({ subordinates
                             </SubordinateLink>
                         </SubordinateBox>
                     ))
+                    // создать компонент пустой информации
+                    : <div>Empty list</div>
                 }
             </SuborditanesContainer>
         </ContainerInfo>

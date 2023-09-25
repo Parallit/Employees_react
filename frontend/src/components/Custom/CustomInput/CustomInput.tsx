@@ -10,6 +10,7 @@ interface CustomInputProps {
     placeholder?: string;
     required: boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    $width?: string,
     className?: string
 };
 
@@ -22,6 +23,7 @@ export const CustomInput: FC<CustomInputProps> = ({
     labelName,
     required,
     onChange,
+    $width,
     className
 }) => {
     return (

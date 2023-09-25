@@ -66,7 +66,7 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose 
         <>
             <FormContainer>
                 <h3>Employee information</h3>
-                <AvatarIcon width={'80px'} height={'80px'} name={avatarId}/>
+                <AvatarIcon width={'120px'} height={'120px'} name={avatarId}/>
                 <form onSubmit={handleSubmit}>
                         <InputForm
                             required

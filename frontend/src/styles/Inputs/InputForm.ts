@@ -2,9 +2,11 @@ import { CustomInput } from "src/components/Custom/CustomInput";
 import { styled } from "styled-components";
 
 export const InputForm = styled(CustomInput) <{
-    labelName: string
-}>`
+    labelName?: string,
+    $width?: string
+}>` 
     position: relative;
+    width: ${({ $width }) => $width || "100%"};
 
     & input {
         width: 100%;

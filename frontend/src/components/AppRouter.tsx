@@ -8,10 +8,9 @@ import { EmployeesPage } from 'src/pages/EmployeesPage';
 import { LogIn } from 'src/pages/LogIn';
 import { NotFoundPage } from 'src/pages/NotFoundPage';
 import { PrivateRoute } from 'src/components/PrivateRoter';
-import { Profile } from 'src/pages/Profile';
+import { ProfilePage } from 'src/pages/ProfilePage';
 import { ChiefInfoPage } from 'src/pages/ChiefInfoPage';
 import { SubordinateInfoPage } from 'src/pages/SubordinateInfoPage';
-
 
 export const AppRouter: FC = () => {
   return (
@@ -25,7 +24,7 @@ export const AppRouter: FC = () => {
           <Route path="/employees/:id" element={<PrivateRoute component={<SubordinateInfoPage />}  />} />
           <Route path="employees" element={<PrivateRoute component={<EmployeesPage />} />} />
           <Route path="employees/user/:id" element={<PrivateRoute component={<ChiefInfoPage />} />} />
-          <Route path="profile" element={<PrivateRoute component={<Profile />} />} />
+          <Route path="profile" element={<PrivateRoute component={<ProfilePage />} />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

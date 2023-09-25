@@ -22,8 +22,6 @@ export const updateUserInfo = createAsyncThunk(
   'user/userEditInfo',
   async (payload: editedUserInfo, thunkApi) => {
     try {
-      console.log(payload);
-
       const res = await $api.patch<User>(
         `/user/edit/${payload.userId}`,
         payload
@@ -54,6 +52,7 @@ export const deleteUserProfile = createAsyncThunk(
 
 const initialState: UserState = {
   currentUser: {} as User,
+  isLoadingUser: false
 };
 
 const userSlice = createSlice({
@@ -61,16 +60,24 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      fetchCurrentUser.fulfilled,
-      (state, action: PayloadAction<User>) => {
-        state.currentUser = action.payload;
-      }
-    );
+    builder
+      .addCase(
+        fetchCurrentUser.pending,
+        (state, _) => {
+          state.isLoadingUser = true;
+        })
+      .addCase(
+        fetchCurrentUser.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.currentUser = action.payload;
+          state.isLoadingUser = false;
+        }
+      );
     builder.addCase(
       updateUserInfo.fulfilled,
       (state, action: PayloadAction<User>) => {
         state.currentUser = action.payload;
+        console.log('Updated', state.currentUser);
       }
     );
     builder.addCase(deleteUserProfile.fulfilled, (state, _) => {

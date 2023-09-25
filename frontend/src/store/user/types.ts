@@ -10,4 +10,5 @@ export interface editedUserInfo {
 
 export interface UserState {
   currentUser: User;
+  isLoadingUser: boolean
 }
