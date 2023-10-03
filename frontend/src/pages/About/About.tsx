@@ -1,4 +1,4 @@
-import { TitlePage } from 'src/styles/TitlePage';
+import { TitlePage } from 'src/styles/Titles/TitlePage';
 import style from './About.module.scss';
 
 export const About = () => {

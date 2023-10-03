@@ -10,7 +10,7 @@ class UserService {
     async registration(email, password, firstName, lastName) {
         const candidate = await User.findOne({ email })
         if (candidate) {
-            throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует`);
+            throw ApiError.BadRequest(`This email is already in use.`);
         }
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
@@ -25,11 +25,11 @@ class UserService {
     async login(email, password) {
         const user = await User.findOne({ email })
         if (!user) {
-            throw ApiError.BadRequest('Пользователь с таким email не найден')
+            throw ApiError.BadRequest('Invalid Username or Password!')
         }
         const isPassEquals = await bcrypt.compare(password, user.password)
         if (!isPassEquals) {
-            throw ApiError.BadRequest('Введен некорректный логин или пароль')
+            throw ApiError.BadRequest('Invalid Username or Password!')
         }
         const userDto = new UserDto(user);
         const tokens = await tokenService.generateTokens({ ...userDto })

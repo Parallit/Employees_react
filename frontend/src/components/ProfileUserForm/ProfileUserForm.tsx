@@ -16,8 +16,26 @@ interface ProfileUserProps {
   user: User;
 }
 
-export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
+interface Errors {
+  firstName: string,
+  lastName: string,
+  position: string,
+  room: string,
+  department: string,
+  telephone: string,
+  about: string
+}
 
+export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
+  const [errors, setErrors] = useState<Errors>({ 
+    firstName: "",
+    lastName: "",
+    position: "",
+    room: "",
+    department: "",
+    telephone: "",
+    about: ""
+  })
   const [avatarId, setAvatarId] = useState<string>(user.avatar);
   const [fieldState, setFieldState] = useState({
     firstName: user.firstName,
@@ -71,8 +89,27 @@ export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
       ...prevState,
       [name]: value
     }))
+    setErrors((prevState) => ({
+      ...prevState,
+      [name]: ''
+    }))
   }
-
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    let errMsg = "";
+    if (!value) {
+      errMsg = 'Please fill out this field!';    
+    } else if (name === "email" && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+      errMsg = 'Please use a valid email address';
+    } else if (name === "password" && (value.length < 3 || value.length > 32)) {
+      errMsg = 'Password should contain at least 3 characters';
+    }
+    setErrors((prevState) => ({
+      ...prevState,
+      [name]: errMsg
+    }))
+  }
+  
   const handleChangeArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFieldState((prevState) => ({
@@ -99,6 +136,8 @@ export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
               id={'firstName'}
               labelName={'First Name'}
               type={'text'}
+              errors={errors}
+              onBlur={handleBlur}
               onChange={handleChange} 
               $width='45%'/>
             <InputForm
@@ -107,6 +146,8 @@ export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
               name={'lastName'}
               id={'lastName'}
               labelName={'Last Name'}
+              errors={errors}
+              onBlur={handleBlur}
               type={'text'}
               onChange={handleChange} 
               $width='45%'/>
@@ -118,6 +159,8 @@ export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
               name={'department'}
               id={'department'}
               labelName={'Department'}
+              errors={errors}
+              onBlur={handleBlur}
               type={'text'}
               onChange={handleChange} 
               $width='45%'/>
@@ -128,6 +171,8 @@ export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
               id={'position'}
               labelName={'Position'}
               type={'text'}
+              errors={errors}
+              onBlur={handleBlur}
               onChange={handleChange} 
               $width='45%'/>
           </InputBox>
@@ -138,6 +183,8 @@ export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
               name={'room'}
               id={'room'}
               labelName={'Room'}
+              errors={errors}
+              onBlur={handleBlur}
               type={'text'}
               onChange={handleChange} 
               $width='45%'/>
@@ -147,6 +194,8 @@ export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
               name={'telephone'}
               id={'telephone'}
               labelName={'Tel.'}
+              errors={errors}
+              onBlur={handleBlur}
               type={'text'}
               onChange={handleChange} 
               $width='45%'/>

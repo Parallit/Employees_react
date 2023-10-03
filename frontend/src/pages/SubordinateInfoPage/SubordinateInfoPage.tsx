@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import $api from "src/axios";
 import { Employee } from "src/store/types.common";
-import { TitlePage } from "src/styles/TitlePage";
+import { TitlePage } from 'src/styles/Titles/TitlePage';
 import { Button } from "src/styles/Buttons/Button";
 import { styled } from "styled-components";
 import { SubordinateInfo } from "src/components/SubordinateInfo";

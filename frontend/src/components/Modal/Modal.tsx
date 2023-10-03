@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import style from './Modal.module.scss';
-import { EmployeeAddForm } from '../EmployeeAddForm';
-import { EmployeeEditForm } from '../EmployeeEditForm';
+import { EmployeeAddForm } from 'src/components/Forms/EmployeeAddForm';
+import { EmployeeEditForm } from 'src/components/Forms/EmployeeEditForm';
 import { EmployeeRemoveWarn } from '../EmployeeRemoveWarn';
 import { Employee, User } from 'src/store/types.common';
 import { SubordinatesLinkBox } from '../SubordinatesLinkBox';

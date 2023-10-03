@@ -1,4 +1,4 @@
-import { TitlePage } from "src/styles/TitlePage";
+import { TitlePage } from 'src/styles/Titles/TitlePage';
 import { Container, TextProjectName, Text } from "./StyledHomepage";
 
 export const Homepage = () => {

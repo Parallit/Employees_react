@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { AuthResponse } from 'src/store/auth/types';
+import { MyKnownApiError } from 'src/store/types.common';
 
 export const API_URL = process.env.REACT_APP_BASE_URL;
 
@@ -19,6 +20,7 @@ $api.interceptors.response.use(
   },
   async (err) => {
     const originalRequest = err.config;
+
     if (err.response.status == 401 && err.config && !err.config._isRetry) {
       originalRequest._isRetry = true;
       try {
@@ -32,6 +34,11 @@ $api.interceptors.response.use(
         console.log('Пользователь не авторизован', error);
       }
       throw err;
+    }
+
+    if (err.response.status == 400 && err.response.data.message) {
+      const errorResponse: MyKnownApiError = { error: err.response.data.message }
+      throw errorResponse
     }
   }
 );

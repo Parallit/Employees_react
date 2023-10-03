@@ -1,15 +1,6 @@
 import { styled } from "styled-components";
 
-export const FormContainer = styled.div`
-    width: 500px;
-    padding: 40px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.9);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
-`
-
-export const FormTitle = styled.h2`
+export const TitleForm = styled.h2`
     font-size: 40px;
     margin: 0 0 30px;
     padding: 0;

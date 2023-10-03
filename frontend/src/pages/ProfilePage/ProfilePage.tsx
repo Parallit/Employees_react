@@ -4,7 +4,7 @@ import { ProfileUserForm } from 'src/components/ProfileUserForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { fetchCurrentUser } from 'src/store/user/userSlice';
-import { TitlePage } from 'src/styles/TitlePage';
+import { TitlePage } from 'src/styles/Titles/TitlePage';
 import { ChiefInfo } from 'src/components/ChiefInfo';
 import { selectIsLoadingUser, selectUser } from 'src/store/user/selectors';
 import { Spinner } from 'src/components/Spinner';

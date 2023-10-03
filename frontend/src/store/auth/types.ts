@@ -10,4 +10,5 @@ export interface AuthState {
   AuthUser: User;
   isAuth: boolean;
   isLoading: boolean;
+  errors: string
 }
