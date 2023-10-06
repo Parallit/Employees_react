@@ -33,3 +33,15 @@ export { AiOutlineCaretUp } from "react-icons/ai"
 
 //user
 export { AiOutlineUser } from "react-icons/ai"
+
+//email
+export { AiOutlineMail } from "react-icons/ai"
+
+//password-visible
+export { AiOutlineEye } from "react-icons/ai"
+
+//password-not-visible
+export { AiOutlineEyeInvisible } from "react-icons/ai"
+
+// burger
+export { AiOutlineMenu } from "react-icons/ai"

@@ -11,7 +11,11 @@ import {
     AiOutlineUser,
     AiOutlineCaretDown,
     AiOutlineCaretUp,
-    AiOutlineReload
+    AiOutlineReload,
+    AiOutlineEyeInvisible,
+    AiOutlineEye,
+    AiOutlineMail,
+    AiOutlineMenu
 } from "src/icons";
 
 interface IconComponentProps {
@@ -57,6 +61,18 @@ const icons = (type: string) => {
         }
         case "close": {
             return <AiOutlineCaretUp />
+        }
+        case "email": {
+            return <AiOutlineMail />
+        }
+        case "password-visible": {
+            return <AiOutlineEye />
+        }
+        case "password-not-visible": {
+            return <AiOutlineEyeInvisible />
+        }
+        case "burger": {
+            return <AiOutlineMenu />
         }
         default: {
             return <AiOutlineRight />;

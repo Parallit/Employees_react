@@ -2,16 +2,18 @@ import { CustomInput } from "src/components/Custom/CustomInput";
 import { styled } from "styled-components";
 
 export const InputForm = styled(CustomInput) <{
-    labelName: string
-}>`
+    $width?: string;
+}>` 
     position: relative;
+    width: ${({ $width }) => $width || "100%"};
+    margin-bottom: 35px;
+    display: flex;
 
     & input {
         width: 100%;
-        padding: 15px 0;
+        padding: 20px 0;
         font-size: 16px;
         color: #fff;
-        margin-bottom: 30px;
         border: none;
         border-bottom: 30px;
         border-bottom: 1px solid #fff;
@@ -28,6 +30,11 @@ export const InputForm = styled(CustomInput) <{
         color: #fff;
         pointer-events: none;
         transition: 0.5s;
+    }
+
+    & input:focus {
+        outline: 0;      
+        border-bottom: 1px solid #03e9f4;
     }
 
     & input:focus~label,

@@ -3,13 +3,18 @@ import { styled } from "styled-components";
 
 export const PrimaryButton = styled(CustomButton)`
     color: ${({ $defaultColor, theme }) => $defaultColor || theme.colors.white};
-    padding: ${({ $padding }) => $padding || "10px 20px"};
+    padding: ${({ $padding }) => $padding || "20px 20px"};
     margin: ${({ $margin }) => $margin || "10px"};
     font-size: ${({ $fontSize }) => $fontSize || "16px"};
     cursor: ${({ disabled }) => (!disabled ? "pointer" : "not-allowed")};
     background: ${({ $bg }) => $bg || "rgba(0, 0, 0, 0.8)"};
     box-shadow: ${({ $boxShadow }) => $boxShadow || "0 15px 25px rgba(0, 0, 0, 0.4)"};
     text-transform: ${({ $textTransform }) => $textTransform || "uppercase"};
+    width: ${({ $width }) => $width || "100%"};
+    top: ${({ $top }) => $top || ""};
+    right: ${({ $right }) => $right || ""};
+    left: ${({ $left }) => $left || ""};
+    bottom: ${({ $bottom }) => $bottom || ""};
     border: none;
     border-radius: 10px;
     letter-spacing: 4px;

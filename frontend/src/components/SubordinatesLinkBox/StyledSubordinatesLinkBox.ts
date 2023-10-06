@@ -16,19 +16,19 @@ export const ContainerInfo = styled.div<{
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
     margin-right: 20px;
 
-            ::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         width: 10px;
-        }
+    }
 
-        ::-webkit-scrollbar-track {
+    ::-webkit-scrollbar-track {
         box-shadow: inset 0 0 5px #03e9f4;
         border-radius: 10px;
-        }
+    }
 
-        ::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
         background: linear-gradient(166deg, rgba(249,123,30,1) 25%, rgba(205,40,149,1) 81%);
         border-radius: 10px;
-        }
+    }
 `
 export const TitleContainer = styled.div`
     padding: 0;

@@ -12,23 +12,28 @@ interface SubordinatesLinkBoxProps {
 }
 
 export const SubordinatesLinkBox: FC<SubordinatesLinkBoxProps> = ({ subordinates, $width, $maxHeight, className }) => {
+    console.log(subordinates);
+    
     return (
         <ContainerInfo className={className} $width={$width} $maxHeight={$maxHeight}>
             <TitleContainer>
                 <h3>Subordinates:</h3>
             </TitleContainer>
             <SuborditanesContainer>
-                {
-                    subordinates.map((employee) => (
+                {   
+                    subordinates
+                    ? subordinates.map((employee) => (
                         <SubordinateBox key={employee._id}>
                             <AvatarIcon name={employee.avatar} width={"60px"} height={"60px"} />
                             <SubordinateLink>
-                                <NavigateLink to={`user/${employee._id}`} $fontSize='18px' $textTransform='capitalize'>
+                                <NavigateLink to={`employee/${employee._id}`} $fontSize='18px' $textTransform='capitalize'>
                                     {employee.firstName} {employee.lastName}
                                 </NavigateLink>
                             </SubordinateLink>
                         </SubordinateBox>
                     ))
+                    // создать компонент пустой информации
+                    : <div>Empty list</div>
                 }
             </SuborditanesContainer>
         </ContainerInfo>

@@ -10,7 +10,7 @@ class UserService {
     async registration(email, password, firstName, lastName) {
         const candidate = await User.findOne({ email })
         if (candidate) {
-            throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует`);
+            throw ApiError.BadRequest(`This email is already in use.`);
         }
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
@@ -25,11 +25,11 @@ class UserService {
     async login(email, password) {
         const user = await User.findOne({ email })
         if (!user) {
-            throw ApiError.BadRequest('Пользователь с таким email не найден')
+            throw ApiError.BadRequest('Invalid Username or Password!')
         }
         const isPassEquals = await bcrypt.compare(password, user.password)
         if (!isPassEquals) {
-            throw ApiError.BadRequest('Введен некорректный логин или пароль')
+            throw ApiError.BadRequest('Invalid Username or Password!')
         }
         const userDto = new UserDto(user);
         const tokens = await tokenService.generateTokens({ ...userDto })
@@ -62,13 +62,13 @@ class UserService {
     }
     async getCurrentUser(refreshToken) {
         const userData = await tokenService.validateRefreshToken(refreshToken);
-        const user = await User.findById(userData._id);
+        const user = await User.findById(userData._id).populate('employeesId');
         const userDto = new UserDto(user)
         return userDto
     }
     async updateUser(id, newData) {
-        const updatedUser = await User.findByIdAndUpdate(id, newData, { new: true });
-        const userDto = new UserDto(updatedUser)
+        const updatedUser = await User.findByIdAndUpdate(id, newData, { new: true }).populate('employeesId');
+        const userDto = new UserDto(updatedUser);
         return userDto
     }
     async removeUser(id, refreshToken) {

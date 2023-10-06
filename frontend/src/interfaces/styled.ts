@@ -18,12 +18,15 @@ export interface ITheme {
         small: string
     }
 
-    // media: {
-    //     extraLarge: string
-    //     large: string
-    //     medium: string
-    //     small: string
-    // }
+    media: {
+        mobileS: string,
+        mobileM: string,
+        mobileL: string,
+        tablet: string,
+        laptop: string,
+        laptopL: string,
+        desktop: string
+    }
 
     // sizes: {
     //     header: { height: number }

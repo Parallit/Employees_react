@@ -1,4 +1,4 @@
-import { TitlePage } from 'src/styles/TitlePage';
+import { TitlePage } from 'src/styles/Titles/TitlePage';
 import { HandbookEmployeesBox } from 'src/components/HandbookEmployeesBox';
 import { ModalButtonBox } from 'src/components/ModalButtonBox';
 import { HandbookTitleBox } from 'src/styles/HandbookTitleBox';

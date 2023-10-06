@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
-import { LoginForm } from 'src/components/AuthForm/LoginForm';
-import { RegistrationForm } from 'src/components/AuthForm/RegistrationForm';
+import { LoginForm } from 'src/components/Forms/LoginForm';
+import { RegistrationForm } from 'src/components/Forms/RegistrationForm';
 import { styled } from 'styled-components';
 
 export const LogIn: FC = () => {
@@ -11,22 +11,23 @@ export const LogIn: FC = () => {
   return (
     <>
       {currentForm === 'login' ? (
-        <Container>
+        <AuthContainer>
           <LoginForm onFormSwitch={toogleForm} />
-        </Container>
+        </AuthContainer>
       ) : (
-        <Container>
+        <AuthContainer>
           <RegistrationForm onFormSwitch={toogleForm} />
-        </Container>
+        </AuthContainer>
       )}
     </>
   );
 };
 
 
-const Container = styled.div`
-  margin: 100px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const AuthContainer = styled.div`
+  position: absolute;
+  transform: translate(-50%, -75%);
+  top: 50%;
+  left: 50%;
+  z-index: 999;
 `

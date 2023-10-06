@@ -32,6 +32,11 @@ export type ITitle = string;
 
 export type ITitles = ITitle[];
 
+export interface MyKnownApiError {
+  error: string
+}
+
+
 // export type IAvatar =
 //   "dart-maul" |
 //   "beard-man" |

@@ -2,32 +2,42 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import $api from 'src/axios';
 import axios from 'axios';
 import { AuthResponse, AuthState } from 'src/store/auth/types';
-import { User } from 'src/store/types.common';
+import { MyKnownApiError, User } from 'src/store/types.common';
 
-export const userRegistration = createAsyncThunk(
+export const userRegistration = createAsyncThunk<
+  AuthResponse,
+  { firstName: string; lastName: string; email: string; password: string },
+  { rejectValue: string }
+>(
   'auth/userRegistration',
   async (
-    payload: { firstName: string; lastName: string; email: string; password: string },
-    thunkApi
+    payload,
+    { rejectWithValue }
   ) => {
     try {
       const res = await $api.post<AuthResponse>('/user/registration', payload);
       return res.data;
     } catch (error) {
-      return thunkApi.rejectWithValue(
-        `Не удалось зарегистрировать пользователя: ${error}`
-      );
+      const err = error as MyKnownApiError
+      return rejectWithValue(err.error)
     }
   }
 );
-export const userLogin = createAsyncThunk(
+
+
+export const userLogin = createAsyncThunk<
+  AuthResponse,
+  { email: string; password: string },
+  { rejectValue: string }
+>(
   'auth/userLogin',
-  async (payload: { email: string; password: string }, thunkApi) => {
+  async (payload, { rejectWithValue }) => {
     try {
       const res = await $api.post<AuthResponse>('/user/login', payload);
       return res.data;
     } catch (error) {
-      return thunkApi.rejectWithValue(`Не удается авторизоваться: ${error}`);
+      const err = error as MyKnownApiError
+      return rejectWithValue(err.error)
     }
   }
 );
@@ -52,10 +62,9 @@ export const checkAuthUser = createAsyncThunk(
         `${process.env.REACT_APP_BASE_URL}/user/refresh`,
         { withCredentials: true }
       );
-      console.log("checkThunk");
+      console.log("checkAuthThunk");
       return res.data;
     } catch (error) {
-      console.log('Error', error);
       return thunkApi.rejectWithValue(
         `Не удается получить информацию об авторизации пользователя: ${error}`
       );
@@ -67,6 +76,7 @@ const initialState: AuthState = {
   AuthUser: {} as User,
   isAuth: false,
   isLoading: false,
+  errors: ''
 };
 
 const authSlice = createSlice({
@@ -74,6 +84,26 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder
+      .addCase(
+        userRegistration.pending,
+        (state, _) => {
+          state.isLoading = true;
+          state.errors = ''
+        })
+      .addCase(
+        userRegistration.fulfilled,
+        (state, action: PayloadAction<AuthResponse>) => {
+          localStorage.setItem('token', action.payload.accessToken);
+          state.isLoading = false;
+          state.errors = ''
+        })
+      .addCase(
+        userRegistration.rejected,
+        (state, action) => {
+          state.isLoading = false;
+          action.payload ? state.errors = action.payload : state.errors = ''
+        });
     builder
       .addCase(
         userLogin.pending,
@@ -87,8 +117,15 @@ const authSlice = createSlice({
           state.isAuth = true;
           state.isLoading = false;
           state.AuthUser = action.payload.user;
+          state.errors = ''
         }
-      );
+      )
+      .addCase(
+        userLogin.rejected,
+        (state, action) => {
+          state.isLoading = false;
+          action.payload ? state.errors = action.payload : state.errors = ''
+        });
     builder
       .addCase(userLogout.fulfilled, (state, _) => {
         localStorage.removeItem('token');
@@ -108,6 +145,7 @@ const authSlice = createSlice({
           state.AuthUser = action.payload.user;
           state.isAuth = true;
           state.isLoading = false;
+          state.errors = ''
         })
       .addCase(
         checkAuthUser.rejected,
