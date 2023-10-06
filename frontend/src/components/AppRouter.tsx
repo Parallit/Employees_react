@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from 'src/components/Layout';
 import { Homepage } from 'src/pages/Homepage';
 import { Users } from 'src/pages/Users';
-import { About } from 'src/pages/About';
 import { EmployeesPage } from 'src/pages/EmployeesPage';
 import { LogIn } from 'src/pages/LogIn';
 import { NotFoundPage } from 'src/pages/NotFoundPage';
@@ -18,7 +17,6 @@ export const AppRouter: FC = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Homepage />} />
           <Route path="login" element={<LogIn />} />
-          <Route path="about" element={<About />} />
           <Route path="users" element={<PrivateRoute component={<Users />}  />} />
           <Route path="users/employee/:id" element={<PrivateRoute component={<SubordinateInfoPage />}  />} />
           <Route path="employees" element={<PrivateRoute component={<EmployeesPage />} />} />

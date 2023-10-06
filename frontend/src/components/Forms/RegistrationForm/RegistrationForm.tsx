@@ -90,7 +90,7 @@ export const RegistrationForm: FC<RegistrationFormProp> = ({ onFormSwitch }) => 
   return (
     <>
       <FormContainer>
-        <TitleForm>Sign In</TitleForm>
+        <TitleForm>Sign Up</TitleForm>
         <form onSubmit={handleSubmit}>
           <InputForm
             required

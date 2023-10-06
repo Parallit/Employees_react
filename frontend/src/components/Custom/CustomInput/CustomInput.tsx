@@ -44,7 +44,6 @@ export const CustomInput: FC<CustomInputProps> = ({
     $width,
     className
 }) => {
-    console.log(name, errors);
     return (
         
         <>

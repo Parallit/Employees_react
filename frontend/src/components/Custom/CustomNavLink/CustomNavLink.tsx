@@ -22,12 +22,12 @@ export const CustomNavLink: FC<NavLinkComponentProps> = ({
     ...props
 }) => {
     return (
-        <NavLink
-            to={to}
-            onClick={onClick}
-            {...props}
-        >
-            {children}
-        </NavLink>
+            <NavLink
+                to={to}
+                onClick={onClick}
+                {...props}
+            >
+                {children}
+            </NavLink>
     );
 };

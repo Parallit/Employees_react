@@ -11,10 +11,6 @@ export const NavigateLink = styled(CustomNavLink)`
     letter-spacing: 1px;
     transition: all 0.5s ease-in-out;
 
-    &:hover {
-        color: ${({ $activeColor, theme }) => $activeColor || theme.colors.orange};
-    }
-
     &.active {
         color: ${({ $activeColor, theme }) => $activeColor || theme.colors.neonBlue};
     }

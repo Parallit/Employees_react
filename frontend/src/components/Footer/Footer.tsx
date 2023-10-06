@@ -22,7 +22,7 @@ export const Footer: FC = () => {
               href="https://github.com/Parallite"
             >
               {' '}
-              Parallitik
+              Parallite
             </NameLink>
           </CopyrightText>
         </CopyrightBox>

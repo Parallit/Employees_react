@@ -42,3 +42,6 @@ export { AiOutlineEye } from "react-icons/ai"
 
 //password-not-visible
 export { AiOutlineEyeInvisible } from "react-icons/ai"
+
+// burger
+export { AiOutlineMenu } from "react-icons/ai"

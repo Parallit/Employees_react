@@ -14,7 +14,8 @@ import {
     AiOutlineReload,
     AiOutlineEyeInvisible,
     AiOutlineEye,
-    AiOutlineMail
+    AiOutlineMail,
+    AiOutlineMenu
 } from "src/icons";
 
 interface IconComponentProps {
@@ -69,6 +70,9 @@ const icons = (type: string) => {
         }
         case "password-not-visible": {
             return <AiOutlineEyeInvisible />
+        }
+        case "burger": {
+            return <AiOutlineMenu />
         }
         default: {
             return <AiOutlineRight />;

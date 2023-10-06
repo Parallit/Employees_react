@@ -1,5 +1,15 @@
 import { ITheme } from "src/interfaces/styled";
 
+const breakpoints = {
+    mobileS: '320px',
+    mobileM: '375px',
+    mobileL: '425px',
+    tablet: '768px',
+    laptop: '1024px',
+    laptopL: '1440px',
+    desktop: '2560px'
+}
+
 export const baseTheme: ITheme = {
     colors: {
         neonBlue: '#03e9f4',
@@ -18,14 +28,16 @@ export const baseTheme: ITheme = {
         large: '20px',
         medium: '18px',
         small: '16px'
-    }
-
-    // media: {
-    //     extraLarge: '(max-width: 1140px)',
-    //     large: '(max-width: 960px)',
-    //     medium: '(max-width: 720px)',
-    //     small: '(max-width: 540px)',
-    // },
+    },
+    media: {
+        mobileS: `(max-width: ${breakpoints.mobileS})`,
+        mobileM: `(max-width: ${breakpoints.mobileM})`,
+        mobileL: `(max-width: ${breakpoints.mobileL})`,
+        tablet: `(max-width: ${breakpoints.tablet})`,
+        laptop: `(max-width: ${breakpoints.laptop})`,
+        laptopL: `(max-width: ${breakpoints.laptopL})`,
+        desktop: `(max-width: ${breakpoints.desktop})`,
+    },
 
     // in px
     // sizes: {

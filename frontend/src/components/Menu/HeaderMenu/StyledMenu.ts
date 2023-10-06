@@ -1,10 +1,32 @@
-import { styled } from "styled-components";
+import { baseTheme } from "src/styles/theme"
+import { styled } from "styled-components"
 
-export const ContainerLink = styled.li`
+export const NavigateContainer = styled.nav`
+    margin: 20px 20px;
+    @media ${baseTheme.media.laptopL} {
+      margin: 0 20px;
+    }
+`
+
+export const List = styled.ul`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media ${baseTheme.media.laptop} {
+      display: none;
+    }
+
+    @media ${baseTheme.media.laptopL} {
+        justify-content: center;
+    }
+`
+
+export const Item = styled.li`
     list-style-type: none;
-    background: none;
-    border: none;
+    padding: 0 20px 0 20px;
     position: relative;
+    text-wrap: nowrap;
 
     & a::before {
         content: '';
