@@ -44,11 +44,12 @@ export const CustomInput: FC<CustomInputProps> = ({
     $width,
     className
 }) => {
+
     return (
         
         <>
             <div className={className}>
-                <input
+                <input                    
                     name={name}
                     id={id}
                     placeholder={placeholder}

@@ -29,12 +29,14 @@ export const EmployeeRemoveWarn: FC<EmployeeRemoveWarnProps> = ({ onClose, emplo
                 <p>It will be impossible to recover the data</p>
                 <div>
                     <DangerButton
+                        $width={'50%'}
                         $outline="none"
                         onClick={handleClickSuccess}
                     >
                         yes
                     </DangerButton>
                     <PrimaryButton
+                        $width={'50%'}
                         onClick={handleClickReject}
                     >
                         no

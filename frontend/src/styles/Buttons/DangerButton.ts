@@ -8,6 +8,7 @@ export const DangerButton = styled(CustomButton)`
   font-size: ${({ $fontSize }) => $fontSize || "16px"};
   cursor: ${({ disabled }) => (!disabled ? "pointer" : "not-allowed")};
   outline: ${({ $outline }) => $outline || "1px solid #fff"};
+  width: ${({ $width }) => $width || "100%"};
   border: none;
   border-radius: 10px;
   letter-spacing: 4px;

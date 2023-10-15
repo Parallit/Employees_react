@@ -19,7 +19,6 @@ export const ProfilePage: FC = () => {
   useEffect(() => {
     dispatch(fetchCurrentUser());
   }, []);
-  console.log('Parent', currentUser.employeesId);
   
   return (
     <>

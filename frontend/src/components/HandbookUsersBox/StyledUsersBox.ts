@@ -1,3 +1,4 @@
+import { baseTheme } from "src/styles/theme";
 import { styled } from "styled-components";
 
 export const StyledUsersBox = styled.div`
@@ -25,9 +26,19 @@ export const StyledUsersBox = styled.div`
     min-height: 70px;
     backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
-    letter-spacing: 2px;
     overflow: hidden;
     transition: 0.5s;
+
+    @media ${baseTheme.media.laptopL} {
+      grid-template-columns: repeat(7, 110px);
+      min-height: 110px;
+      align-items: end;
+      padding-bottom: 30px;
+    }
+      @media ${baseTheme.media.laptop} {
+        grid-template-columns: repeat(7, 90px);
+        column-gap: 10px;
+      }
   }
 
   & ul:hover {
@@ -39,12 +50,25 @@ export const StyledUsersBox = styled.div`
     );
     z-index: 999;
     transform: scale(1.2);
+
+    @media ${baseTheme.media.laptopL} {
+      transform: none;
+    }
   }
 
   & li {
     list-style-type: none;
     letter-spacing: 2px;
     overflow: hidden;
+
+    @media ${baseTheme.media.laptopL} {
+      letter-spacing: 0;
+      font-size: 16px;
+    }
+
+    @media ${baseTheme.media.laptop} {
+      font-size: 14px;
+    }
   }
 
   & li:first-child {
@@ -52,11 +76,19 @@ export const StyledUsersBox = styled.div`
     left: -130px;
     opacity: 0;
     transition: 0.8s;
+
+    @media ${baseTheme.media.laptopL} {
+      top: 15px;
+    }
   }
 
   & ul:hover li:first-child {
     opacity: 1;
     left: 20px;
+    @media ${baseTheme.media.laptopL} {
+      top: 15px;
+      left: 80px;
+    }
   }
 
   & li:last-child {
@@ -64,10 +96,17 @@ export const StyledUsersBox = styled.div`
     right: -130px;
     opacity: 0;
     transition: 0.8s;
+    @media ${baseTheme.media.laptopL} {
+      top: 15px;
+    }
   }
 
   & ul:hover li:last-child {
     right: 10px;
     opacity: 1;
+    @media ${baseTheme.media.laptopL} {
+      top: 15px;
+      right: 50px;
+    }
   }
 `

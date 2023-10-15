@@ -77,7 +77,6 @@ const userSlice = createSlice({
       updateUserInfo.fulfilled,
       (state, action: PayloadAction<User>) => {
         state.currentUser = action.payload;
-        console.log('Updated', state.currentUser);
       }
     );
     builder.addCase(deleteUserProfile.fulfilled, (state, _) => {

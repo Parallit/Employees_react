@@ -44,13 +44,13 @@ export const HandbookEmployeesBox: FC<HandbookEmployeesBoxProps> = ({ titles, cl
         const noLowerCaseData = unspacedData.charAt(0).toLowerCase() + unspacedData.slice(1);
         const property = unit[noLowerCaseData as keyof Employee];
 
-        if(typeof property === "string") {
+        if (typeof property === "string") {
             return property.toLowerCase().includes(lowerCaseValue)
-        } 
+        }
     }
 
     useEffect(() => {
-            dispatch(fetchEmployees());
+        dispatch(fetchEmployees());
     }, []);
 
     return (

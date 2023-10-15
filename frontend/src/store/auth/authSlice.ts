@@ -62,7 +62,6 @@ export const checkAuthUser = createAsyncThunk(
         `${process.env.REACT_APP_BASE_URL}/user/refresh`,
         { withCredentials: true }
       );
-      console.log("checkAuthThunk");
       return res.data;
     } catch (error) {
       return thunkApi.rejectWithValue(
@@ -75,6 +74,7 @@ export const checkAuthUser = createAsyncThunk(
 const initialState: AuthState = {
   AuthUser: {} as User,
   isAuth: false,
+  isAuthChecking: false,
   isLoading: false,
   errors: ''
 };
@@ -136,7 +136,7 @@ const authSlice = createSlice({
       .addCase(
         checkAuthUser.pending,
         (state, _) => {
-          state.isLoading = true;
+          state.isAuthChecking = true;
         })
       .addCase(
         checkAuthUser.fulfilled,
@@ -144,13 +144,13 @@ const authSlice = createSlice({
           localStorage.setItem('token', action.payload.accessToken);
           state.AuthUser = action.payload.user;
           state.isAuth = true;
-          state.isLoading = false;
+          state.isAuthChecking = false;
           state.errors = ''
         })
       .addCase(
         checkAuthUser.rejected,
         (state, _) => {
-          state.isLoading = false;
+          state.isAuthChecking = false;
           state.isAuth = false;
         });
   },

@@ -1,3 +1,4 @@
+import { baseTheme } from "src/styles/theme"
 import { styled } from "styled-components"
 
 export const ContainerInfo = styled.div<{

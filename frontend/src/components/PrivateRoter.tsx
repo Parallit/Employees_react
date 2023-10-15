@@ -5,7 +5,6 @@ import { selectIsAuth } from 'src/store/auth/selectors';
 
 interface PrivateRouteProps {
   component?: JSX.Element;
-  isAuth?: boolean
 }
 
 export const PrivateRoute: FC<PrivateRouteProps> = ({ component }) => {

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from 'src/components/Layout';
 import { Homepage } from 'src/pages/Homepage';
@@ -11,10 +11,10 @@ import { ProfilePage } from 'src/pages/ProfilePage';
 import { ChiefInfoPage } from 'src/pages/ChiefInfoPage';
 import { SubordinateInfoPage } from 'src/pages/SubordinateInfoPage';
 
-export const AppRouter: FC = () => {
+export const AppRouter: FC = () => { 
   return (
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout />} >
           <Route index element={<Homepage />} />
           <Route path="login" element={<LogIn />} />
           <Route path="users" element={<PrivateRoute component={<Users />}  />} />

@@ -1,25 +1,22 @@
-import { useEffect } from 'react';
+import GlobalStyles from 'src/styles/global'
+import { baseTheme } from 'src/styles/theme';
+import { ThemeProvider } from 'styled-components'
 import { BrowserRouter } from 'react-router-dom';
 import { AppRouter } from 'src/components/AppRouter';
-import GlobalStyles from 'src/styles/global'
-import { ThemeProvider } from 'styled-components'
-import { baseTheme } from 'src/styles/theme';
-import { checkAuthUser } from './store/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from './store';
+import { useEffect } from 'react';
+import { checkAuthUser } from './store/auth/authSlice';
 
 const App = () => {
-  const dispatch = useDispatch<AppDispatch>();  
+  const dispatch = useDispatch<AppDispatch>();
 
-  useEffect( () => {
-    if (localStorage.getItem('token')) {
-      dispatch(checkAuthUser());
-    }
+  useEffect(() => {
+    dispatch(checkAuthUser());
   }, []);
 
   return (
     <>
-    
       <ThemeProvider theme={baseTheme}>
         <BrowserRouter>
           <AppRouter />
@@ -31,4 +28,3 @@ const App = () => {
 };
 
 export default App
-

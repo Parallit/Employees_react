@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from 'src/store/auth/authSlice';
 import { AppDispatch } from 'src/store';
@@ -79,7 +79,6 @@ export const LoginForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
       [name]: errMsg
     }))
   }
-
   return (
     <>
       <FormContainer>
