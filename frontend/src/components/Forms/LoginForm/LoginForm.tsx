@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from 'src/store/auth/authSlice';
 import { AppDispatch } from 'src/store';
-import { useLocation, useNavigate } from 'react-router-dom'
+import { redirect, useLocation, useNavigate } from 'react-router-dom'
 import { InputForm } from 'src/styles/Inputs/InputForm';
 import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
 import { baseTheme } from 'src/styles/theme';
@@ -48,7 +48,7 @@ export const LoginForm: FC<LoginFormProp> = ({ onFormSwitch }) => {
         email: "",
         password: ""
       })
-      navigate(from, { replace: true });
+      navigate(from, {replace: true})
     }
   };
 

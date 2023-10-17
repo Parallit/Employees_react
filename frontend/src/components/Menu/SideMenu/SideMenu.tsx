@@ -10,7 +10,7 @@ import { userLogout } from 'src/store/auth/authSlice';
 
 interface SideMenuProps {
   navigation: MenuLinks[];
-  isAuth: boolean;
+  isAuth: boolean | null;
 }
 
 export const SideMenu: FC<SideMenuProps> = ({ navigation, isAuth }) => {

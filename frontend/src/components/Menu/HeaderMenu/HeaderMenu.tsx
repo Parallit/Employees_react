@@ -8,7 +8,7 @@ import { Item, List, NavigateContainer } from './StyledMenu';
 
 interface HeaderMenuProps {
   navigation: MenuLinks[];
-  isAuth: boolean;
+  isAuth: boolean | null;
 }
 
 export const HeaderMenu: FC<HeaderMenuProps> = ({ navigation, isAuth }) => {

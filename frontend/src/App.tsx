@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { checkAuthUser } from './store/auth/authSlice';
 
 const App = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
     dispatch(checkAuthUser());

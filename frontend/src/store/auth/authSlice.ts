@@ -109,14 +109,14 @@ const authSlice = createSlice({
       .addCase(
         userLogin.pending,
         (state, _) => {
-          state.isLoading = true;
+          state.isAuthChecking = true;
         })
       .addCase(
         userLogin.fulfilled,
         (state, action: PayloadAction<AuthResponse>) => {
           localStorage.setItem('token', action.payload.accessToken);
           state.isAuth = true;
-          state.isLoading = false;
+          state.isAuthChecking = false;
           state.AuthUser = action.payload.user;
           state.errors = ''
         }
@@ -124,7 +124,7 @@ const authSlice = createSlice({
       .addCase(
         userLogin.rejected,
         (state, action) => {
-          state.isLoading = false;
+          state.isAuthChecking = false;
           action.payload ? state.errors = action.payload : state.errors = ''
         });
     builder

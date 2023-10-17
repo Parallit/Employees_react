@@ -9,7 +9,7 @@ export interface AuthResponse {
 export interface AuthState {
   AuthUser: User;
   isAuthChecking: boolean;
-  isAuth: boolean;
+  isAuth: boolean | null;
   isLoading: boolean;
   errors: string
 }
