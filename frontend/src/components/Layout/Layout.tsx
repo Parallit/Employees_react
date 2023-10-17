@@ -6,7 +6,7 @@ import { LayoutContainer } from 'src/styles/Containers/LayoutContainer';
 import { ContentContainer } from 'src/styles/Containers/MainContainer';
 import { Header } from 'src/components/Header';
 
-export const Layout: FC = () => {
+export const Layout = () => {
   return (
     <>
       <LayoutContainer>

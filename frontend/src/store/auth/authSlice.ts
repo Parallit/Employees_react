@@ -62,6 +62,7 @@ export const checkAuthUser = createAsyncThunk(
         `${process.env.REACT_APP_BASE_URL}/user/refresh`,
         { withCredentials: true }
       );
+      console.log('Thunk check finish');
       return res.data;
     } catch (error) {
       return thunkApi.rejectWithValue(
@@ -144,6 +145,7 @@ const authSlice = createSlice({
           localStorage.setItem('token', action.payload.accessToken);
           state.AuthUser = action.payload.user;
           state.isAuth = true;
+          console.log('Action change state Auth');
           state.isAuthChecking = false;
           state.errors = ''
         })

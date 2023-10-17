@@ -1,4 +1,4 @@
-
+import EmployeeDto from '../dtos/employee-dto.js'
 import { Employee } from '../models/employee-model.js'
 import { User } from '../models/user-model.js'
 import tokenService from './token-service.js';
@@ -11,11 +11,12 @@ class EmployeesService {
         return employees
     }
     async getEmployee(id) {
-        const employee = await Employee.findById(id);
+        const employee = await Employee.findById(id);;
         if (!employee) {
             throw ApiError.BadRequest('Сотрудник не найден');
         }
-        return employee
+        const employeeDto = new EmployeeDto(employee);
+        return employeeDto
     }
     async getUserOfEmployee(id) {
         const user = await User.findById(id).populate('employeesId');

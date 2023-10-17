@@ -1,7 +1,6 @@
 import GlobalStyles from 'src/styles/global'
 import { baseTheme } from 'src/styles/theme';
 import { ThemeProvider } from 'styled-components'
-import { BrowserRouter } from 'react-router-dom';
 import { AppRouter } from 'src/components/AppRouter';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from './store';
@@ -18,10 +17,8 @@ const App = () => {
   return (
     <>
       <ThemeProvider theme={baseTheme}>
-        <BrowserRouter>
           <AppRouter />
-          <GlobalStyles />
-        </BrowserRouter>
+        <GlobalStyles />
       </ThemeProvider>
     </>
   );
