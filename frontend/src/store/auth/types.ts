@@ -8,8 +8,9 @@ export interface AuthResponse {
 
 export interface AuthState {
   AuthUser: User;
+  isUserChecked: boolean;
   isAuthChecking: boolean;
-  isAuth: boolean | null;
+  isAuth: boolean;
   isLoading: boolean;
   errors: string
 }

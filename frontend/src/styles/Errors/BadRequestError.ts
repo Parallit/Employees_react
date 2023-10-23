@@ -2,10 +2,11 @@ import { InputError } from "src/components/InputError";
 import { styled } from "styled-components";
 
 export const BadRequestError = styled(InputError)`
-    width: 100%;
-    font-size: 20px;
+    margin-top: 50px;
+    padding: 0 10px;
+    font-size: ${({ theme }) => theme.fontSize.medium};
+    background: ${({ theme }) => theme.bg.linear};
     text-align: center;
-    background: -webkit-linear-gradient(#f97b1e, #cd2895);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 `

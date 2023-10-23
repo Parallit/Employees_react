@@ -6,18 +6,22 @@ export interface ITheme {
         danger: string
     },
     bg: {
-        darkBlue: string
+        primary: string,
         neonBlue: string
         orange: string
         danger: string
+        linear: string
+    },
+    boxShadow: {
+        primary: string,
     },
     fontSize: {
+        XXL: string,
         extraLarge: string,
         large: string,
         medium: string,
         small: string
-    }
-
+    },
     media: {
         mobileS: string,
         mobileM: string,

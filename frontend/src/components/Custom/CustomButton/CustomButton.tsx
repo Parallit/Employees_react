@@ -45,10 +45,9 @@ export const CustomButton: FC<CustomButtonProps> = ({
     $bottom,
     className,
 }) => {
-
     return (
         <>
-            <button onClick={onClick} className={className}>
+            <button onClick={onClick} className={className} disabled={disabled}>
                 {children}
             </button>
         </>

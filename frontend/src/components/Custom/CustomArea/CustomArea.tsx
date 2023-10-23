@@ -1,44 +1,50 @@
 import { FC } from 'react';
 import { InputValidationError } from 'src/styles/Errors/InputValidationError';
 
-interface CustomInputProps {
-    required: boolean;
-    type: 'text' | 'number' | 'email' | 'password';
+interface CustomAreaProps {
+    required?: boolean;
+    rows: number;
+    cols: number;
+    maxLength: number;
     value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
     name: string;
     labelName: string;
     error?: string;
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void
     className?: string;
 };
 
-export const CustomInput: FC<CustomInputProps> = ({
+export const CustomArea: FC<CustomAreaProps> = ({
     value,
     name,
-    type,
-    labelName,
+    rows,
+    cols,
+    maxLength,
     required,
+    labelName,
     onChange,
     onBlur,
     error,
     className
-}) => {   
+}) => {
     return (
-        
+
         <>
             <div className={className}>
-                <input                    
+                <textarea
+                    rows={rows}
+                    cols={cols}
+                    maxLength={maxLength}
                     name={name}
                     id={name}
                     value={value}
-                    type={type}
                     required={required}
                     onChange={onChange}
                     onBlur={onBlur}
-                />
-                <label htmlFor={name}>
-                    {labelName}:{' '}
+                ></textarea>
+                <label htmlFor={labelName}>
+                    About:
                 </label>
                 {
                     required &&

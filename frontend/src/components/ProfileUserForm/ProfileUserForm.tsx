@@ -11,51 +11,23 @@ import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
 import { DangerButton } from 'src/styles/Buttons/DangerButton';
 import { AvatarIcon } from '../AvatarIcon';
 import { styled } from 'styled-components';
+import { useInput } from '../Hook/useInput';
+import { useArea } from '../Hook/useArea';
+import { TextAreaForm } from 'src/styles/TextArea/TextArea';
 
 interface ProfileUserProps {
   user: User;
 }
 
-interface Errors {
-  firstName: string,
-  lastName: string,
-  position: string,
-  room: string,
-  department: string,
-  telephone: string,
-  about: string
-}
-
 export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
-  const [errors, setErrors] = useState<Errors>({ 
-    firstName: "",
-    lastName: "",
-    position: "",
-    room: "",
-    department: "",
-    telephone: "",
-    about: ""
-  })
+  const firstNameInput = useInput('');
+  const lastNameInput = useInput('');
+  const positionInput = useInput('');
+  const roomInput = useInput('');
+  const departmentInput = useInput('');
+  const telephoneInput = useInput('');
+  const aboutArea = useArea('');
   const [avatarId, setAvatarId] = useState<string>(user.avatar);
-  const [fieldState, setFieldState] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    position: user.position,
-    room: user.room,
-    department: user.department,
-    telephone: user.telephone,
-    about: user.about
-  });
-
-  const {
-    firstName,
-    lastName,
-    position,
-    room,
-    department,
-    telephone,
-    about
-  } = fieldState;
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -71,52 +43,17 @@ export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
     e.preventDefault();
     const editedUserInfo = {
       userId: user._id,
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      position: positionInput.value,
+      room: roomInput.value,
+      department: departmentInput.value,
+      telephone: telephoneInput.value,
+      about: aboutArea.value,
       avatar: avatarId,
-      firstName: firstName,
-      lastName: lastName,
-      position: position,
-      room: room,
-      department: department,
-      telephone: telephone,
-      about: about
     };
     updateProfile(editedUserInfo);
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFieldState((prevState) => ({
-      ...prevState,
-      [name]: value
-    }))
-    setErrors((prevState) => ({
-      ...prevState,
-      [name]: ''
-    }))
-  }
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    let errMsg = "";
-    if (!value) {
-      errMsg = 'Please fill out this field!';    
-    } else if (name === "email" && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-      errMsg = 'Please use a valid email address';
-    } else if (name === "password" && (value.length < 3 || value.length > 32)) {
-      errMsg = 'Password should contain at least 3 characters';
-    }
-    setErrors((prevState) => ({
-      ...prevState,
-      [name]: errMsg
-    }))
-  }
-  
-  const handleChangeArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFieldState((prevState) => ({
-      ...prevState,
-      [name]: value
-    }))
-  }
 
   const getAvatarId = (radioId: string) => {
     setAvatarId(radioId)
@@ -131,90 +68,55 @@ export const ProfileUserForm: FC<ProfileUserProps> = ({ user }) => {
           <InputBox>
             <InputForm
               required
-              value={fieldState.firstName}
+              type={'text'}
               name={'firstName'}
-              id={'firstName'}
               labelName={'First Name'}
-              type={'text'}
-              errors={errors}
-              onBlur={handleBlur}
-              onChange={handleChange} 
-              $width='45%'/>
+              {...firstNameInput}
+            />
             <InputForm
               required
-              value={fieldState.lastName}
+              type={'text'}
               name={'lastName'}
-              id={'lastName'}
               labelName={'Last Name'}
-              errors={errors}
-              onBlur={handleBlur}
-              type={'text'}
-              onChange={handleChange} 
-              $width='45%'/>
-          </InputBox>
-          <InputBox>
+              {...lastNameInput}
+            />
             <InputForm
               required
-              value={fieldState.department}
-              name={'department'}
-              id={'department'}
-              labelName={'Department'}
-              errors={errors}
-              onBlur={handleBlur}
               type={'text'}
-              onChange={handleChange} 
-              $width='45%'/>
-            <InputForm
-              required
-              value={fieldState.position}
               name={'position'}
-              id={'position'}
               labelName={'Position'}
-              type={'text'}
-              errors={errors}
-              onBlur={handleBlur}
-              onChange={handleChange} 
-              $width='45%'/>
-          </InputBox>
-          <InputBox>
+              {...positionInput}
+            />
             <InputForm
               required
-              value={fieldState.room}
+              type={'text'}
               name={'room'}
-              id={'room'}
               labelName={'Room'}
-              errors={errors}
-              onBlur={handleBlur}
-              type={'text'}
-              onChange={handleChange} 
-              $width='45%'/>
+              {...roomInput}
+            />
             <InputForm
               required
-              value={fieldState.telephone}
-              name={'telephone'}
-              id={'telephone'}
-              labelName={'Tel.'}
-              errors={errors}
-              onBlur={handleBlur}
               type={'text'}
-              onChange={handleChange} 
-              $width='45%'/>
+              name={'department'}
+              labelName={'Department'}
+              {...departmentInput}
+            />
+            <InputForm
+              required
+              type={'text'}
+              name={'telephone'}
+              labelName={'Telephone'}
+              {...telephoneInput}
+            />
           </InputBox>
-          <div className={style.textbox_wrp}>
-            <textarea
-              onChange={handleChangeArea}
-              value={fieldState.about}
-              className={style.form_textbox}
-              rows={10}
-              cols={45}
-              name={'about'}
-              maxLength={300}
-              id="about"
-            ></textarea>
-            <label htmlFor="about" className={style.form_label}>
-              About:
-            </label>
-          </div>
+          <TextAreaForm
+            cols={14}
+            rows={5}
+            maxLength={300}
+            {...aboutArea}
+            name={'about'}
+            labelName={'About'}
+          />
           <div>
             <h4>Shoose an Avatar:</h4>
             <AvatarFormBox getAvatarId={getAvatarId} />

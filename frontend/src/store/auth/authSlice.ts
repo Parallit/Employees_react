@@ -62,7 +62,6 @@ export const checkAuthUser = createAsyncThunk(
         `${process.env.REACT_APP_BASE_URL}/user/refresh`,
         { withCredentials: true }
       );
-      console.log('Thunk check finish');
       return res.data;
     } catch (error) {
       return thunkApi.rejectWithValue(
@@ -74,6 +73,7 @@ export const checkAuthUser = createAsyncThunk(
 
 const initialState: AuthState = {
   AuthUser: {} as User,
+  isUserChecked: false,
   isAuth: false,
   isAuthChecking: false,
   isLoading: false,
@@ -102,21 +102,24 @@ const authSlice = createSlice({
       .addCase(
         userRegistration.rejected,
         (state, action) => {
-          state.isLoading = false;
           action.payload ? state.errors = action.payload : state.errors = ''
+          state.isLoading = false;
         });
     builder
       .addCase(
         userLogin.pending,
         (state, _) => {
           state.isAuthChecking = true;
+          state.isLoading = true;
         })
       .addCase(
         userLogin.fulfilled,
         (state, action: PayloadAction<AuthResponse>) => {
           localStorage.setItem('token', action.payload.accessToken);
           state.isAuth = true;
+          state.isUserChecked = true;
           state.isAuthChecking = false;
+          state.isLoading = false;
           state.AuthUser = action.payload.user;
           state.errors = ''
         }
@@ -125,6 +128,7 @@ const authSlice = createSlice({
         userLogin.rejected,
         (state, action) => {
           state.isAuthChecking = false;
+          state.isLoading = false;
           action.payload ? state.errors = action.payload : state.errors = ''
         });
     builder
@@ -144,14 +148,15 @@ const authSlice = createSlice({
         (state, action: PayloadAction<AuthResponse>) => {
           localStorage.setItem('token', action.payload.accessToken);
           state.AuthUser = action.payload.user;
+          state.isUserChecked = true;
           state.isAuth = true;
-          console.log('Action change state Auth');
           state.isAuthChecking = false;
           state.errors = ''
         })
       .addCase(
         checkAuthUser.rejected,
         (state, _) => {
+          state.isUserChecked = true;
           state.isAuthChecking = false;
           state.isAuth = false;
         });

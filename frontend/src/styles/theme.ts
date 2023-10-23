@@ -18,16 +18,22 @@ export const baseTheme: ITheme = {
         danger: '#ff6781 ',
     },
     bg: {
-        darkBlue: '#00000080',
+        primary: 'rgba(0, 0, 0, 0.9)',
         neonBlue: '#03e9f4',
         orange: '#ff7101',
         danger: '#ff6781 ',
+        linear: 'linear-gradient(166deg, rgb(249, 123, 30) 25%, rgb(205, 40, 149) 81%)',
     },
+    boxShadow: {
+        primary: '0 15px 25px rgba(0, 0, 0, 0.9)'
+    },
+    // 12-16pt on a mobile screen, 15-19pt on a tablet, and 16-20pt on a desktop computer screen
     fontSize: {
-        extraLarge: '22px',
+        XXL: '32px',
+        extraLarge: '24px',
         large: '20px',
         medium: '18px',
-        small: '16px'
+        small: '14px',
     },
     media: {
         mobileS: `(max-width: ${breakpoints.mobileS})`,

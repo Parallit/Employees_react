@@ -11,7 +11,9 @@ const App = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    dispatch(checkAuthUser());
+    if(localStorage.getItem('token')){
+      dispatch(checkAuthUser());
+    }
   }, []);
 
   return (
