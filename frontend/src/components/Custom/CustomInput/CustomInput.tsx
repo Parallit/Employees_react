@@ -2,56 +2,35 @@ import { FC } from 'react';
 import { InputValidationError } from 'src/styles/Errors/InputValidationError';
 
 interface CustomInputProps {
-    value: string;
-    name: string;
-    type: string;
-    labelName: string;
-    isEmptyField?: boolean;
-    errors: Errors;
-    id?: string;
-    placeholder?: string;
     required: boolean;
+    type: 'text' | 'number' | 'email' | 'password';
+    value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
-    $width?: string;
+    name: string;
+    labelName: string;
+    error?: string;
     className?: string;
 };
-
-interface Errors {
-    email?: string;
-    password?: string;
-    firstName?: string;
-    lastName?: string;
-    position?: string;
-    room?: string;
-    department?: string;
-    telephone?: string
-    confirmPassword?: string;
-  }
-  
 
 export const CustomInput: FC<CustomInputProps> = ({
     value,
     name,
     type,
-    placeholder,
-    id,
     labelName,
     required,
     onChange,
     onBlur,
-    errors,
-    $width,
+    error,
     className
-}) => {
+}) => {   
     return (
         
         <>
             <div className={className}>
-                <input
+                <input                    
                     name={name}
-                    id={id}
-                    placeholder={placeholder}
+                    id={name}
                     value={value}
                     type={type}
                     required={required}
@@ -61,9 +40,10 @@ export const CustomInput: FC<CustomInputProps> = ({
                 <label htmlFor={name}>
                     {labelName}:{' '}
                 </label>
-                { errors[name as keyof Errors] && required && (
-                    <InputValidationError>{errors[name as keyof Errors]}</InputValidationError>
-                )}
+                {
+                    required &&
+                    <InputValidationError>{error}</InputValidationError>
+                }
             </div>
         </>
     );

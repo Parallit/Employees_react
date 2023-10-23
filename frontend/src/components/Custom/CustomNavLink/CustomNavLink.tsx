@@ -8,6 +8,10 @@ interface NavLinkComponentProps {
     $defaultColor?: string;
     $activeColor?: string;
     $fontSize?: string;
+    $padding?: string;
+    $margin?: string;
+    $decoration?: string;
+    $textAlign?: string;
     $textTransform?: string;
 }
 
@@ -19,6 +23,10 @@ export const CustomNavLink: FC<NavLinkComponentProps> = ({
     $activeColor,
     $fontSize,
     $textTransform,
+    $padding,
+    $margin,
+    $textAlign,
+    $decoration,
     ...props
 }) => {
     return (

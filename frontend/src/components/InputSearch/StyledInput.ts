@@ -1,3 +1,4 @@
+import { baseTheme } from "src/styles/theme";
 import { styled } from "styled-components";
 
 export const Input = styled.input`
@@ -10,12 +11,10 @@ export const Input = styled.input`
     border-top: 1px solid #e55455;
     border-radius: 10px;
     height: 80%;
+    width: 100%;
     text-align: center;
 
-    &:focus~& label {
-    top: -20px;
-    left: 0;
-    color: #03e9f4;
-    font-size: 12px;
+    @media ${baseTheme.media.laptop} {
+        height: 40%;
     }
 `

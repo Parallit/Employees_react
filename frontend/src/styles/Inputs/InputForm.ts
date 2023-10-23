@@ -6,17 +6,17 @@ export const InputForm = styled(CustomInput) <{
 }>` 
     position: relative;
     width: ${({ $width }) => $width || "100%"};
-    margin-bottom: 35px;
+    margin-bottom: 40px;
     display: flex;
 
     & input {
         width: 100%;
         padding: 20px 0;
-        font-size: 16px;
-        color: #fff;
+        font-size: ${({ theme }) => theme.fontSize.medium};
+        color: ${({ theme }) => theme.colors.white};
         border: none;
         border-bottom: 30px;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid ${({ theme }) => theme.colors.white};
         outline: none;
         background: transparent;
     }
@@ -26,22 +26,22 @@ export const InputForm = styled(CustomInput) <{
         top: 0;
         left: 0;
         padding: 10px 0;
-        font-size: 16px;
-        color: #fff;
+        font-size: ${({ theme }) => theme.fontSize.medium};
+        color: ${({ theme }) => theme.colors.white};
         pointer-events: none;
         transition: 0.5s;
     }
 
     & input:focus {
         outline: 0;      
-        border-bottom: 1px solid #03e9f4;
+        border-bottom: 1px solid ${({ theme }) => theme.colors.neonBlue};
     }
 
     & input:focus~label,
     input:valid~label {
     top: -20px;
     left: 0;
-    color: #03e9f4;
-    font-size: 12px;
+    color: ${({ theme }) => theme.colors.neonBlue};
+    font-size: ${({ theme }) => theme.fontSize.small};
 }
 `

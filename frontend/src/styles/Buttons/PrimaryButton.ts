@@ -22,9 +22,18 @@ export const PrimaryButton = styled(CustomButton)`
     transition: all 0.5s ease-in-out;
     
     &:hover {
-        color: ${({ $hoverColor, theme }) => $hoverColor || theme.colors.white};;
+        color: ${({ $hoverColor, theme }) => $hoverColor || theme.colors.white};
         background: #03e9f4;
         box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
             0 0 100px #03e9f4;
         }
+
+    &:focus {
+        outline: 1px solid ${({ theme }) => theme.colors.neonBlue};
+    }
+
+    &:disabled {
+        color: ${({ theme }) => theme.colors.white};
+        opacity: 0.8;
+    }
 `

@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser'
+import path from 'path'
 import logger from 'morgan';
 
 import 'dotenv/config';
@@ -24,6 +25,7 @@ app.use(cors(
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
+
 app.get('/status', (_, res) => res.send('OK'));
 app.use('/api/user', UsersRouter);
 app.use('/api/employees', EmployeesRouter);

@@ -1,3 +1,4 @@
+import { baseTheme } from "src/styles/theme"
 import { styled } from "styled-components"
 
 export const SearchContainer = styled.div`
@@ -20,6 +21,16 @@ export const SearchContainer = styled.div`
         margin: 0;
         min-height: 50px;
         position: relative;
+
+        @media ${baseTheme.media.laptopL} {
+            grid-template-columns: repeat(7, 110px);
+        }
+
+        @media ${baseTheme.media.laptop} {
+            grid-template-columns: repeat(7, 90px);
+            column-gap: 10px;
+            min-height: 100px;
+        }
     }
 
     & li {
@@ -27,6 +38,9 @@ export const SearchContainer = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        @media ${baseTheme.media.laptop} {
+            align-items: end;
+        }
 
         & svg {
             width: 35px;
@@ -38,14 +52,43 @@ export const SearchContainer = styled.div`
         position: absolute;
         left: 25px;
         top: 0;
-        transition: all 0.5s ease-in-out;
+        @media ${baseTheme.media.laptopL} {
+            left: -10px;
+            width: 40px;
+            height: 100%;
+
+            & svg {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        @media ${baseTheme.media.laptop} {
+            left: -15px;
+            height: 40%;
+        }
     }
 
     & li:last-child {
         position: absolute;
         right: 25px;
         top: 0;
-        transition: all 0.5s ease-in-out;
+
+        @media ${baseTheme.media.laptopL} {
+            right: -10px;
+            width: 40px;
+            height: 100%;
+
+            & svg {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        @media ${baseTheme.media.laptop} {
+            right: -15px;
+            height: 40%;
+        }
     }
 `
 

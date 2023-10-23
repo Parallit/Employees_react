@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import $api from 'src/axios';
 import { AddEmployeeRequest, EmployeesState } from 'src/store/employees/types';
-import { Employee, Employees } from 'src/store/types.common';
+import { Employee, Employees, MyKnownApiError } from 'src/store/types.common';
 
 export const fetchEmployees = createAsyncThunk(
   'employees/fetchEmployees',
@@ -17,30 +17,36 @@ export const fetchEmployees = createAsyncThunk(
   }
 );
 
-export const addNewEmployee = createAsyncThunk(
+export const addNewEmployee = createAsyncThunk<
+  Employee,
+  AddEmployeeRequest,
+  { rejectValue: string }
+>(
   'employees/addNewEmployee',
-  async (payload: AddEmployeeRequest, thunkApi) => {
+  async (payload, { rejectWithValue }) => {
     try {
       const res = await $api.post<Employee>('/employees/add', payload);
       return res.data;
     } catch (error) {
-      return thunkApi.rejectWithValue(
-        `Не удалось добавить сотрудника: ${error}`
-      );
+      const err = error as MyKnownApiError
+      return rejectWithValue(err.error)
     }
   }
 );
 
-export const editEmployee = createAsyncThunk(
+export const editEmployee = createAsyncThunk<
+  { employee: Employee, newData: AddEmployeeRequest },
+  { employee: Employee, newData: AddEmployeeRequest },
+  { rejectValue: string }
+>(
   'employees/editEmployee',
-  async (payload: { employee: Employee, newData: AddEmployeeRequest }, thunkApi) => {
+  async (payload, { rejectWithValue }) => {
     try {
       const res = await $api.patch<Employee>(`/employees/edit/${payload.employee._id}`, payload.newData);
       return payload;
     } catch (error) {
-      return thunkApi.rejectWithValue(
-        `Не удалось редактировать данные сотрудника: ${error}`
-      );
+      const err = error as MyKnownApiError
+      return rejectWithValue(err.error)
     }
   }
 );
@@ -63,6 +69,7 @@ const initialState: EmployeesState = {
   newEmployee: {} as AddEmployeeRequest,
   isLoadingEmployees: false,
   employees: [],
+  errors: ''
 };
 
 const usersSlice = createSlice({
@@ -84,24 +91,53 @@ const usersSlice = createSlice({
           state.isLoadingEmployees = false;
         }
       );
-
-    builder.addCase(
-      addNewEmployee.fulfilled,
-      (state, action: PayloadAction<Employee>) => {
-        state.newEmployee = action.payload;
-        state.employees.push(action.payload);
-      }
-    );
-    builder.addCase(
-      editEmployee.fulfilled,
-      (state, action: PayloadAction<{ employee: Employee, newData: AddEmployeeRequest }>) => {
-        const [prevDataEmployee, newDataEmployee] = [action.payload.employee, action.payload.newData]
-        const employee = state.employees.find((employee) => employee._id === prevDataEmployee._id);
-        if (employee) {
-          Object.assign(employee, newDataEmployee);
+    builder
+      .addCase(
+        addNewEmployee.pending,
+        (state, _) => {
+          state.isLoadingEmployees = true;
         }
-      }
-    );
+      )
+      .addCase(
+        addNewEmployee.fulfilled,
+        (state, action: PayloadAction<Employee>) => {
+          state.isLoadingEmployees = false;
+          state.newEmployee = action.payload;
+          state.employees.push(action.payload);
+        }
+      )
+      .addCase(
+        addNewEmployee.rejected,
+        (state, action) => {
+          state.isLoadingEmployees = false;
+          action.payload ? state.errors = action.payload : state.errors = ''
+        }
+      )
+    builder
+      .addCase(
+        editEmployee.pending,
+        (state, _) => {
+          state.isLoadingEmployees = true;
+        }
+      )
+      .addCase(
+        editEmployee.fulfilled,
+        (state, action: PayloadAction<{ employee: Employee, newData: AddEmployeeRequest }>) => {
+          state.isLoadingEmployees = false;
+          const [prevDataEmployee, newDataEmployee] = [action.payload.employee, action.payload.newData]
+          const employee = state.employees.find((employee) => employee._id === prevDataEmployee._id);
+          if (employee) {
+            Object.assign(employee, newDataEmployee);
+          }
+        }
+      )
+      .addCase(
+        editEmployee.rejected,
+        (state, action) => {
+          state.isLoadingEmployees = false;
+          action.payload ? state.errors = action.payload : state.errors = ''
+        }
+      );
     builder.addCase(
       removeEmployee.fulfilled,
       (state, action: PayloadAction<Employee>) => {

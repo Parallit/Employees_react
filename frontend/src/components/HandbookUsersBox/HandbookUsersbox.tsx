@@ -9,7 +9,6 @@ import { selectIsLoadingUsers, selectUsers } from "src/store/users/selectors";
 import { Spinner } from "../Spinner";
 import { AvatarIcon } from "../AvatarIcon";
 import { useSearchContext } from "src/components/Hook/useSearchContext";
-import { SubordinatesBox } from "../SubordinatesBox";
 import { ModalButtonBox } from "../ModalButtonBox";
 
 interface inputData {

@@ -1,12 +1,14 @@
 import { styled } from "styled-components";
 
 export const FormContainer = styled.div<{
-    width?: string
+    $width?: string
+    $margin?: string
 }>`
-    width: ${({ width }) => width || "500px"};
+    width: ${({ $width }) => $width || "500px"};
+    margin: ${({ $margin }) => $margin || "15% auto 15% auto"};
     padding: 40px 40px;
     box-sizing: border-box;
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.9);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
+    background: ${({ theme }) => theme.bg.primary};
+    box-shadow: ${({ theme }) => theme.boxShadow.primary};
 `

@@ -1,0 +1,1 @@
+export { CustomArea } from './CustomArea'

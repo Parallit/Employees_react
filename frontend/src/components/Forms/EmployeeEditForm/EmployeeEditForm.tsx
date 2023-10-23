@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { editEmployee } from 'src/store/employees/employeesSlice';
 import { Employee } from 'src/store/types.common';
@@ -7,11 +7,11 @@ import { AvatarFormBox } from 'src/components/AvatarFormBox';
 import { InputForm } from 'src/styles/Inputs/InputForm';
 import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
 import { AvatarIcon } from 'src/components/AvatarIcon';
-import { Errors } from '../types.commonForm';
-import { TitleForm } from 'src/styles/Titles/TitleForm';
 import { SubTitleForm } from 'src/styles/SubTitles/SubTitleForm';
-import { FormContainer } from 'src/styles/Containers/FormContainer';
 import { ContainerFlexCenter } from 'src/styles/Containers/ContainerFlexCenter';
+import { useInput } from 'src/components/Hook/useInput';
+import { BadRequestError } from 'src/styles/Errors/BadRequestError';
+import { selectIsLoadingEmployees, selectReqErr } from 'src/store/employees/selectors';
 
 interface EmployeeEditFormProps {
     employee: Employee;
@@ -19,76 +19,53 @@ interface EmployeeEditFormProps {
 }
 
 export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose }) => {
-    const [errors, setErrors] = useState<Errors>({
-        firstName: "",
-        lastName: "",
-        position: "",
-        room: "",
-        department: "",
-        telephone: ""
-    })
+    const firstNameInput = useInput(employee.firstName);
+    const lastNameInput = useInput(employee.lastName);
+    const positionInput = useInput(employee.position);
+    const roomInput = useInput(employee.room);
+    const departmentInput = useInput(employee.department);
+    const telephoneInput = useInput(employee.telephone);
     const [avatarId, setAvatarId] = useState<string>(employee.avatar);
-    const [fieldState, setFieldState] = useState({
-        firstName: employee.firstName,
-        lastName: employee.lastName,
-        position: employee.position,
-        room: employee.room,
-        department: employee.department,
-        telephone: employee.telephone,
-    });
-    const {
-        firstName,
-        lastName,
-        position,
-        room,
-        department,
-        telephone
-    } = fieldState;
 
     const dispatch = useDispatch<AppDispatch>();
+    const isLoading = useSelector(selectIsLoadingEmployees);
+    const reqErrors = useSelector(selectReqErr);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const newDataEmployee = {
-            firstName: firstName,
-            lastName: lastName,
-            position: position,
-            room: room,
-            department: department,
-            telephone: telephone,
-            avatar: avatarId
-        };
-        dispatch(editEmployee({ employee, newData: newDataEmployee }));
-        onClose()
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFieldState((prevState) => ({
-            ...prevState,
-            [name]: value
-        }))
-        setErrors((prevState) => ({
-            ...prevState,
-            [name]: ''
-        }))
-    }
-
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        let errMsg = "";
-        if (!value) {
-            errMsg = 'Please fill out this field!';
-        } else if (name === "email" && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-            errMsg = 'Please use a valid email address';
-        } else if (name === "password" && (value.length < 3 || value.length > 32)) {
-            errMsg = 'Password should contain at least 3 characters';
+    const isValid = (input: { value: string, error: string }): boolean => {
+        if (input.value && input.error) {
+            return false
+        } else {
+            return true
         }
-        setErrors((prevState) => ({
-            ...prevState,
-            [name]: errMsg
-        }))
     }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (
+            isValid(firstNameInput) &&
+            isValid(lastNameInput) &&
+            isValid(positionInput) &&
+            isValid(roomInput) &&
+            isValid(departmentInput) &&
+            isValid(telephoneInput)
+        ) {
+            try {
+                const newDataEmployee = {
+                    firstName: firstNameInput.value,
+                    lastName: lastNameInput.value,
+                    position: positionInput.value,
+                    room: roomInput.value,
+                    department: departmentInput.value,
+                    telephone: telephoneInput.value,
+                    avatar: avatarId
+                };
+                await dispatch(editEmployee({ employee, newData: newDataEmployee })).unwrap();
+                onClose()
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     const getAvatarId = (radioId: string) => {
         setAvatarId(radioId)
@@ -96,81 +73,68 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose 
 
     return (
         <>
-            <FormContainer width={"100%"}>
-                <TitleForm>Employee information</TitleForm>
-                <ContainerFlexCenter>
-                    <AvatarIcon width={'120px'} height={'120px'} name={avatarId} />
-                </ContainerFlexCenter>
-                <form onSubmit={handleSubmit}>
-                    <InputForm
-                        required
-                        value={fieldState.firstName}
-                        name={'firstName'}
-                        id={'firstName'}
-                        labelName={'First Name'}
-                        errors={errors}
-                        onBlur={handleBlur}
-                        type={'text'}
-                        onChange={handleChange} />
-                    <InputForm
-                        required
-                        value={fieldState.lastName}
-                        name={'lastName'}
-                        id={'lastName'}
-                        labelName={'Last Name'}
-                        errors={errors}
-                        onBlur={handleBlur}
-                        type={'text'}
-                        onChange={handleChange} />
-                    <InputForm
-                        required
-                        value={fieldState.position}
-                        name={'position'}
-                        id={'position'}
-                        labelName={'Position'}
-                        errors={errors}
-                        onBlur={handleBlur}
-                        type={'text'}
-                        onChange={handleChange} />
-                    <InputForm
-                        required
-                        value={fieldState.room}
-                        name={'room'}
-                        id={'room'}
-                        labelName={'Room'}
-                        errors={errors}
-                        onBlur={handleBlur}
-                        type={'text'}
-                        onChange={handleChange} />
-                    <InputForm
-                        required
-                        value={fieldState.department}
-                        name={'department'}
-                        id={'department'}
-                        labelName={'Department'}
-                        errors={errors}
-                        onBlur={handleBlur}
-                        type={'text'}
-                        onChange={handleChange} />
-                    <InputForm
-                        required
-                        value={fieldState.telephone}
-                        name={'telephone'}
-                        id={'telephone'}
-                        labelName={'Tel.'}
-                        errors={errors}
-                        onBlur={handleBlur}
-                        type={'text'}
-                        onChange={handleChange} />
-                    <div>
-                        <SubTitleForm>Shoose an Avatar:</SubTitleForm>
-                        <AvatarFormBox getAvatarId={getAvatarId} />
-                    </div>
-                    <PrimaryButton>
-                        Click to complete edit
-                    </PrimaryButton>
-                </form>
-            </FormContainer>
+            <ContainerFlexCenter>
+                <AvatarIcon width={'120px'} height={'120px'} name={avatarId} />
+            </ContainerFlexCenter>
+            <form onSubmit={handleSubmit}>
+                <InputForm
+                    required
+                    type={'text'}
+                    name={'firstName'}
+                    labelName={'First Name'}
+                    {...firstNameInput}
+                />
+                <InputForm
+                    required
+                    type={'text'}
+                    name={'lastName'}
+                    labelName={'Last Name'}
+                    {...lastNameInput}
+                />
+                <InputForm
+                    required
+                    type={'text'}
+                    name={'position'}
+                    labelName={'Position'}
+                    {...positionInput}
+                />
+                <InputForm
+                    required
+                    type={'text'}
+                    name={'room'}
+                    labelName={'Room'}
+                    {...roomInput}
+                />
+                <InputForm
+                    required
+                    type={'text'}
+                    name={'department'}
+                    labelName={'Department'}
+                    {...departmentInput}
+                />
+                <InputForm
+                    required
+                    type={'text'}
+                    name={'telephone'}
+                    labelName={'Telephone'}
+                    {...telephoneInput}
+                />
+                <BadRequestError>{reqErrors}</BadRequestError>
+                <SubTitleForm>Shoose an Avatar:</SubTitleForm>
+                <AvatarFormBox getAvatarId={getAvatarId} />
+                <PrimaryButton
+                    disabled={(
+                        !firstNameInput.value ||
+                        !lastNameInput.value ||
+                        !positionInput.value ||
+                        !roomInput.value ||
+                        !departmentInput.value ||
+                        !telephoneInput.value
+                    )}
+                >
+                    {isLoading ? 'Loading...' : 'Click to complete edit'}
+                </PrimaryButton>
+            </form>
         </>
     );
 };

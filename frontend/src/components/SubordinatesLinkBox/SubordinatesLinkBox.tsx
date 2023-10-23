@@ -12,7 +12,6 @@ interface SubordinatesLinkBoxProps {
 }
 
 export const SubordinatesLinkBox: FC<SubordinatesLinkBoxProps> = ({ subordinates, $width, $maxHeight, className }) => {
-    console.log(subordinates);
     
     return (
         <ContainerInfo className={className} $width={$width} $maxHeight={$maxHeight}>

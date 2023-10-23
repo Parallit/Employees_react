@@ -15,6 +15,7 @@ export interface User {
 export type Users = User[];
 
 export interface Employee {
+  employeesId: any;
   _id: string;
   firstName: string;
   lastName: string;

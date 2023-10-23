@@ -62,7 +62,6 @@ export const checkAuthUser = createAsyncThunk(
         `${process.env.REACT_APP_BASE_URL}/user/refresh`,
         { withCredentials: true }
       );
-      console.log("checkAuthThunk");
       return res.data;
     } catch (error) {
       return thunkApi.rejectWithValue(
@@ -74,7 +73,9 @@ export const checkAuthUser = createAsyncThunk(
 
 const initialState: AuthState = {
   AuthUser: {} as User,
+  isUserChecked: false,
   isAuth: false,
+  isAuthChecking: false,
   isLoading: false,
   errors: ''
 };
@@ -101,13 +102,14 @@ const authSlice = createSlice({
       .addCase(
         userRegistration.rejected,
         (state, action) => {
-          state.isLoading = false;
           action.payload ? state.errors = action.payload : state.errors = ''
+          state.isLoading = false;
         });
     builder
       .addCase(
         userLogin.pending,
         (state, _) => {
+          state.isAuthChecking = true;
           state.isLoading = true;
         })
       .addCase(
@@ -115,6 +117,8 @@ const authSlice = createSlice({
         (state, action: PayloadAction<AuthResponse>) => {
           localStorage.setItem('token', action.payload.accessToken);
           state.isAuth = true;
+          state.isUserChecked = true;
+          state.isAuthChecking = false;
           state.isLoading = false;
           state.AuthUser = action.payload.user;
           state.errors = ''
@@ -123,6 +127,7 @@ const authSlice = createSlice({
       .addCase(
         userLogin.rejected,
         (state, action) => {
+          state.isAuthChecking = false;
           state.isLoading = false;
           action.payload ? state.errors = action.payload : state.errors = ''
         });
@@ -136,21 +141,23 @@ const authSlice = createSlice({
       .addCase(
         checkAuthUser.pending,
         (state, _) => {
-          state.isLoading = true;
+          state.isAuthChecking = true;
         })
       .addCase(
         checkAuthUser.fulfilled,
         (state, action: PayloadAction<AuthResponse>) => {
           localStorage.setItem('token', action.payload.accessToken);
           state.AuthUser = action.payload.user;
+          state.isUserChecked = true;
           state.isAuth = true;
-          state.isLoading = false;
+          state.isAuthChecking = false;
           state.errors = ''
         })
       .addCase(
         checkAuthUser.rejected,
         (state, _) => {
-          state.isLoading = false;
+          state.isUserChecked = true;
+          state.isAuthChecking = false;
           state.isAuth = false;
         });
   },

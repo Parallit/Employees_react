@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import style from './Modal.module.scss';
-import { EmployeeAddForm } from 'src/components/Forms/EmployeeAddForm';
-import { EmployeeEditForm } from 'src/components/Forms/EmployeeEditForm';
 import { EmployeeRemoveWarn } from '../EmployeeRemoveWarn';
 import { Employee, User } from 'src/store/types.common';
 import { SubordinatesLinkBox } from '../SubordinatesLinkBox';
+import { EmployeeAddBox } from '../EmployeeAddBox';
+import { EmployeeEditBox } from '../EmployeeEditBox';
 
 interface ModalProps {
   open: boolean;
@@ -20,11 +20,11 @@ export const Modal: FC<ModalProps> = ({ open, onClose, modalContentType, employe
     const getModalContent = (modalContentType: string) => {
       switch (modalContentType) {
           case "add": {
-            return <EmployeeAddForm onClose={onClose} />;
+            return <EmployeeAddBox onClose={onClose} />;
           }
           case "edit": {
             if(employee)
-              return <EmployeeEditForm employee={employee} onClose={onClose}/>;
+              return <EmployeeEditBox employee={employee} onClose={onClose}/>;
           }
           case 'remove': {
             if(employee)

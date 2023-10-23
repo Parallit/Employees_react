@@ -1,5 +1,6 @@
 import { CustomTitlesBox } from "src/components/Custom/CustomTitlesBox";
 import { styled } from "styled-components";
+import { baseTheme } from "src/styles/theme";
 
 export const HandbookTitleBox = styled(CustomTitlesBox) <{
     titles: string[]
@@ -22,11 +23,29 @@ export const HandbookTitleBox = styled(CustomTitlesBox) <{
         align-items: center;
         text-align: center;
         column-gap: 15px;
+
+        @media ${baseTheme.media.laptopL} {
+            grid-template-columns: repeat(7, 110px);
+        }
+
+        @media ${baseTheme.media.laptop} {
+            grid-template-columns: repeat(7, 90px);
+            column-gap: 10px;
+        }
     }
 
     & li {
         list-style-type: none;
         letter-spacing: 2px;
         overflow: hidden;
+
+        @media ${baseTheme.media.laptopL} {
+            letter-spacing: 0;
+            font-size: 16px;
+        }
+
+        @media ${baseTheme.media.laptop} {
+            column-gap: 14px;
+        }
     }
 `
