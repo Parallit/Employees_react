@@ -2,7 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import $api from 'src/axios';
 import { UserState, editedUserInfo } from 'src/store/user/types';
 import { userLogout } from 'src/store/auth/authSlice';
-import { User } from 'src/store/types.common';
+import { MyKnownApiError, User } from 'src/store/types.common';
 
 export const fetchCurrentUser = createAsyncThunk(
   'user/fetchCurrentUser',
@@ -18,9 +18,13 @@ export const fetchCurrentUser = createAsyncThunk(
   }
 );
 
-export const updateUserInfo = createAsyncThunk(
-  'user/userEditInfo',
-  async (payload: editedUserInfo, thunkApi) => {
+export const updateUserInfo = createAsyncThunk<
+  User,
+  editedUserInfo,
+  { rejectValue: string }
+>(
+  'user/updateUserInfo',
+  async (payload, { rejectWithValue }) => {
     try {
       const res = await $api.patch<User>(
         `/user/edit/${payload.userId}`,
@@ -28,9 +32,8 @@ export const updateUserInfo = createAsyncThunk(
       );
       return res.data;
     } catch (error) {
-      return thunkApi.rejectWithValue(
-        `Не удалось редактировать пользователя: ${error}`
-      );
+      const err = error as MyKnownApiError
+      return rejectWithValue(err.error)
     }
   }
 );
@@ -52,7 +55,8 @@ export const deleteUserProfile = createAsyncThunk(
 
 const initialState: UserState = {
   currentUser: {} as User,
-  isLoadingUser: false
+  isLoadingUser: false,
+  errors: ''
 };
 
 const userSlice = createSlice({
@@ -64,6 +68,7 @@ const userSlice = createSlice({
       .addCase(
         fetchCurrentUser.pending,
         (state, _) => {
+          state.errors = ''
           state.isLoadingUser = true;
         })
       .addCase(
@@ -72,13 +77,36 @@ const userSlice = createSlice({
           state.currentUser = action.payload;
           state.isLoadingUser = false;
         }
+      )
+      .addCase(
+        fetchCurrentUser.rejected,
+        (state, _) => {
+          state.isLoadingUser = false;
+        }
       );
-    builder.addCase(
-      updateUserInfo.fulfilled,
-      (state, action: PayloadAction<User>) => {
-        state.currentUser = action.payload;
-      }
-    );
+    builder
+      .addCase(
+        updateUserInfo.pending,
+        (state, _) => {
+          state.errors = ''
+          state.isLoadingUser = true;
+        }
+      )
+      .addCase(
+        updateUserInfo.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.currentUser = action.payload;
+          state.errors = ''
+          state.isLoadingUser = false;
+        }
+      )
+      .addCase(
+        updateUserInfo.rejected,
+        (state, action) => {
+          action.payload ? state.errors = action.payload : state.errors = ''
+          state.isLoadingUser = false;
+        }
+      );
     builder.addCase(deleteUserProfile.fulfilled, (state, _) => {
       state.currentUser = {} as User;
     });

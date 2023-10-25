@@ -4,18 +4,17 @@ import { styled } from "styled-components";
 export const ContainerInfo = styled.div<{
     $width?: string,
 }>`
-    width: ${({ $width }) => $width || "100%"};
-    width: 50%;
+    width: ${({ $width }) => $width || "45%"};
     text-align: center;
     padding: 40px;
     box-sizing: border-box;
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.9);
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
-    margin-left: 20px;
 
     @media ${baseTheme.media.laptopL} {
         margin: 0;
+        width: 100%;
     }
 
     li {

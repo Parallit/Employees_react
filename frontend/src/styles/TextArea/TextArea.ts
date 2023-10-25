@@ -5,8 +5,9 @@ export const TextAreaForm = styled(CustomArea)`
     position: relative;
     margin-bottom: 40px;
     display: flex;
+    width: 100%;
 
-    & input {
+    & textarea {
         width: 100%;
         padding: 20px 0;
         font-size: 16px;
@@ -29,13 +30,13 @@ export const TextAreaForm = styled(CustomArea)`
         transition: 0.5s;
     }
 
-    & input:focus {
+    & textarea:focus {
         outline: 0;      
         border-bottom: 1px solid #03e9f4;
     }
 
-    & input:focus~label,
-    input:valid~label {
+    & textarea:focus~label,
+    textarea:valid~label {
     top: -20px;
     left: 0;
     color: #03e9f4;

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from 'src/store/auth/authSlice';
 import { AppDispatch } from 'src/store';
@@ -6,16 +6,16 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { InputForm } from 'src/styles/Inputs/InputForm';
 import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
 import { baseTheme } from 'src/styles/theme';
-import { selectLoading, selectReqErr } from 'src/store/auth/selectors';
+import { selectLoading } from 'src/store/auth/selectors';
 import { BadRequestError } from 'src/styles/Errors/BadRequestError';
 import { useInput } from 'src/components/Hook/useInput';
 
 export const LoginForm: FC = ({ }) => {
   const emailInput = useInput('');
   const passwordInput = useInput('');
+  const [requestErr, setRequestError] = useState<string>('')
 
   const isLoading = useSelector(selectLoading);
-  const reqErrors = useSelector(selectReqErr);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -47,7 +47,8 @@ export const LoginForm: FC = ({ }) => {
         passwordInput.setValue('');
         navigate(from, { replace: true });
       } catch (error) {
-        console.log(error);
+        const reqErr = error as string
+        setRequestError(reqErr)
       }
     }
   };
@@ -69,7 +70,7 @@ export const LoginForm: FC = ({ }) => {
           labelName={'Password'}
           {...passwordInput}
         />
-        <BadRequestError>{reqErrors}</BadRequestError>
+        <BadRequestError>{requestErr}</BadRequestError>
         <PrimaryButton
           $bg='none'
           $boxShadow='none'

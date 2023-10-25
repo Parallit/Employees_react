@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userRegistration } from 'src/store/auth/authSlice';
 import { AppDispatch } from 'src/store';
@@ -15,6 +15,7 @@ export const RegistrationForm: FC = ({ }) => {
   const lastNameInput = useInput('');
   const emailInput = useInput('');
   const passwordInput = useInput('');
+  const [requestErr, setRequestError] = useState<string>('')
 
   const isValid = (input: { value: string, error: string }): boolean => {
     if (input.value && input.error) {
@@ -25,7 +26,6 @@ export const RegistrationForm: FC = ({ }) => {
   }
 
   const isLoading = useSelector(selectLoading);
-  const reqErrors = useSelector(selectReqErr);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -53,7 +53,8 @@ export const RegistrationForm: FC = ({ }) => {
         passwordInput.setValue('');
         navigate('../login', { replace: true });
       } catch (error) {
-        console.log(error);
+        const reqErr = error as string
+        setRequestError(reqErr)
       }
     }
   };
@@ -89,7 +90,7 @@ export const RegistrationForm: FC = ({ }) => {
           labelName={'Password'}
           {...passwordInput}
         />
-        <BadRequestError>{reqErrors}</BadRequestError>
+        <BadRequestError>{requestErr}</BadRequestError>
         <PrimaryButton
           $bg='none'
           $boxShadow='none'

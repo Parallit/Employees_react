@@ -9,7 +9,7 @@ import { SubTitleForm } from 'src/styles/SubTitles/SubTitleForm';
 import { useInput } from 'src/components/Hook/useInput';
 import { ContainerFlexCenter } from 'src/styles/Containers/ContainerFlexCenter';
 import { AvatarIcon } from 'src/components/AvatarIcon';
-import { selectIsLoadingEmployees, selectReqErr } from 'src/store/employees/selectors';
+import { selectIsLoadingEmployees } from 'src/store/employees/selectors';
 import { BadRequestError } from 'src/styles/Errors/BadRequestError';
 
 interface EmployeeAddFormProps {
@@ -24,10 +24,10 @@ export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({ onClose }) => {
   const departmentInput = useInput('');
   const telephoneInput = useInput('');
   const [avatarId, setAvatarId] = useState<string>('default');
+  const [requestErr, setRequestError] = useState<string>('')
 
   const dispatch = useDispatch<AppDispatch>();
   const isLoading = useSelector(selectIsLoadingEmployees);
-  const reqErrors = useSelector(selectReqErr);
 
   const isValid = (input: { value: string, error: string }): boolean => {
     if (input.value && input.error) {
@@ -60,7 +60,8 @@ export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({ onClose }) => {
         await dispatch(addNewEmployee(newEmployee)).unwrap();
         onClose();
       } catch (error) {
-        console.log(error);
+        const reqErr = error as string
+        setRequestError(reqErr)
       }
     }
   };
@@ -117,7 +118,7 @@ export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({ onClose }) => {
           labelName={'Telephone'}
           {...telephoneInput}
         />
-        <BadRequestError>{reqErrors}</BadRequestError>
+        <BadRequestError>{requestErr}</BadRequestError>
         <SubTitleForm>Shoose an Avatar:</SubTitleForm>
         <AvatarFormBox getAvatarId={getAvatarId} />
         <PrimaryButton
@@ -130,7 +131,7 @@ export const EmployeeAddForm: FC<EmployeeAddFormProps> = ({ onClose }) => {
             !telephoneInput.value
           )}
         >
-          {isLoading ? 'Loading...' : 'Click to add new employee'}
+          {isLoading ? 'Processing...' : 'Click to add new employee'}
         </PrimaryButton>
       </form>
     </>

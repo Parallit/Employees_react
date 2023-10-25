@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 export const ContainerInfo = styled.div`
     display: flex;
     justify-content: center;
-    margin: 20px 60px;
+    margin: 10px 0;
     width: 100%;
     gap: 20px;
 

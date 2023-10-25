@@ -3,6 +3,7 @@ import { AvatarIcon } from "../AvatarIcon"
 import { Employees } from "src/store/types.common"
 import { FC } from "react"
 import { ContainerInfo, SubordinateBox, SubordinateLink, SuborditanesContainer, TitleContainer } from "./StyledSubordinatesLinkBox"
+import { Text } from "src/styles/Text/Text"
 
 interface SubordinatesLinkBoxProps {
     subordinates: Employees,
@@ -20,8 +21,8 @@ export const SubordinatesLinkBox: FC<SubordinatesLinkBoxProps> = ({ subordinates
             </TitleContainer>
             <SuborditanesContainer>
                 {   
-                    subordinates
-                    ? subordinates.map((employee) => (
+                    subordinates ?
+                    (subordinates.map((employee) => (
                         <SubordinateBox key={employee._id}>
                             <AvatarIcon name={employee.avatar} width={"60px"} height={"60px"} />
                             <SubordinateLink>
@@ -30,9 +31,7 @@ export const SubordinatesLinkBox: FC<SubordinatesLinkBoxProps> = ({ subordinates
                                 </NavigateLink>
                             </SubordinateLink>
                         </SubordinateBox>
-                    ))
-                    // создать компонент пустой информации
-                    : <div>Empty list</div>
+                    ))) : <Text>Empty list</Text>
                 }
             </SuborditanesContainer>
         </ContainerInfo>

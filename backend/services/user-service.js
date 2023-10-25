@@ -67,10 +67,16 @@ class UserService {
         return userDto
     }
     async updateUser(id, newData) {
+        const existEmployee = await User.findOne({ firstName: newData.firstName, lastName: newData.lastName }, { _id: 1 });
+        const existEmployeeId = existEmployee?._id.toString();
+        if (existEmployee && (existEmployeeId !== id)) {
+            throw ApiError.BadRequest('User with this First Name & Last Name already exists')
+        }
         const updatedUser = await User.findByIdAndUpdate(id, newData, { new: true }).populate('employeesId');
         const userDto = new UserDto(updatedUser);
         return userDto
     }
+
     async removeUser(id, refreshToken) {
         if (!id || !refreshToken) {
             throw ApiError.BadRequest()

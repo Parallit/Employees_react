@@ -11,7 +11,7 @@ class EmployeesService {
         return employees
     }
     async getEmployee(id) {
-        const employee = await Employee.findById(id);;
+        const employee = await Employee.findById(id);
         if (!employee) {
             throw ApiError.BadRequest('Сотрудник не найден');
         }

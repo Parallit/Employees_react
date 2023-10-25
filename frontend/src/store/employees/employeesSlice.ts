@@ -68,6 +68,7 @@ export const removeEmployee = createAsyncThunk(
 const initialState: EmployeesState = {
   newEmployee: {} as AddEmployeeRequest,
   isLoadingEmployees: false,
+  isRemovingEmployee: false,
   employees: [],
   errors: ''
 };
@@ -138,12 +139,26 @@ const usersSlice = createSlice({
           action.payload ? state.errors = action.payload : state.errors = ''
         }
       );
-    builder.addCase(
-      removeEmployee.fulfilled,
-      (state, action: PayloadAction<Employee>) => {
-        state.employees = state.employees.filter((employee) => employee._id !== action.payload._id);
-      }
-    );
+    builder
+      .addCase(
+        removeEmployee.pending,
+        (state, _) => {
+          state.isLoadingEmployees = true;
+        }
+      )
+      .addCase(
+        removeEmployee.fulfilled,
+        (state, action: PayloadAction<Employee>) => {
+          state.isLoadingEmployees = false;
+          state.employees = state.employees.filter((employee) => employee._id !== action.payload._id);
+        }
+      )
+      .addCase(
+        removeEmployee.rejected,
+        (state, _) => {
+          state.isLoadingEmployees = false;
+        }
+      );
   },
 });
 
