@@ -1,11 +1,6 @@
 import EmployeesService from "../services/employees-service.js";
 
 class EmployeesController {
-    /**
-     * @route GET /api/employees
-     * @desc get all employees
-     * @access Private
-     */
     async getAllEmployees(req, res, next) {
         try {
             const employees = await EmployeesService.getAllEmployees();
@@ -14,11 +9,6 @@ class EmployeesController {
             next(err)
         }
     }
-    /**
-     * @route GET /api/employees/:id
-     * @desc get employee
-     * @access Private 
-     */
     async getEmployee(req, res, next) {
         const { id } = req.params;
         try {
@@ -28,7 +18,6 @@ class EmployeesController {
             next(err)
         }
     }
-    // GET /api/employees/user/:id
     async getUserOfEmployee(req, res, next) {
         try {
             const { id } = req.params;
@@ -38,11 +27,6 @@ class EmployeesController {
             next(err)
         }
     }
-    /**
-     * @route POST /api/employees/add
-     * @desc add employee
-     * @access Private
-     */
     async addNewEmployee(req, res, next) {
         try {
             const data = req.body;
@@ -53,11 +37,6 @@ class EmployeesController {
             next(err)
         }
     }
-    /**
-     * @route PATCH /api/employees/edit/:id
-     * @desc edit data of employee
-     * @access Private
-     */
     async editDataEmployee(req, res, next) {
         try {
             const data = req.body;
@@ -69,11 +48,6 @@ class EmployeesController {
             next(err)
         }
     }
-    /**
-     * @route DELETE /api/employees/remove/:id
-     * @desc remove employee
-     * @access Private
-     */
     async removeEmployee(req, res, next) {
         const { id } = req.params;
         try {

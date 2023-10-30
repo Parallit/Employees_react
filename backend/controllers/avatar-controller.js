@@ -2,11 +2,6 @@ import { ApiError } from '../exceptions/api-error.js';
 import avatarService from '../services/avatar-service.js';
 
 class AvatarController {
-    /**
- * @route GET /api/avatars
- * @desc get avatars
- * @access Public
- */
     async getAllAvatars(_, res, next) {
         try {
             const avatars = await avatarService.getAllAvatars();
@@ -15,7 +10,6 @@ class AvatarController {
             next(err)
         }
     }
-    // POST
     async addNewAvatar(req, res, next) {
         try {
             const data = req.body;

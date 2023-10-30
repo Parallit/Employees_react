@@ -7,7 +7,10 @@ import { ApiError } from '../exceptions/api-error.js';
 
 class EmployeesService {
     async getAllEmployees() {
-        const employees = await Employee.find().populate('userId');
+        const employees = await Employee.find(
+            {},
+            '-password -createdAt -updatedAt -__v -field')
+            .populate('userId', '-password -createdAt -updatedAt -__v -field');
         return employees
     }
     async getEmployee(id) {
@@ -42,8 +45,11 @@ class EmployeesService {
         const createdEmployee = (await Employee.create(newEmployeeData)).populate('userId');
 
         await User.findByIdAndUpdate(currentUser._id, { $push: { employeesId: (await createdEmployee)._id } })
-
-        return createdEmployee
+        const createdEmployeeToClient = await Employee.find(
+            { firstName: data.firstName, lastName: data.lastName },
+            '-createdAt -updatedAt -__v -field')
+            .populate('userId', '-password -createdAt -updatedAt -__v -field');
+        return createdEmployeeToClient
     }
     async editDataEmployee(id, data, refreshToken) {
         const currentUser = await tokenService.validateRefreshToken(refreshToken);

@@ -57,10 +57,22 @@ class UserService {
         return { ...tokens, user: userDto }
     }
     async getAllUsers() {
-        const users = await User.find().populate('employeesId');
+        const users = await User.find(
+            {},
+            '-password -createdAt -updatedAt -__v -field')
+            .populate('employeesId', '-createdAt -updatedAt -__v -field');
         return users
     }
+    async getUser(id) {
+        const user = await User.findById(id).populate('employeesId');
+        if (!user) {
+            throw ApiError.BadRequest('Сотрудник не найден');
+        }
+        const userDto = new UserDto(user)
+        return userDto
+    }
     async getCurrentUser(refreshToken) {
+        console.log(111);
         const userData = await tokenService.validateRefreshToken(refreshToken);
         const user = await User.findById(userData._id).populate('employeesId');
         const userDto = new UserDto(user)

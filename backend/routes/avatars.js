@@ -4,7 +4,8 @@ import avatarController from '../controllers/avatar-controller.js';
 
 const router = express.Router();
 
-router.get('/avatars', authMiddleware, avatarController.getAllAvatars);
+// /api/avatars
+router.get('/all', authMiddleware, avatarController.getAllAvatars);
 router.post('/add', authMiddleware, avatarController.addNewAvatar);
 
 export default router;
