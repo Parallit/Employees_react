@@ -4,11 +4,6 @@ import { ApiError } from '../exceptions/api-error.js';
 import avatarService from '../services/avatar-service.js';
 
 class UserController {
-    /**
-     * @route POST /api/user/registration
-     * @desc  Registration
-     * @access Public
-     */
     async registration(req, res, next) {
         try {
             const errors = validationResult(req);
@@ -23,11 +18,6 @@ class UserController {
             next(err)
         }
     }
-    /**
-     * @route POST /api/user/login
-     * @desc Login
-     * @access Public
-     */
     async login(req, res, next) {
         try {
             const { email, password } = req.body;
@@ -38,11 +28,6 @@ class UserController {
             next(err)
         }
     }
-    /**
-     * @route POST /api/user/logout
-     * @desc Logout
-     * @access Public
-     */
     async logout(req, res, next) {
         try {
             const { refreshToken } = req.cookies;
@@ -53,11 +38,6 @@ class UserController {
             next(err)
         }
     }
-    /**
-     * @route GET /api/user/refresh
-     * @desc Logout
-     * @access Public
-     */
     async refresh(req, res, next) {
         try {
             const { refreshToken } = req.cookies;
@@ -68,11 +48,6 @@ class UserController {
             next(err)
         }
     }
-    /**
-     * @route GET /api/user/current
-     * @desc  get current user
-     * @access Private
-     */
     async current(req, res, next) {
         try {
             const { refreshToken } = req.cookies;
@@ -82,11 +57,6 @@ class UserController {
             next(err)
         }
     }
-    /**
-     * @route GET /api/users
-     * @desc  get all users
-     * @access Private
-     */
     async getAllUsers(_, res, next) {
         try {
             const users = await UserService.getAllUsers();
@@ -95,11 +65,15 @@ class UserController {
             next(err)
         }
     }
-    /**
-     * @route PATCH /api/users/edit/:id
-     * @desc  update user data
-     * @access Private
-     */
+    async getUser(req, res, next) {
+        try {
+            const { id } = req.params;
+            const user = await UserService.getUser(id)
+            return res.status(200).json(user)
+        } catch (err) {
+            next(err)
+        }
+    }
     async updateUserData(req, res, next) {
         try {
             const { id } = req.params;
@@ -110,11 +84,6 @@ class UserController {
             next(err)
         }
     }
-    /**
-     * @route DELETE /api/user/remove/:id
-     * @desc  remove user
-     * @access Private
-     */
     async removeUser(req, res, next) {
         try {
             const { id } = req.params;

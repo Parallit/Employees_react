@@ -1,5 +1,5 @@
 export default class EmployeeDto {
-    id;
+    _id;
     firstName;
     lastName;
     room;
@@ -10,7 +10,7 @@ export default class EmployeeDto {
     userId;
 
     constructor(model) {
-        this.id = model._id;
+        this._id = model._id;
         this.firstName = model.firstName;
         this.lastName = model.lastName;
         this.room = model.room;

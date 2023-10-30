@@ -57,20 +57,38 @@ class UserService {
         return { ...tokens, user: userDto }
     }
     async getAllUsers() {
-        const users = await User.find().populate('employeesId');
+        const users = await User.find(
+            {},
+            '-password -createdAt -updatedAt -__v -field')
+            .populate('employeesId', '-createdAt -updatedAt -__v -field');
         return users
     }
+    async getUser(id) {
+        const user = await User.findById(id).populate('employeesId');
+        if (!user) {
+            throw ApiError.BadRequest('Сотрудник не найден');
+        }
+        const userDto = new UserDto(user)
+        return userDto
+    }
     async getCurrentUser(refreshToken) {
+        console.log(111);
         const userData = await tokenService.validateRefreshToken(refreshToken);
         const user = await User.findById(userData._id).populate('employeesId');
         const userDto = new UserDto(user)
         return userDto
     }
     async updateUser(id, newData) {
+        const existEmployee = await User.findOne({ firstName: newData.firstName, lastName: newData.lastName }, { _id: 1 });
+        const existEmployeeId = existEmployee?._id.toString();
+        if (existEmployee && (existEmployeeId !== id)) {
+            throw ApiError.BadRequest('User with this First Name & Last Name already exists')
+        }
         const updatedUser = await User.findByIdAndUpdate(id, newData, { new: true }).populate('employeesId');
         const userDto = new UserDto(updatedUser);
         return userDto
     }
+
     async removeUser(id, refreshToken) {
         if (!id || !refreshToken) {
             throw ApiError.BadRequest()

@@ -32,7 +32,7 @@ export const Modal: FC<ModalProps> = ({ open, onClose, modalContentType, employe
           }
           case 'subordinates': {
             if(user)
-              return <SubordinatesLinkBox subordinates={user.employeesId}/>
+              return <SubordinatesLinkBox subordinates={user.employeesId} $width='450px'/>
           }
       }
     };

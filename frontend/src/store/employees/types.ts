@@ -4,6 +4,7 @@ export interface EmployeesState {
   employees: Employees;
   newEmployee: AddEmployeeRequest;
   isLoadingEmployees: boolean;
+  isRemovingEmployee: boolean;
   errors: string
 }
 

@@ -2,7 +2,7 @@ import { Avatar } from "../models/avatar-model.js";
 
 class AvatarService {
     async getAllAvatars() {
-        const avatars = await Avatar.find();
+        const avatars = await Avatar.find({}, '-createdAt -updatedAt -__v -field');
         return avatars
     }
     async addNewAvatar(data) {

@@ -21,7 +21,6 @@ export const ChiefInfoPage: FC = () => {
             <TitlePage>Chief information</TitlePage>
             <Button onClick={goBackPage} children={'Go Back'} $primaryButton $padding="20px 30px" $margin="10px 10px" />
             <ContainerInfo>
-                {/* добавить скелетон */}
                 <Suspense fallback={<Spinner />}>
                     <Await
                         errorElement={<div>Something went wrong!</div>}
@@ -30,7 +29,7 @@ export const ChiefInfoPage: FC = () => {
                         {(resolvedUser) => (
                             <>
                                 <ChiefInfo user={resolvedUser} />
-                                <SubordinatesLinkBox subordinates={resolvedUser.employeesId} $width="40%" />
+                                <SubordinatesLinkBox subordinates={resolvedUser.employeesId} $width="45%"/>
                             </>
                         )}
                     </Await>

@@ -11,7 +11,7 @@ import { SubTitleForm } from 'src/styles/SubTitles/SubTitleForm';
 import { ContainerFlexCenter } from 'src/styles/Containers/ContainerFlexCenter';
 import { useInput } from 'src/components/Hook/useInput';
 import { BadRequestError } from 'src/styles/Errors/BadRequestError';
-import { selectIsLoadingEmployees, selectReqErr } from 'src/store/employees/selectors';
+import { selectIsLoadingEmployees } from 'src/store/employees/selectors';
 
 interface EmployeeEditFormProps {
     employee: Employee;
@@ -26,10 +26,10 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose 
     const departmentInput = useInput(employee.department);
     const telephoneInput = useInput(employee.telephone);
     const [avatarId, setAvatarId] = useState<string>(employee.avatar);
+    const [requestErr, setRequestError] = useState<string>('')
 
     const dispatch = useDispatch<AppDispatch>();
     const isLoading = useSelector(selectIsLoadingEmployees);
-    const reqErrors = useSelector(selectReqErr);
 
     const isValid = (input: { value: string, error: string }): boolean => {
         if (input.value && input.error) {
@@ -62,7 +62,8 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose 
                 await dispatch(editEmployee({ employee, newData: newDataEmployee })).unwrap();
                 onClose()
             } catch (error) {
-                console.log(error);
+                const reqErr = error as string
+                setRequestError(reqErr)
             }
         }
     };
@@ -119,7 +120,7 @@ export const EmployeeEditForm: FC<EmployeeEditFormProps> = ({ employee, onClose 
                     labelName={'Telephone'}
                     {...telephoneInput}
                 />
-                <BadRequestError>{reqErrors}</BadRequestError>
+                <BadRequestError>{requestErr}</BadRequestError>
                 <SubTitleForm>Shoose an Avatar:</SubTitleForm>
                 <AvatarFormBox getAvatarId={getAvatarId} />
                 <PrimaryButton

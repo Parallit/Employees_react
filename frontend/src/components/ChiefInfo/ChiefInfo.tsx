@@ -8,8 +8,6 @@ interface ChiefInfoProps {
     $width?: string,
 }
 
-// добавить количество подчиненных
-
 export const ChiefInfo: FC<ChiefInfoProps> = ({ user, $width }) => {
     return (
         <>

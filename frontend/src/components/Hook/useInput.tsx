@@ -17,7 +17,7 @@ export const useInput = (initialValue: string) => {
         } else if (name === "email" && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
             errMsg = 'Please use a valid email address';
         } else if (name === "password" && (value.length < 3 || value.length > 32)) {
-            errMsg = 'Password should contain at least 3 characters';
+            errMsg = 'Password should contain at least 3 characters and no more than 32';
         } else if (name === "firstName" && !/^[а-яА-Яa-zA-Z]+$/i.test(value)) {
             errMsg = 'This field must be a string';
         } else if (name === "lastName" && !/^[а-яА-Яa-zA-Z]+$/i.test(value)) {
