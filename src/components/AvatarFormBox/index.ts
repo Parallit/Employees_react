@@ -1,0 +1,1 @@
+export { AvatarFormBox } from './AvatarFormBox';

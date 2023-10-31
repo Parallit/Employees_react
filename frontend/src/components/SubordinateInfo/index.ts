@@ -1,1 +1,0 @@
-export { SubordinateInfo } from './SubordinateInfo'

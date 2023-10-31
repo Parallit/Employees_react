@@ -1,1 +1,0 @@
-export { RegistrationBox } from './RegistrationBox'
