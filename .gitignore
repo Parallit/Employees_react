@@ -1,8 +1,8 @@
+.DS_Store
+
 # dependencies
 /node_modules
 .env
 
 # production
 /build
-
-.DS_Store

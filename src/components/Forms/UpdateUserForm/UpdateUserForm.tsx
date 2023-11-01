@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { updateUserInfo } from 'src/store/user/userSlice';
