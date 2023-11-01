@@ -6,7 +6,7 @@ import { InputForm } from 'src/styles/Inputs/InputForm';
 import { PrimaryButton } from 'src/styles/Buttons/PrimaryButton';
 import { baseTheme } from 'src/styles/theme';
 import { BadRequestError } from 'src/styles/Errors/BadRequestError';
-import { selectLoading, selectReqErr } from 'src/store/auth/selectors';
+import { selectLoading } from 'src/store/auth/selectors';
 import { useNavigate } from 'react-router-dom';
 import { useInput } from 'src/components/Hook/useInput';
 

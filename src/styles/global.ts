@@ -11,6 +11,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+    background-color: black;
     background-image: url(${require('src/assets/images/office.jpg')});
     background-size: cover;
     background-repeat: no-repeat;

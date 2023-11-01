@@ -1,13 +1,12 @@
 import { CustomInput } from 'src/components/Custom/CustomInput';
 import { styled } from 'styled-components';
 
-export const InputForm = styled(CustomInput)<{
+export const InputForm = styled(CustomInput) <{
   $width?: string;
 }>`
   position: relative;
   width: ${({ $width }) => $width || '100%'};
   margin-bottom: 40px;
-  display: flex;
 
   & input {
     width: 100%;

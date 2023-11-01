@@ -66,6 +66,7 @@ export const NavigateContainer = styled.nav`
     list-style-type: none;
     margin: 40px;
     padding: 0 20px 0 20px;
+    width: 50%;
     position: relative;
 
     & a::before {

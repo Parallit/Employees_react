@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { User } from 'src/store/types.common';
-import { AvatarIcon } from '../AvatarIcon';
+import { AvatarIcon } from 'src/components/AvatarIcon';
 import {
   ContainerBox,
   ContainerInfo,

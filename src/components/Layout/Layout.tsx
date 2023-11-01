@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Footer } from 'src/components/Footer';
 import { FooterContainer } from 'src/styles/Containers/FooterContainer';

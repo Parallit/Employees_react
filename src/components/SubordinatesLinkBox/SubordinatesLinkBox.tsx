@@ -1,5 +1,5 @@
 import { NavigateLink } from 'src/styles/NavigateLink';
-import { AvatarIcon } from '../AvatarIcon';
+import { AvatarIcon } from 'src/components/AvatarIcon';
 import { Employees } from 'src/store/types.common';
 import { FC } from 'react';
 import {
