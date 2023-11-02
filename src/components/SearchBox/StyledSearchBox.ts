@@ -29,7 +29,6 @@ export const SearchContainer = styled.div`
     @media ${baseTheme.media.laptop} {
       grid-template-columns: repeat(7, 90px);
       column-gap: 10px;
-      min-height: 100px;
     }
   }
 
@@ -64,8 +63,8 @@ export const SearchContainer = styled.div`
     }
 
     @media ${baseTheme.media.laptop} {
-      left: -15px;
-      height: 40%;
+      left: -12px;
+      width: 10px;
     }
   }
 
@@ -75,6 +74,7 @@ export const SearchContainer = styled.div`
     top: 0;
 
     @media ${baseTheme.media.laptopL} {
+      position: absolute;
       right: -10px;
       width: 40px;
       height: 100%;
@@ -86,8 +86,8 @@ export const SearchContainer = styled.div`
     }
 
     @media ${baseTheme.media.laptop} {
-      right: -15px;
-      height: 40%;
+      right: -12px;
+      width: 10px;
     }
   }
 `;

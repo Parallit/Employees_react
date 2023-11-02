@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { styled } from 'styled-components';
 import { IconComponent } from 'src/components/Icon';
+import { baseTheme } from 'src/styles/theme';
 
 export const Footer: FC = () => {
   return (
@@ -52,6 +53,10 @@ const TextHeading = styled.h3`
   color: #fff;
   text-transform: uppercase;
 
+  @media ${baseTheme.media.laptop} {
+      font-size: ${({ theme }) => theme.fontSize.large};
+  }
+
   &::before {
     position: absolute;
     content: '';
@@ -101,6 +106,10 @@ const CopyrightText = styled.p`
   -webkit-backdrop-filter: blur(3px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.18);
+
+  @media ${baseTheme.media.laptop} {
+      font-size: ${({ theme }) => theme.fontSize.small};
+    }
 `;
 
 const NameLink = styled.a`

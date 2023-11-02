@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { CustomNavLink } from 'src/components/Custom/CustomNavLink';
+import { baseTheme } from '../theme';
 
 export const NavigateLink = styled(CustomNavLink)`
   color: ${({ $defaultColor, theme }) => $defaultColor || theme.colors.white};
@@ -15,18 +16,22 @@ export const NavigateLink = styled(CustomNavLink)`
   text-wrap: nowrap;
   transition: all 0.5s ease-in-out;
 
+  @media ${baseTheme.media.laptop} {
+    font-size: ${({ theme }) => theme.fontSize.small};
+  }
+
   &.active {
     color: ${({ $activeColor, theme }) =>
-      $activeColor || theme.colors.neonBlue};
+    $activeColor || theme.colors.neonBlue};
   }
 
   &:hover {
     color: ${({ $defaultColor, theme }) =>
-      $defaultColor || theme.colors.neonBlue};
+    $defaultColor || theme.colors.neonBlue};
   }
 
   &:focus {
     color: ${({ $defaultColor, theme }) =>
-      $defaultColor || theme.colors.neonBlue};
+    $defaultColor || theme.colors.neonBlue};
   }
 `;

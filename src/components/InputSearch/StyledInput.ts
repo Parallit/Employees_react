@@ -15,6 +15,6 @@ export const Input = styled.input`
   text-align: center;
 
   @media ${baseTheme.media.laptop} {
-    height: 40%;
+    font-size: ${({ theme }) => theme.fontSize.small};
   }
 `;

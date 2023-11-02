@@ -2,7 +2,7 @@ import { CustomTitlesBox } from 'src/components/Custom/CustomTitlesBox';
 import { styled } from 'styled-components';
 import { baseTheme } from 'src/styles/theme';
 
-export const HandbookTitleBox = styled(CustomTitlesBox)<{
+export const HandbookTitleBox = styled(CustomTitlesBox) <{
   titles: string[];
 }>`
   min-height: 70px;
@@ -15,6 +15,10 @@ export const HandbookTitleBox = styled(CustomTitlesBox)<{
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
   margin: 10px 0 0;
   padding: 0px 20px;
+
+  @media ${baseTheme.media.laptop} {
+    font-size: ${({ theme }) => theme.fontSize.small};
+  }
 
   & ul {
     display: grid;

@@ -1,5 +1,6 @@
 import { CustomInput } from 'src/components/Custom/CustomInput';
 import { styled } from 'styled-components';
+import { baseTheme } from '../theme';
 
 export const InputForm = styled(CustomInput) <{
   $width?: string;
@@ -18,6 +19,10 @@ export const InputForm = styled(CustomInput) <{
     border-bottom: 1px solid ${({ theme }) => theme.colors.white};
     outline: none;
     background: transparent;
+
+    @media ${baseTheme.media.laptop} {
+      font-size: ${({ theme }) => theme.fontSize.small};
+    }
   }
 
   & label {
@@ -29,6 +34,10 @@ export const InputForm = styled(CustomInput) <{
     color: ${({ theme }) => theme.colors.white};
     pointer-events: none;
     transition: 0.5s;
+
+    @media ${baseTheme.media.laptop} {
+      font-size: ${({ theme }) => theme.fontSize.small};
+    }
   }
 
   & input:focus {

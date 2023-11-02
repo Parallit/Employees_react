@@ -1,3 +1,4 @@
+import { baseTheme } from 'src/styles/theme';
 import { styled } from 'styled-components';
 
 export const Container = styled.div`
@@ -12,9 +13,17 @@ export const TextProjectName = styled.h2`
   margin: 0 0 50px 0;
   padding: 0 20px;
   letter-spacing: 1px;
+
+      @media ${baseTheme.media.laptop} {
+      font-size: ${({ theme }) => theme.fontSize.extraLarge};
+    }
 `;
 
 export const Text = styled.p`
   padding: 0 20px;
   letter-spacing: 2px;
+
+  @media ${baseTheme.media.laptop} {
+      font-size: ${({ theme }) => theme.fontSize.small};
+    }
 `;

@@ -1,4 +1,5 @@
 import { CustomTitle } from 'src/components/Custom/CustomTitle';
+import { baseTheme } from 'src/styles/theme';
 import { styled } from 'styled-components';
 
 export const TitlePage = styled(CustomTitle)`
@@ -13,6 +14,10 @@ export const TitlePage = styled(CustomTitle)`
   & h1 {
     font-size: ${({ $fontSize }) => $fontSize || '40px'};
     text-transform: ${({ $textTransform }) => $textTransform || 'uppercase'};
+
+    @media ${baseTheme.media.laptop} {
+      font-size: ${({ theme }) => theme.fontSize.extraLarge};
+    }
   }
 
   &::before {

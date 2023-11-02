@@ -1,5 +1,6 @@
 import { CustomButton } from 'src/components/Custom/CustomButton';
 import { styled } from 'styled-components';
+import { baseTheme } from '../theme';
 
 export const PrimaryButton = styled(CustomButton)`
   color: ${({ $defaultColor, theme }) => $defaultColor || theme.colors.white};
@@ -17,10 +18,17 @@ export const PrimaryButton = styled(CustomButton)`
   left: ${({ $left }) => $left || ''};
   bottom: ${({ $bottom }) => $bottom || ''};
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 10px;
   letter-spacing: 4px;
   position: relative;
   transition: all 0.5s ease-in-out;
+
+  @media ${baseTheme.media.laptop} {
+    font-size: ${({ theme }) => theme.fontSize.small};
+  }
 
   &:hover {
     color: ${({ $hoverColor, theme }) => $hoverColor || theme.colors.white};
