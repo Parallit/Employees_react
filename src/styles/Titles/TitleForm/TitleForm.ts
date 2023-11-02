@@ -1,3 +1,4 @@
+import { baseTheme } from 'src/styles/theme';
 import { styled } from 'styled-components';
 
 export const TitleForm = styled.h2`
@@ -9,6 +10,10 @@ export const TitleForm = styled.h2`
   position: relative;
   top: -60px;
   letter-spacing: 1px;
+
+    @media ${baseTheme.media.laptop} {
+    font-size: ${({ theme }) => theme.fontSize.extraLarge};
+  }
 
   &:before {
     position: absolute;

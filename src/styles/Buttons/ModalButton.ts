@@ -1,10 +1,11 @@
 import { CustomButton } from 'src/components/Custom/CustomButton';
 import { styled } from 'styled-components';
+import { baseTheme } from '../theme';
 
-export const ModalButton = styled(CustomButton)<{
-  $primaryButton?: boolean;
-  $secondaryButton?: boolean;
-  $dangerButton?: boolean;
+export const ModalButton = styled(CustomButton) <{
+    $primaryButton?: boolean;
+    $secondaryButton?: boolean;
+    $dangerButton?: boolean;
 }>`
   color: ${({ $defaultColor, theme }) => $defaultColor || theme.colors.white};
   padding: ${({ $padding }) => $padding || '10px 20px'};
@@ -18,9 +19,13 @@ export const ModalButton = styled(CustomButton)<{
   position: relative;
   transition: all 0.5s ease-in-out;
 
+    @media ${baseTheme.media.laptop} {
+    font-size: ${({ theme }) => theme.fontSize.small};
+  }
+
   ${(props) =>
-    props.$primaryButton &&
-    `
+        props.$primaryButton &&
+        `
         background: rgba(0, 0, 0, 0.8);
         box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
         
@@ -32,8 +37,8 @@ export const ModalButton = styled(CustomButton)<{
     `}
 
   ${(props) =>
-    props.$secondaryButton &&
-    `
+        props.$secondaryButton &&
+        `
         outline: 1px solid #fff;
         background: none;
 
@@ -64,8 +69,8 @@ export const ModalButton = styled(CustomButton)<{
         `}
 
     ${(props) =>
-    props.$dangerButton &&
-    `
+        props.$dangerButton &&
+        `
         outline: 1px solid #fff;
         background: none;
         
